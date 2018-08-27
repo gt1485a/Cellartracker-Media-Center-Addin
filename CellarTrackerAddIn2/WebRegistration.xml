@@ -1,0 +1,12 @@
+﻿<application id="{B3338890-E09E-4a64-8F08-9EA2E15C6925}"
+             Title="CellarTrackerAddin"
+             Description="View your Cellar in Media Center">
+  <entrypoint id="{29371D88-018F-4d6c-8703-E4A5156BBE40}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="CellarTrackerAddin"
+              Description="View your Cellar in Media Center"
+              ImageUrl="file://C:\Users\ryanh\Documents\Visual Studio 2008\Projects\CellarTrackerMcml\CellarTrackerAddIn2\bin\Debug\WineBarrel.jpg"
+              context="http://localhost/Markup/Default.mcml">
+    <category category="More Programs"/>
+  </entrypoint>
+</application>

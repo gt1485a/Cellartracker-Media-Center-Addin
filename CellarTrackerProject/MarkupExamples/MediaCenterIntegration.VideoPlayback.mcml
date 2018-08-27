@@ -1,0 +1,202 @@
+<Mcml 
+  xmlns="http://schemas.microsoft.com/2006/mcml"
+  xmlns:cor="assembly://MSCorlib/System" 
+  xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+  xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+  xmlns:b="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Scenarios.SimpleButton.mcml"
+  xmlns:e="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Scenarios.SimpleEditbox.mcml" 
+  xmlns:me="Me">
+
+  <!-- The Windows Media Center extensibility platform includes a full set  -->
+  <!-- of APIs for interacting with media services. Such services include   -->
+  <!-- playing media (such as music and videos) as well as other non-media  -->
+  <!-- related services (like displaying a MediaCenter dialog box).         -->
+
+  <!-- All Windows Media Center services are accessed via the AddInHost     -->
+  <!-- type, which is located in the Microsoft.MediaCenter namespace.       -->
+
+  <!-- This sample demonstrates the how to play a video and query its       -->
+  <!-- properties using APIs in the Microsoft.MediaCenter namespace.        -->
+
+  <UI Name="MediaPlayback">
+
+    <Locals>
+
+      <!-- AddInHost is where all Windows Media Center-specific services start -->
+      <!-- from. It must appear in the Locals section of a markup file.        -->
+      <addin:AddInHost Name="AddInHost"/>
+      <cor:String Name="MediaPath" String="http://play.mediacentersandbox.com/SDKTestVideo.wmv"/>
+      
+    </Locals>
+
+    <Rules>
+
+      <!-- Start video playback once the UI is loaded -->
+      <Rule>
+        <Actions>
+          <Invoke Target="[AddInHost.MediaCenterEnvironment.PlayMedia]" 
+                  mediaType="Video"
+                  media="[MediaPath]"
+                  addToQueue="false"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]"/>
+          <Modified Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]"/>
+        </Conditions>
+
+        <Actions>
+          <Set Target="[PlayRate.Content]" Value="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate.ToString]"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayState]"/>
+          <Modified Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayState]"/>
+        </Conditions>
+
+        <Actions>
+          <Set Target="[PlayState.Content]" Value="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayState.ToString]"/>
+        </Actions>
+      </Rule>
+
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.Position]"/>
+          <Modified Source="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.Position]"/>
+        </Conditions>
+
+        <Actions>
+          <Set Target="[Position.Content]" Value="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.Position.ToString]"/>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Dock">
+        <Children>
+
+          <Panel Layout="VerticalFlow" Margins="10,10,10,10" Padding="10,50,0,0">
+            <LayoutInput>
+              <DockLayoutInput Position="Left"/>
+            </LayoutInput>
+
+            <Children>
+
+              <me:PlayRateButton Description="Stop"   PlayRate="0"/>
+              <me:PlayRateButton Description="Pause"  PlayRate="1"/>
+              <me:PlayRateButton Description="Play"   PlayRate="2"/>
+              <me:PlayRateButton Description="FF1"    PlayRate="3"/>
+              <me:PlayRateButton Description="FF2"    PlayRate="4"/>
+              <me:PlayRateButton Description="FF3"    PlayRate="5"/>
+              <me:PlayRateButton Description="Rew1"   PlayRate="6"/>
+              <me:PlayRateButton Description="Rew2"   PlayRate="7"/>
+              <me:PlayRateButton Description="Rew3"   PlayRate="8"/>
+              <me:PlayRateButton Description="Slo1"   PlayRate="9"/>
+              <me:PlayRateButton Description="Slo2"   PlayRate="10"/>
+              <me:PlayRateButton Description="Slo3"   PlayRate="11"/>
+
+              <!-- Skip Forward -->
+              <b:SimpleButton MinimumSize="250,0" Padding="2,2,2,2" LabelFont="Tahoma,16" >
+                <Command>
+                  <InvokeCommand Description="SkipForward()"  
+                                 Target="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.SkipForward]"/>
+                </Command>
+              </b:SimpleButton>
+
+              <!-- Skip Back -->
+              <b:SimpleButton MinimumSize="250,0" Padding="2,2,2,2" LabelFont="Tahoma,16" >
+                <Command>
+                  <InvokeCommand Description="SkipBack()"  
+                                 Target="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.SkipBack]"/>
+                </Command>
+              </b:SimpleButton>
+
+              <!-- Switch to Full Screen -->
+              <b:SimpleButton MinimumSize="250,0" Padding="2,2,2,2" LabelFont="Tahoma,16" >
+                <Command>
+                  <InvokeCommand Description="GoToFullScreen()"  
+                                 Target="[AddInHost.MediaCenterEnvironment.MediaExperience.GoToFullScreen]"/>
+                </Command>
+              </b:SimpleButton>
+
+            </Children>
+          </Panel>
+
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <DockLayoutInput Position="Client" Alignment="Center"/>
+            </LayoutInput>
+
+            <Children>
+
+              <!-- Currently playing video -->
+              <Video MinimumSize="400,300"/>
+
+              <!-- Play Rate (Stop/Pause/Play/FF1/FF2/FF3/Rewind1/Rewind2/Rewind3/SlowMotion1/SlowMotion2/SlowMotion3) -->
+              <Panel Layout="HorizontalFlow" Padding="0,50,0,0">
+                <Children>
+                  <Text Content="PlayRate" Color="Yellow" MinimumSize="200,0"/>
+                  <Text Name="PlayRate" Content="unknown" Font="Tahoma,18" Color="White" BackColor="Blue" Padding="30,0,0,0"/>
+                </Children>
+              </Panel>
+
+              <!-- Play State (Stopped/Paused/Playing/Buffering/Finished/Undefined) -->
+              <Panel Layout="HorizontalFlow">
+                <Children>
+                  <Text Content="PlayState" Color="Yellow" MinimumSize="200,0"/>
+                  <Text Name="PlayState" Content="unknown" Font="Tahoma,18" Color="White" BackColor="Blue" Padding="30,0,0,0"/>
+                </Children>
+              </Panel>
+
+              <!-- Position of currently playing media -->
+              <Panel Layout="HorizontalFlow">
+                <Children>
+                  <Text Content="Position" Color="Yellow" MinimumSize="200,0"/>
+                  <Text Name="Position" Content="unknown" Font="Tahoma,18" Color="White" BackColor="Blue" Padding="30,0,0,0"/>
+                </Children>
+              </Panel>
+
+            </Children>
+          </Panel>
+          
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+  <!-- Button for changing the play rate -->
+  <UI Name="PlayRateButton">
+    <Properties>
+      <cor:Single Name="PlayRate" Single="0"/>
+      <cor:String Name="Description" String="ButtonName"/>
+    </Properties>
+
+    <Locals>
+      <addin:AddInHost Name="AddInHost"/>
+      <Command Name="Command" Description="Button Name"/>
+    </Locals>
+
+    <Rules>
+      <Binding Source="[Description]" Target="[Command.Description]"/>
+
+      <Changed Source="[Command.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.MediaExperience.Transport.PlayRate]" Value="[PlayRate]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <b:SimpleButton Command="[Command]" MinimumSize="250,0" Padding="2,2,2,2" LabelFont="Tahoma,16" />
+    </Content>
+
+  </UI>
+
+</Mcml>

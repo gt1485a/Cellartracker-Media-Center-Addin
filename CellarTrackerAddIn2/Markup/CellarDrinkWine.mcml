@@ -1,0 +1,173 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+          xmlns:cor="assembly://MSCorLib/System"
+        xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:CT="assembly://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=275706189cd468f2"
+
+      xmlns:me="Me">
+
+  <Aggregate Source="resx://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=275706189cd468f2/CellarTrackerAddIn2.Resources/Controls"/>
+  
+  
+  
+  <UI Name="CellarDrinkWine">
+    <Properties>
+      <cor:String Name="WineID" String="$Required"/>
+      <cor:String Name="size" String="$Required"/>
+      <cor:String Name="WineName" String="$Required"/>
+      <cor:String Name="WineVintage" String="$Required"/>
+      <da:RemoteResourceUri Name="RequestURI"/>
+    </Properties>
+    <Locals>
+      <cor:String Name="location" String=""/>
+      <EditableText Name="etScore" Description="Score: "/>
+      <EditableText Name="etNote" Description="Note: "/>
+      <EditableText Name="etDate" Description="Date: " Value="Today"/>
+      <EditableText Name="etBin" Description="Bin: "/>
+      <EditableText Name="etRevenue" Description="Revenue: "/>
+
+      <Command Name="EditBoxCommand"/>
+      
+      
+      <da:XmlRemoteResource Name="ResponseDocument">
+        <Mappings>
+          <da:XmlRemoteValue Name="Action"
+                             Source="cellartracker/response/action" />
+          <da:XmlRemoteValue Name="Status"
+                             Source="cellartracker/response/status"/>
+          <da:XmlRemoteValueList Name="Errors" RepeatedType="PropertySet" Source="cellartracker/response/errors">
+            <Mappings>
+              <da:XmlRemoteValue Name="Error" Property="Entries.#Error" Source="/error"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+        </Mappings>
+      </da:XmlRemoteResource>
+
+      <cor:String Name="CTUri" String="http://www.cellartracker.com/api_write.asp"/>
+      <cor:String Name="user" String="user"/>
+      <cor:String Name="password" String="password"/>
+      <cor:String Name="API" String="API"/>
+      <cor:String Name="APIVal" String="drink"/>
+      <cor:String Name="iWine" String="iWine"/>
+      <cor:String Name="QuerySize" String="Size"/>
+      <cor:String Name="Location" String="Location"/>
+      <cor:String Name="Bin" String="Bin"/>
+      <cor:String Name="ConsumptionNote" String="ConsumptionNote"/>
+      <cor:String Name="Revenue" String="Revenue"/>
+      <cor:String Name="ConsumptionType" String="ConsumptionType"/>
+      <cor:String Name="DrinkDate" String="DrinkDate"/>
+      <cor:String Name="Rating" String="Rating"/>
+      
+      <CT:CellarTrackerAddIn2.Properties.Settings Name="Settings"/>
+      <coll:IDictionary Name="QueryPairs" IDictionary="[RequestURI.QueryPairs]"/>
+      <Command Name="DrinkCmd" Description="Drink Wine"/>
+    </Locals>
+    <Rules>
+      
+      <Changed Source="[DrinkCmd.Invoked]">
+        <Actions>
+          <Set Target="[RequestURI.FullString]" Value="[CTUri]" InvokePolicy="Synchronous"/>
+          <Set Target="[etDate.Value]" Value="" InvokePolicy="Synchronous" />
+          <Invoke Target="[QueryPairs.Clear]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[RequestURI.QueryPairs.Clear]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[QueryPairs.Add]" key="[user]" value="[Settings.Default.Username]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[password]" value="[Settings.Default.Password]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[API]" value="[APIVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[iWine]" value="[WineID]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[ConsumptionNote]" value="[etNote.Value]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Bin]" value="[etBin.Value]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[QuerySize]" value="[size]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Location]" value="[location]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Revenue]" value="[etRevenue]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[ConsumptionType]" value="[ConsumptionTypeSpinner.Model.ChosenIndex]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[DrinkDate]" value="[etDate.Value]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Rating]" value="[etScore.Value]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          
+          <Set Target="[RequestURI.QueryPairs]" Value="[QueryPairs]"/>
+          <Set Target="[ResponseDocument.RequestUri]" Value="[RequestURI]" InvokePolicy="Synchronous"/>
+
+          <Set Target="[ResponseDocument.RequestMethod]" Value="POST"/>
+          <DebugTrace Message="DrinkWine URI: {0}">
+            <Params>
+              <ObjectPath ObjectPath="[RequestURI.FullString]"/>
+            </Params>
+          </DebugTrace>
+          <Invoke Target="[ResponseDocument.GetDataFromResource]" InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[ResponseDocument.ResponseDocument]">
+        <Actions>
+          <Set Target="[DrinkResponse.Content]" Value="[ResponseDocument.ResponseDocument]"/>
+          <DebugTrace Message="ResponseDocument: {0}">
+            <Params>
+              <ObjectPath ObjectPath="[ResponseDocument.ResponseDocument]"/>
+            </Params>
+          </DebugTrace>
+        </Actions>
+      </Changed>
+
+    </Rules>
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Panel Name="Header">
+            <LayoutInput>
+              <FormLayoutInput Top="Parent,0,50" Right="Parent,0,0" Left="Parent,.8,0" Bottom="Parent,.3,0"/>
+            </LayoutInput>
+          </Panel>
+          <Panel Name="Body" Layout="Center">
+            <LayoutInput>
+              <FormLayoutInput Top="Header,1,0" Left="Parent,0,150" Right="Parent,1,0" Bottom="Parent,1,0"/>
+            </LayoutInput>
+            <Children>
+              <Panel Layout="VerticalFlow">
+                <Children>
+                  <Panel Layout="HorizontalFlow">
+                    <Children>
+                      <Text Content="[WineVintage]" Color="WhiteSmoke" Padding="0,0,20,0"/>
+                      <Text Content="[WineName]" Color="WhiteSmoke"/>
+                    </Children>
+                  </Panel>
+                  <Text Content="Consumption Type: " Color="WhiteSmoke"/>
+                  <me:SimpleSpinner Name="ConsumptionTypeSpinner" Padding="20,0,0,0">
+                    <Model>
+                      <Choice>
+                        <Options>
+                          <cor:String String="Drank from my cellar"/>
+                          <cor:String String="Gave away as a gift"/>
+                          <cor:String String="Restaurant purchase"/>
+                          <cor:String String="Sold or traded"/>
+                          <cor:String String="Spoiled and returned to vendor"/>
+                          <cor:String String="Had a taste"/>
+                          <cor:String String="Dropped or broke"/>
+                          <cor:String String="Spoiled but not returned"/>
+                          <cor:String String="Missing or presumed drunk"/>
+                          <cor:String String="Donated"/>
+                          <cor:String String="Consumed by family member or spouse"/>
+                          <cor:String String="Drank from a friend's cellar"/>
+                          <cor:String String="Used for cooking"/>
+                          <cor:String String="Brought to a tasting"/>
+                        </Options>
+                      </Choice>
+                    </Model>
+                  </me:SimpleSpinner>
+                  
+                  <me:LabeledEditBox Name="DateNameBox"  CommandOnEnter="[EditBoxCommand]"  EditableText="[etDate]"/>
+                  <me:LabeledEditBox Name="ScoreNameBox"   CommandOnEnter="[EditBoxCommand]"  EditableText="[etScore]"/>
+                  <me:LabeledEditBox Name="BinNameBox"  CommandOnEnter="[EditBoxCommand]"  EditableText="[etBin]"/>
+                  <me:LabeledEditBox Name="RevenueNameBox"  CommandOnEnter="[EditBoxCommand]"  EditableText="[etRevenue]"/>
+                  <me:LabeledEditBox Name="NoteNameBox"  CommandOnEnter="[EditBoxCommand]"  EditableText="[etNote]" Height="400" Width="400" Wrap="true"/>
+                  <me:SimpleButton Command="[DrinkCmd]" />
+                  <Text Content="" Name="DrinkResponse" Color="WhiteSmoke"/>
+                </Children>
+              </Panel>
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+      
+    </Content>
+
+  </UI>
+
+</Mcml>

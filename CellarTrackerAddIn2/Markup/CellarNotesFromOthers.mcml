@@ -1,0 +1,226 @@
+<Mcml
+  xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:CT="assembly://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=275706189cd468f2"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="ME">
+  <!--CellarWineDetail-->
+  <UI Name="CellarWineOthersNotes">
+    <Properties>
+      <cor:String Name="WineID" String="$Required"/>
+      <CT:CellarTrackerAddIn2.Properties.Settings Name="Settings"/>
+      <da:RemoteResourceUri Name="MyUri"/>
+    
+      <da:XmlRemoteResource Name="MyCellarOthersNotes">
+        <!--Table=Notes&iUserOverride=-1-->
+        <Mappings>
+          <da:XmlRemoteValueList Name="OthersNotes" RepeatedType="PropertySet" Source="/cellartracker/notes/row">
+            <Mappings>
+              <da:XmlRemoteValue Name="iWine" Property="Entries.#iWine" Source="/iWine"/>
+              <da:XmlRemoteValue Name="Vintage" Property="Entries.#Vintage" Source="/Vintage"/>
+              <da:XmlRemoteValue Name="WineName" Property="Entries.#WineName" Source="/Wine"/>
+              <da:XmlRemoteValue Name="TastingDate" Property="Entries.#TastingDate" Source="/TastingDate"/>
+              <da:XmlRemoteValue Name="UserName" Property="Entries.#UserName" Source="/Name"/>
+              <da:XmlRemoteValue Name="Rating" Property="Entries.#Rating" Source="/Rating"/>
+              <da:XmlRemoteValue Name="TastingNotes" Property="Entries.#TastingNotes" Source="/TastingNotes"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+        </Mappings>
+      </da:XmlRemoteResource>
+    </Properties>
+
+    <Locals>
+
+      <ScrollingData Name="NotesScrollData"/>
+
+      <coll:IDictionary Name="QueryPairs" IDictionary="[MyUri.QueryPairs]"/>
+
+      <cor:String Name="CTUri" String="http://www.cellartracker.com/api_read.asp"/>
+      <cor:String Name="user" String="user"/>
+      <cor:String Name="password" String="password"/>
+      <cor:String Name="API" String="API"/>
+      <cor:String Name="APIVal" String="list"/>
+      <cor:String Name="Format" String="Format"/>
+      <cor:String Name="FormatVal" String="XML"/>
+      <cor:String Name="Table" String="Table"/>
+      <cor:String Name="TableVal" String="Notes"/>
+      <cor:String Name="iUserOverride" String="iUserOverride"/>
+      <cor:String Name="iUserOverrideVal" String="-1"/>
+
+    </Locals>
+
+    <Rules>
+      
+      <Binding Source="[MyCellarOthersNotes.Mappings.Entries.#OthersNotes!da:XmlRemoteValueList]" Target="[NotesDisplay.NotesData]"/>
+
+      <Rule>
+        <Actions>
+
+          <Set Target="[MyUri.FullString]" Value="[CTUri]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[MyUri.QueryPairs.Clear]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[QueryPairs.Clear]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[QueryPairs.Add]" key="[user]" value="[Settings.Default.Username]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[password]" value="[Settings.Default.Password]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[API]" value="[APIVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Format]" value="[FormatVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Table]" value="[TableVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[iUserOverride]" value="[iUserOverrideVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          
+          <Set Target="[MyUri.QueryPairs]" Value="[QueryPairs]"/>
+          <Set Target="[MyCellarOthersNotes.RequestUri]" Value="[MyUri]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[MyCellarOthersNotes.GetDataFromResource]" InvokePolicy="Synchronous"/>
+
+          <DebugTrace Message="Uri: {0}">
+            <Params>
+              <ObjectPath ObjectPath="[MyUri.FullString]"/>
+            </Params>
+          </DebugTrace>
+
+        </Actions>
+      </Rule>
+
+      <!--<Changed Source="[MyCellarOthersNotes.Mappings.Entries.#OthersNotes!da:XmlRemoteValueList.List.Count]">
+        <Actions>
+
+          <Set Target="[NotesDisplay.NotesData]" Value="[MyCellarOthersNotes.Mappings.Entries.#OthersNotes!da:XmlRemoteValueList]"/>
+
+          <DebugTrace Message="Entries Changed: {0}">
+            <Params>
+              <ObjectPath ObjectPath="[MyCellarOthersNotes.Mappings.Entries.#OthersNotes!da:XmlRemoteValueList.List.Count]"/>
+            </Params>
+          </DebugTrace>
+
+        </Actions>
+      </Changed>-->
+    </Rules>
+
+    <Content>
+      <Panel Layout="Center">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <!--<Text Name="MyText" Content="[WineID]" Color="White" Font="Calibri, 24"/>-->
+              <me:Notes Name="NotesDisplay" NotesData="[MyCellarOthersNotes.Mappings.Entries.#OthersNotes!da:XmlRemoteValueList]"/>
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+  <!--Notes-->
+  <UI Name="Notes">
+    <Properties>
+      <da:XmlRemoteValueList Name="NotesData" XmlRemoteValueList="$Required"/>
+    </Properties>
+
+    <Locals>
+      <ScrollingData Name="ScrollData"/>
+      <ScrollingHandler Name="ScrollHandler" HandlerStage="Bubbled"/>
+    </Locals>
+
+    <Rules>
+      <Binding Target="[ScrollHandler.ScrollingData]" Source="[ScrollData]"/>
+      <Binding Target="[ScrollData.Repeater]" Source="[WineNotesRepeater]"/>
+      <Changed Source="[WineNotesRepeater.Source]">
+        <Actions>
+          <Invoke Target="[WineNotesRepeater.NavigateInto]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Scroller ScrollingData="[ScrollData]" Orientation="Vertical" MaximumSize="0,400">
+        <Children>
+          <Repeater Name="WineNotesRepeater" Source="[NotesData.List]" Layout="VerticalFlow" >
+
+            <Divider >
+              <Text Content="---------" Color="DimGray"/>
+            </Divider>
+
+            <Content>
+              
+              <me:Note UserName="[RepeatedItem!PropertySet.Entries.#UserName!cor:String]"
+                       NoteDate="[RepeatedItem!PropertySet.Entries.#TastingDate!cor:String]"
+                       Description="[RepeatedItem!PropertySet.Entries.#TastingNotes!cor:String]"
+                       Rating="[RepeatedItem!PropertySet.Entries.#Rating!cor:String]"
+                       Wine="[RepeatedItem!PropertySet.Entries.#WineName!cor:String]"
+                       Vintage="[RepeatedItem!PropertySet.Entries.#Vintage!cor:String]"
+                       WineID="[RepeatedItem!PropertySet.Entries.#iWine!cor:String]"
+                       Margins="0,30,0,0"/>
+            </Content>
+          </Repeater>
+        </Children>
+      </Scroller>
+    </Content>
+  </UI>
+<!--Note-->
+  <UI Name="Note">
+
+    <Properties>
+      <cor:String Name="UserName" String="A"/>
+      <cor:String Name="NoteDate" String="B"/>
+      <cor:String Name="Description" String="C"/>
+      <cor:String Name="Rating" String="D"/>
+      <cor:String Name="Wine" String="E"/>
+      <cor:String Name="Vintage" String="F"/>
+      <cor:String Name="WineID" String="G"/>
+    </Properties>
+    <Locals>
+      <ClickHandler Name="Clicker">
+        <Command>
+          <NavigateCommand Description="Cellar Wine Detal"
+                            Source="@resx://CellarTrackerAddIn2/CellarTrackerAddIn2.Resources/CellarWineDetail"
+                            WineID="[WineID]"/>
+        </Command>
+      </ClickHandler>
+      <cor:String Name="iWine" String="G"/>
+    </Locals>
+    <Content>
+      
+  
+          <Panel Name="Background" Layout="VerticalFlow" MaximumSize="800,0">
+            <Children>
+
+              <Panel Layout="HorizontalFlow">
+                <Children>
+                  <Text Name="vintage" Content="[Vintage]" Color="DimGray" Margins="0,15,0,0"/>
+                  <Text Name="wine" Content="[Wine]" Color="DimGray" Margins="0,15,0,0"/>
+                </Children>
+              </Panel>
+
+              <Panel Layout="HorizontalFlow">
+                <Children>
+                  <Text Name="user" Content="User: " Color="DimGray"/>
+                  <Text Name="username" Content="[UserName]" Color="DimGray"/>
+                  <Text Name="date" Content="Date:" Color="DimGray" Margins="30,0,0,0"/>
+                  <Text Name="notedate" Content="[NoteDate]" Color="DimGray"/>
+                  <Text Name="rating" Content="Rating: " Color="DimGray" Margins="30,0,0,0"/>
+                  <Text Name="ratingval" Content="[Rating]" Color="DimGray"/>
+                </Children>
+              </Panel>
+              <Text Name="description" Content="[Description]" Margins="0,15,0,0" Color="DimGray" MaximumLines="10" WordWrap="true"/>
+            </Children>
+          </Panel>
+    </Content>
+
+    <Rules>
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[user.Color]" Value="White"/>
+          <Set Target="[username.Color]" Value="White"/>
+          <Set Target="[date.Color]" Value="White"/>
+          <Set Target="[notedate.Color]" Value="White"/>
+          <Set Target="[rating.Color]" Value="White"/>
+          <Set Target="[ratingval.Color]" Value="White"/>
+          <Set Target="[description.Color]" Value="White"/>
+          <Set Target="[vintage.Color]" Value="White"/>
+          <Set Target="[wine.Color]" Value="White"/>
+        </Actions>
+      </Condition>
+      <Default Target="[Background.Scale]" Value="1.0,1.0,1.0"/>
+    </Rules>
+  </UI>
+
+</Mcml>

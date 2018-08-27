@@ -1,0 +1,32 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml">
+
+    <Image Name="AcquiringImage" Source="res://Microsoft.MediaCenter.UI!AcquiringImage.png" NineGrid="8,8,49,49"/>
+    <Image Name="ErrorImage" Source="res://Microsoft.MediaCenter.UI!ErrorImage.png" NineGrid="8,8,49,49"/>
+
+    <!-- Marquee text: Part1 (Unscaled) -->
+    <Animation Name="TextMarquee.Part1.Idle" Loop="-1" Type="Idle">
+        <Keyframes>
+            <PositionKeyframe Time="0.00" RelativeTo="Final"/>
+            <PositionKeyframe Time="0.50" RelativeTo="Final"/>
+            
+            <AlphaKeyframe Time="0.00" Value="1.0"/>
+        </Keyframes>
+    </Animation>
+    
+    <!-- Marquee text: Part2 (Scaled) -->
+    <Animation Name="TextMarquee.Part2.Idle" Loop="-1" Type="Idle">
+        <Keyframes>
+            <PositionKeyframe Time="0.80" Value="-1, 0, 0" RelativeTo="Final"/>
+            <PositionKeyframe Time="1.20" Value="-1, 0, 0" RelativeTo="Final"/>
+            <PositionKeyframe Time="1.25" RelativeTo="Final"/>
+            <PositionKeyframe Time="2.50" RelativeTo="Final"/>
+            
+            <AlphaKeyframe Time="1.00" Value="1.0" RelativeTo="Absolute"/>
+            <AlphaKeyframe Time="1.20" Value="0.0" RelativeTo="Absolute"/>
+            <AlphaKeyframe Time="1.25" Value="0.0" RelativeTo="Absolute"/>
+            <AlphaKeyframe Time="1.45" Value="1.0" RelativeTo="Absolute"/>
+            <AlphaKeyframe Time="2.50" Value="1.0" RelativeTo="Absolute"/>
+        </Keyframes>
+    </Animation>
+
+</Mcml>

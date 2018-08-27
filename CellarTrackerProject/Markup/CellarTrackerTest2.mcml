@@ -1,0 +1,80 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:cor="assembly://MSCorLib/System">
+  
+  <Aggregate Source="Boilerplate.mcml"/>
+  
+  <UI Name="CellarTrackerTest2" BaseUI="Boilerplate">
+
+    <Properties>
+      <Color Name="MyColor" Color="White"/>
+    </Properties>
+
+    <Locals>
+      <cor:String Name="MyString"
+                  String="Hello"/>
+    </Locals>
+
+    <Rules>
+      <Default Target="[MyText.Content]"
+               Value="[MyString]"/>
+    </Rules>
+
+    <Content>
+      
+      <Text Name="MyText"
+            Color="[MyColor]"
+            Font="Calibri, 24"/>
+    </Content>
+
+  </UI>
+  
+  <UI Name="WineDetail" BaseUI="Boilerplate">
+    <Properties>
+      <cor:String Name="WineID" Value="$Required" />
+      <da:XmlRemoteResource Name="Resource"/>
+    </Properties>
+    <Rules>
+
+    </Rules>
+    <Locals>
+      <cor:String Name="TestUriOne" String="http://www.cellartracker.com/api_read.asp"/>
+      <cor:String Name="user" String="user"/>
+      <cor:String Name="userVal" String="gt1485a"/>
+      <cor:String Name="password" String="password"/>
+      <cor:String Name="passwordVal" String="Darwin1"/>
+      <cor:String Name="API" String="API"/>
+      <cor:String Name="APIVal" String="wine"/>
+      <cor:String Name="WineID" String="iWine"/>
+      <cor:String Name="WineIDVal" String="[WineID]"/>
+      <cor:String Name="Format" String="Format"/>
+      <cor:String Name="FormatVal" String="XML"/>
+
+      <ArrayListDataSet Name="WineDetails">
+        <Source>
+          <cor:String Name="Name" Value ="Default"/>
+          <cor:String Name="Locale" Value ="Default"/>
+          <cor:String Name="Region" Value ="Default"/>
+          <cor:String Name="SubRegion" Value ="Default"/>
+          <cor:String Name="Vintage" Value ="Default"/>
+          <cor:String Name="Country" Value ="Default"/>
+          <cor:String Name="MasterVarietal" Value ="Default"/>
+          <cor:String Name="Varietal" Value ="Default"/>
+          <cor:String Name="Country" Value ="Default"/>
+          <cor:String Name="Price" Value ="Default"/>
+        </Source>
+      </ArrayListDataSet>
+    </Locals>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <GridLayout Columns="1" Rows="2"/>
+        </Layout>
+        <Children>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+</Mcml>

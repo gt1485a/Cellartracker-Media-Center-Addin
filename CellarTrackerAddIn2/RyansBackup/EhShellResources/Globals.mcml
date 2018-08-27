@@ -1,0 +1,10 @@
+<Mcml xmlns ="http://schemas.microsoft.com/2006/mcml" xmlns:cor ="assembly://MsCorLib/System">
+  <Aggregate Source="res://Animations.mcml"/>
+  <Aggregate Source="Colors.mcml"/>
+  <Aggregate Source="Fonts.mcml"/>
+  <Aggregate Source="Images.mcml"/>
+  <Aggregate Source="MetaImages.mcml"/>
+  <Aggregate Source="Constants.mcml"/>
+  <cor:String Name="EmptyString" String=""/>
+  <BooleanTransformer Name="IsNullOrEmpty"/>
+</Mcml>

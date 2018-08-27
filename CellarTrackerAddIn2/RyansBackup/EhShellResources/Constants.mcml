@@ -1,0 +1,13 @@
+<Mcml xmlns ="http://schemas.microsoft.com/2008/mcml" 
+      xmlns:cor ="assembly://MsCorLib/System">
+  <Inset Name="StandardButtonTextMargins" TopLeft="16, 0" BottomRight="8, 0"/>
+  <cor:Single Name="BrowseGalleryTitleFadeSize" Single="100"/>
+  <cor:Single Name="BrowseGalleryTitleFarOffset" Single="-30"/>
+  <cor:Single Name="SettingsGalleryTitleFarOffset" Single="100"/>
+  <cor:Single Name="TitleFadeSize" Single="100"/>
+  <cor:Single Name="TitleFarOffset" Single="-30"/>
+  <cor:Single Name="NowPlayingTitleFadeSize" Single="40"/>
+  <cor:Single Name="NowPlayingTitleFarOffset" Single="40"/>
+  <cor:Single Name="StartMenuQuickLinkNoFocusAlpha" Single="0.5"/>
+  <cor:Int32 Name="BufferintIndicatorTimeout" Int32="1500"/>
+</Mcml>

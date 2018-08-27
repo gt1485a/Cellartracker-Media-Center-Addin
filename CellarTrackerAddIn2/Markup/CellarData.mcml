@@ -1,0 +1,47 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:me="Me">
+  
+  <UI Name="CellarData">
+
+    <Properties>
+      <Command Name="GetDataCommand" Description="Get Data"/>
+      
+      <da:RemoteResourceUri Name="MyUri"/>
+      <da:XmlRemoteResource Name="MyResource">
+        <Mappings>
+          <da:XmlRemoteValueList Name="Wines" RepeatedType="PropertySet" Source="/cellartracker/list/row" SortBy="Entries.#Wine" >
+            <Mappings>
+              <da:XmlRemoteValue Name="WineName" Property="Entries.#Wine" Source="/Wine"/>
+              <da:XmlRemoteValue Name="WineVintage" Property="Entries.#Vintage" Source="/Vintage"/>
+              <da:XmlRemoteValue Name="WineType" Property="Entries.#Type" Source="/Type"/>
+              <da:XmlRemoteValue Name="WineID" Property="Entries.#iWine" Source="/iWine"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+        </Mappings>
+      </da:XmlRemoteResource>
+    </Properties>
+    
+    <Locals>
+      
+      <coll:IDictionary Name="QueryPairs" IDictionary="[MyUri.QueryPairs]"/>
+
+      <cor:String Name="TestUriOne" String="http://www.cellartracker.com/api_read.asp"/>
+      <cor:String Name="user" String="user"/>
+      <cor:String Name="password" String="password"/>
+      <cor:String Name="API" String="API"/>
+      <cor:String Name="APIVal" String="list"/>
+      <cor:String Name="Page" String="Page"/>
+      <cor:String Name="PageVal" String="1"/>
+      <cor:String Name="Records" String="Records"/>
+      <cor:String Name="RecordsVal" String="20"/>
+      <cor:String Name="Format" String="Format"/>
+      <cor:String Name="FormatVal" String="XML"/>
+      
+    </Locals>
+
+  </UI>
+
+</Mcml>

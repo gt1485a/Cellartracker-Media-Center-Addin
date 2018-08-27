@@ -1,0 +1,45 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:a="assembly://CellarTrackerAddIn.XMLData"
+      xmlns:me="Me">
+
+  <UI Name="Default">
+
+    <Content>
+      <me:Wine Name="MyWine"/>
+    </Content>
+
+  </UI>
+
+  <UI Name="Wine" >
+    <Properties>
+      <cor:Int32 Name="RowNum"/>
+    </Properties>
+    <Locals>
+      <a:XMLData name="MyData"></a:XMLData>
+    </Locals>
+    <Content>
+      <Panel Layout ="HorizontalFlow">
+        <Children>
+          <Text Name="Vintage" Color="White" Content="Vintage"/>
+          <Text Name="Type" Color="White" Content="Type" />
+          <Text Name="WineName" Color="White" Content="WineName" />
+        </Children>
+      </Panel>
+    </Content>
+
+    <Rules>
+      <Binding Source="[MyData.GetData]" Target="[Vintage.Content]"/>
+      <!--  <Condition ConditionOp="Equals" SourceValue="[MyCellar.Mappings.#RowNum].String" Value="asdas" Source="[MyCellar.Mappings.#RowNum!PropertySet.Entries.#Vintage!da:XmlRemoteValue.String]" Target="[Vintage.Content]"/>-->
+    </Rules>
+    <!--
+    <Binding Source="[Row[#0].Vintage!da:PropertySet.String]" Target="[Vintage.Content]"/>
+      <Binding Source="[MyCellar.#Inventory.#Row.Type]" Target="[Type.BackgroundColor]" />
+      <Binding Source="[MyCellar.#Inventory.#Row.Wine]" Target="[WineName.Content]" />
+     
+    </Rules>
+     -->
+
+  </UI>
+
+</Mcml>

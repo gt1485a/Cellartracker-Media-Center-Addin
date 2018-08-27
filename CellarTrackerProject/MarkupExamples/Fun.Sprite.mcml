@@ -1,0 +1,261 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:text="assembly://MsCorLib/System.Text" 
+      xmlns:me="Me">
+
+  <UI Name="Sprite">
+
+    <Properties>
+
+      <!-- A List of Images that will make up the sprite sequence. -->
+      <coll:IList Name="Content" IList="$Required"/>
+
+      <!-- The total length of the desired sequence. -->
+      <cor:Single Name="Duration" Single="1.0"/>
+
+      <!-- How long the sprite frames should overlap. -->
+      <cor:Single Name="Overlap" Single="0.005"/>
+
+      <!-- Loop value for the created sprite sequence. -->
+      <cor:Int32 Name="Loop" Int32="0"/>
+
+      <!-- Optional name for the created animation. -->
+      <cor:String Name="SequenceName" String=""/>
+
+    </Properties>
+
+    <Rules>
+      <Binding Source="[Content]" Target="[Repeater.Source]"/>
+
+    </Rules>
+
+    <Content>
+
+      <Repeater Name="Repeater">
+        <Content>
+
+          <me:SpriteImage Content="[RepeatedItem!Image]" Duration="[Duration]" 
+                          Overlap="[Overlap]" Loop="[Loop]" Index="[RepeatedItemIndex]" 
+                          Count="[Content.Count]" SequenceName="[SequenceName]"/>
+
+        </Content>
+      </Repeater>
+
+    </Content>
+
+  </UI>
+
+
+  <UI Name="SpriteImage">
+
+    <Properties>
+
+      <!-- The image for this frame. -->
+      <Image Name="Content" Image="$Required"/>
+
+      <!-- The index of this frame. -->
+      <Index Name="Index" Index="$Required"/>
+
+      <!-- The total frame count. -->
+      <cor:Int32 Name="Count"/>
+
+      <!-- The total length of the desired sequence. -->
+      <cor:Single Name="Duration" Single="1.0"/>
+
+      <!-- How long the sprite frames should  overlap. -->
+      <cor:Single Name="Overlap" Single="0.005"/>
+
+      <!-- The loop value for the created sprite sequence. -->
+      <cor:Int32 Name="Loop" Int32="0"/>
+
+      <!-- An optional name for the created animation. -->
+      <cor:String Name="SequenceName" String=""/>
+
+    </Properties>
+
+    <Locals>
+
+      <AlphaKeyframe Name="Key-1" Time="0.0" Value="0.0"/>
+      <!-- begin loop -->
+      <AlphaKeyframe Name="Key-2" Time="1.0" Value="0.0"/>
+      <!-- Fading In -->
+      <AlphaKeyframe Name="Key-3" Time="1.0" Value="1.0"/>
+      <!-- FrameStartPosition (begin visible) -->
+      <AlphaKeyframe Name="Key-4" Time="1.0" Value="1.0"/>
+      <!-- FrameEndPosition (end visible) -->
+      <AlphaKeyframe Name="Key-5" Time="1.0" Value="0.0"/>
+      <!-- Faded Out -->
+      <AlphaKeyframe Name="Key-6" Time="1.0" Value="0.0"/>
+      <!-- end loop -->
+
+      <Animation Name="Animation" Loop="[Loop]"/>
+
+      <MathTransformer Name="DivideByCount" DivideInt="[Count]" Type="Single"/>
+      <MathTransformer Name="MultiplyByDuration" Multiply="[Duration]"/>
+      <MathTransformer Name="Add" Type="Single"/>
+      <MathTransformer Name="SubtractOverlap" Subtract="[Overlap]"/>
+      <MathTransformer Name="AddOverlap" Add="[Overlap]"/>
+
+      <cor:Single Name="FrameLength"/>
+      <cor:Single Name="FrameStartPosition"/>
+      <cor:Single Name="FrameEndPosition"/>
+
+      <cor:Single Name="ScaledFrameStartPosition"/>
+      <cor:Single Name="ScaledFrameEndPosition"/>
+
+      <text:StringBuilder Name="AnimationName"/>
+
+    </Locals>
+
+    <Rules>
+      
+      <Rule>
+        <Actions>
+          <!-- Frame start = index divided by count -->
+          <Set Target="[FrameStartPosition]" Value="[Index.Value]" Transformer="[DivideByCount]"/>
+
+          <!-- Frame length = 1 divided by count -->
+          <Set Target="[FrameLength]" Transformer="[DivideByCount]">
+            <Value>
+              <cor:Single Single="1.0"/>
+            </Value>
+          </Set>
+
+          <!-- Frame end = frame start plus frame length -->
+          <Set Target="[Add.Add]" Value="[FrameLength]"/>
+          <Set Target="[FrameEndPosition]" Value="[FrameStartPosition]" Transformer="[Add]"/>
+
+          <!-- Scale to duration -->
+          <Set Target="[ScaledFrameStartPosition]" Value="[FrameStartPosition]" Transformer="[MultiplyByDuration]"/>
+          <Set Target="[ScaledFrameEndPosition]" Value="[FrameEndPosition]" Transformer="[MultiplyByDuration]"/>
+          <Set Target="[Key-6.Time]" Value="[Duration]"/>
+
+          <!-- Apply times-->
+          <Set Target="[Key-2.Time]" Value="[ScaledFrameStartPosition]" Transformer="[SubtractOverlap]" ExclusiveApply="false"/>
+          <Set Target="[Key-3.Time]" Value="[ScaledFrameStartPosition]"/>
+          <Set Target="[Key-4.Time]" Value="[ScaledFrameEndPosition]"/>
+          <Set Target="[Key-5.Time]" Value="[ScaledFrameEndPosition]"  Transformer="[AddOverlap]" ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+
+      <!-- If this is the last frame, and the animation is looping, keyframe #5 should be -->
+      <!-- based off of the beginning. Keyframe #1 should have value of 1.0               -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Index.Value]" Value="[Count]">
+            <SourceTransformer>
+              <MathTransformer AddInt="1"/>
+            </SourceTransformer>
+          </Equality>
+          <Equality Source="[Loop]" ConditionOp="NotEquals" Value="0"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Key-5.Time]" Transformer="[AddOverlap]">
+            <Value>
+              <cor:Single Single="0.0"/>
+            </Value>
+          </Set>
+          <Set Target="[Key-1.Value]" Value="1.0"/>
+        </Actions>
+      </Rule>
+
+      <!-- If this is the first frame, keyframe #2 should be based off the end.  -->
+      <!-- Keyframe #6 should have value of the 1.0.                             -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Index.Value]" Value="0"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Key-2.Time]" Transformer="[SubtractOverlap]">
+            <Value>
+              <cor:Single Single="[Duration]"/>
+            </Value>
+          </Set>
+          <Set Target="[Key-6.Value]" Value="1.0"/>
+        </Actions>
+      </Rule>
+
+      <!-- Add the keyframes -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Count]" ConditionOp="GreaterThan" Value="1"/>
+        </Conditions>
+        <Actions>
+
+          <!-- Trace values -->
+          <DebugTrace Message="{0} {1} of {2} - [{3:0.00}, {4}], [{5:0.00}, {6}], [{7:0.00}, {8}], [{9:0.00}, {10}], [{11:0.00}, {12}], [{13:0.00}, {14}]">
+            <Params>
+              <ObjectPath ObjectPath="[SequenceName]"/>
+              <ObjectPath ObjectPath="[Index.Value]"/>
+              <ObjectPath ObjectPath="[Count]"/>
+              <ObjectPath ObjectPath="[Key-1.Time]"/>
+              <ObjectPath ObjectPath="[Key-1.Value]"/>
+              <ObjectPath ObjectPath="[Key-2.Time]"/>
+              <ObjectPath ObjectPath="[Key-2.Value]"/>
+              <ObjectPath ObjectPath="[Key-3.Time]"/>
+              <ObjectPath ObjectPath="[Key-3.Value]"/>
+              <ObjectPath ObjectPath="[Key-4.Time]"/>
+              <ObjectPath ObjectPath="[Key-4.Value]"/>
+              <ObjectPath ObjectPath="[Key-5.Time]"/>
+              <ObjectPath ObjectPath="[Key-5.Value]"/>
+              <ObjectPath ObjectPath="[Key-6.Time]"/>
+              <ObjectPath ObjectPath="[Key-6.Value]"/>
+            </Params>
+          </DebugTrace>
+
+          <Invoke Target="[AnimationName.Append]" value="[SequenceName]" ExclusiveApply="false" InvokePolicy="Synchronous"/>
+          <Invoke Target="[AnimationName.Append]" value="[Index.Value.ToString]" ExclusiveApply="false" InvokePolicy="Synchronous"/>
+          <Invoke Target="[AnimationName.Append]" value="of" ExclusiveApply="false" InvokePolicy="Synchronous"/>
+          <Invoke Target="[AnimationName.Append]" value="[Count.ToString]" ExclusiveApply="false" InvokePolicy="Synchronous"/>
+          <!--<Set Target="[Animation.DebugID]" Value="[AnimationName.ToString]"/>-->
+
+          <!-- Note: Keyframes #1 and #6 are conditionally added -->
+          <Invoke Target="[Animation.Keyframes.Add]" value="[Key-2]" ExclusiveApply="false"/>
+          <Invoke Target="[Animation.Keyframes.Add]" value="[Key-3]" ExclusiveApply="false"/>
+          <Invoke Target="[Animation.Keyframes.Add]" value="[Key-4]" ExclusiveApply="false"/>
+          <Invoke Target="[Animation.Keyframes.Add]" value="[Key-5]" ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+
+      <!-- Only include keyframe #1 if this is not the first frame-->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Index.Value]" ConditionOp="NotEquals" Value="0"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Animation.Keyframes.Add]" value="[Key-1]" ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+
+      <!-- Only include keyframe #6 if this is not the last frame-->
+      <Rule>
+        <Conditions>
+          <Equality Source="[Index.Value]" ConditionOp="NotEquals" Value="[Count]">
+            <SourceTransformer>
+              <MathTransformer AddInt="1"/>
+            </SourceTransformer>
+          </Equality>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Animation.Keyframes.Add]" value="[Key-6]" ExclusiveApply="false"/>
+        </Actions>
+      </Rule>
+
+      <!-- Done processing frame - attach the animation -->
+      <Rule>
+        <Actions>
+          <Invoke Target="[Graphic.AttachAnimation]" animation="[Animation]"/>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+
+      <Graphic Name="Graphic" Content="[Content]"/>
+    </Content>
+
+  </UI>
+
+</Mcml>

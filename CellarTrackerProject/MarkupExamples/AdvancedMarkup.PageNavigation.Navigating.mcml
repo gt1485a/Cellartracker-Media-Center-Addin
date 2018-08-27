@@ -1,0 +1,183 @@
+<Mcml 
+  xmlns="http://schemas.microsoft.com/2006/mcml"
+  xmlns:b="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Scenarios.SimpleButton.mcml" 
+  xmlns:e="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Scenarios.SimpleEditbox.mcml" 
+  xmlns:cor="assembly://MSCorLib/System"
+  xmlns:me="Me">
+
+  <!-- Navigation is used for transitioning to other pages. Pages are placed -->
+  <!-- in the navigation stack so that pressing "back" will return to the    -->
+  <!-- previous page.                                                        -->
+
+  <!-- Even though the term "page" is used, there is no formal definition of -->
+  <!-- a page. A "page" here means any UI within any MCML resource. The UIs  -->
+  <!-- can be as simple or complex as you want them to be.                   -->
+
+  <!-- Navigation can occur via two ways: the Navigate action and            -->
+  <!-- NavigateCommand. Other than where in markup these tags can be placed, -->
+  <!-- they are equivalent as far as what you navigate to and how to pass    -->
+  <!-- property values to the UI that comes back.                            -->
+
+  <!-- The Navigate action is a standard action that can be placed in any    -->
+  <!-- Rule's action block. You can react to conditions occuring within your -->
+  <!-- UI and navigate to a page.                                            -->
+
+  <!-- The NavigateCommand is a type of command that is typically passed to  -->
+  <!-- Buttons. When the Button is clicked, the navigate will occur.         -->
+  <!-- Like the Navigate action and all other tags used in Rules,            -->
+  <!-- NavigateCommands will reevaluate any object-paths that are in use     -->
+  <!-- whenever the command is invoked. This way, storage maintained by the  -->
+  <!-- UI can change and be transferred to the new UI that NavigateCommand   -->
+  <!-- is navigating to.                                                     -->
+
+  <!-- In this sample, an editbox is presented. Its text entry value (in     -->
+  <!-- this case, the user's name) will be passed as a property value to the -->
+  <!-- new UI being loaded. Of course, the UI being loaded must support that -->
+  <!-- property in its Properties block. If it doesn't, no error is          -->
+  <!-- generated, the value is simply ignored.                               -->
+
+  <!-- When a UI is navigated away from, the UI and all the visuals          -->
+  <!-- associated with it are destroyed. However, the URI of the UI and all  -->
+  <!-- the property values passed to the UI are saved. When the UI is        -->
+  <!-- reloaded (when the user presses "back"), the UI will be recreated and -->
+  <!-- the persisted property state of the UI will be used during the        -->
+  <!-- initialization.                                                       -->
+
+  <!-- NOTE: It's important to place any data that should survive between    -->
+  <!-- page navigations in UI properties. All other state (such has locals)  -->
+  <!-- will be thrown away when a page is put on the backstack.              -->
+
+  <UI Name="Navigation">
+
+    <Locals>
+      <EditableText Name="YourName"/>
+    </Locals>
+
+    <Rules>
+      <!-- When the editable text is "submitted", it's ready to be passed on. -->
+      <Changed Source="[YourName.Submitted]">
+        <Actions>
+
+          <!-- Navigation: When you do a navigation, you are navigating to -->
+          <!-- a UI. Since an MCML file can contain multiple UIs, you can  -->
+          <!-- navigate to a specific UI within that file (as shown here   -->
+          <!-- using the '#' syntax which identifes a UI by name). If no   -->
+          <!-- specific UI is called out, the first in the file is used.   -->
+
+          <!-- The Navgate action is used here to navigate to an UI in     -->
+          <!-- this file. The target UI has a property called DisplayName. -->
+          <!-- Take whatever is currently in the edit box and pass it      -->
+          <!-- through. The DisplayName will be saved on the backstack.    -->
+          <Navigate Source="@res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!AdvancedMarkup.PageNavigation.Navigating.mcml#Greeting"
+                    DisplayName="[YourName.Value]"/>
+
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical" ItemAlignment="Center"
+                      Spacing="10,0"/>
+        </Layout>
+        <Children>
+
+          <Text Content="Hello!" Color="Gainsboro" Font="Tahoma,35"/>
+
+          <Text Content="Please enter your name for a custom greeting:" 
+                Color="CornflowerBlue" Font="Tahoma,14"/>
+
+          <!-- This is where the user enters their name. -->
+          <e:SimpleEditbox EditableText="[YourName]" 
+                           BackgroundColor="Silver" 
+                           BackgroundFocusedColor="White" 
+                           LabelColor="CornflowerBlue"
+                           LabelFocusedColor="CornflowerBlue"/>
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+  <!-- This is the target "page" (UI) being navigating to. It accepts a -->
+  <!-- "DisplayName" and it will display it in a nice graphical way.    -->
+
+  <!-- This UI also includes a button to navigate to the the first UI   -->
+  <!-- this file. It demonstrates the use of NavigateCommand.           -->
+
+  <UI Name="Greeting">
+
+    <Properties>
+      <cor:String Name="DisplayName" String="Default"/>
+    </Properties>
+
+    <Rules>
+      <!-- Place the incoming display name in the Text's content. -->
+      <!-- Modify the string to include a "Hello".                -->
+      <Binding Source="[DisplayName]" Target="[Label.Content]">
+        <Transformer>
+          <FormatTransformer Format="Hello {0}!"/>
+        </Transformer>
+      </Binding>
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical" ItemAlignment="Center" Spacing="100,0"/>
+        </Layout>
+
+        <Children>
+
+          <!-- The greeting. -->
+          <Text Name="Label" Content="Hello" Color="White" Font="Verdana,60" WordWrap="true">
+            <Animations>
+              <Animation Type="Show" CenterPointPercent=".5,.5,1">
+                <Keyframes>
+                  <ScaleKeyframe Time="0" Value="0,0,0"/>
+                  <ScaleKeyframe Time="1" Value="1,1,1"/>
+                </Keyframes>
+              </Animation>
+              <Animation Type="Idle" CenterPointPercent=".5,.5,1" Loop="-1">
+                <Keyframes>
+                  <ScaleKeyframe Time="0" Value="1,1,1"/>
+                  <ScaleKeyframe Time="1" Value="1.05,1.05,1.05"/>
+                  <ScaleKeyframe Time="2" Value="1,1,1"/>
+                  <ScaleKeyframe Time="3" Value=".95,.95,.95"/>
+                  <ScaleKeyframe Time="4" Value="1,1,1"/>
+
+                  <ColorKeyframe Time="0"   Value="255,255,255"/>
+                  <ColorKeyframe Time="0.5" Value="0,255,255"/>
+                  <ColorKeyframe Time="1.5" Value="0,255,0"/>
+                  <ColorKeyframe Time="2.0" Value="255,255,0"/>
+                  <ColorKeyframe Time="2.5" Value="0,0,255"/>
+                  <ColorKeyframe Time="3.0" Value="255,0,255"/>
+                  <ColorKeyframe Time="3.5" Value="0,255,255"/>
+                  <ColorKeyframe Time="4.0" Value="255,255,255"/>
+                </Keyframes>
+              </Animation>
+            </Animations>
+          </Text>
+
+          <!-- The NavigateCommand works exactly the same as the Navigate  -->
+          <!-- action, but, it can be used wherever commands are accepted. -->
+          <!-- Typically, that means with buttons. It navigates to the     -->
+          <!-- primary UI of this file.                                    -->
+          <b:SimpleButton>
+            <Command>
+              <NavigateCommand Source="@res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!AdvancedMarkup.PageNavigation.Navigating.mcml"
+                               Description="Click to navigate again."/>
+            </Command>
+          </b:SimpleButton>
+
+        </Children>
+
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

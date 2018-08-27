@@ -1,0 +1,312 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:CT="assembly://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=275706189cd468f2"
+      xmlns:me="Me">
+
+  <Aggregate Source="resx://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=275706189cd468f2/CellarTrackerAddIn2.Resources/Controls"/>
+
+
+
+
+  <UI Name="CellarContents">
+    <Properties>
+
+      <CT:CellarTrackerAddIn2.Properties.Settings Name="Settings"/>
+
+      <da:RemoteResourceUri Name="MyUri"/>
+
+      <EditableText Name="Vintage" Value="" Description="Vintage"/>
+      <EditableText Name="Varietal" Value="" Description="Varietal"/>
+      <EditableText Name="Country" Value="" Description="Country"/>
+      <EditableText Name="Region" Value="" Description="Region"/>
+      <EditableText Name="WineType" Value="" Description="Wine Type"/>
+      
+    </Properties>
+    <Locals>
+      
+      <da:XmlRemoteResource Name="MyResource">
+        <Mappings>
+          <da:XmlRemoteValueList Name="Wines" RepeatedType="PropertySet" Source="/cellartracker/availability/row">
+            <Mappings>
+              <da:XmlRemoteValue Name="WineName" Property="Entries.#Wine" Source="/Wine"/>
+              <da:XmlRemoteValue Name="WineVintage" Property="Entries.#Vintage" Source="/Vintage"/>
+              <da:XmlRemoteValue Name="WineType" Property="Entries.#Type" Source="/Type"/>
+              <da:XmlRemoteValue Name="WineID" Property="Entries.#iWine" Source="/iWine"/>
+              <da:XmlRemoteValue Name="WinePrice" Property="Entries.#Price" Source="/Price"/>
+              <da:XmlRemoteValue Name="WineNoteCount" Property="Entries.#CNotes" Source="/CNotes"/>
+              <da:XmlRemoteValue Name="WineComScore" Property="Entries.#CScore" Source="/CScore"/>
+              <da:XmlRemoteValue Name="WineAvail" Property="Entries.#Avail" Source="/Available"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+        </Mappings>
+      </da:XmlRemoteResource>
+      
+      <coll:IDictionary Name="QueryPairs" IDictionary="[MyUri.QueryPairs]"/>
+
+      <cor:String Name="CTUri" String="http://www.cellartracker.com/api_read.asp"/>
+      <cor:String Name="user" String="user"/>
+      <cor:String Name="password" String="password"/>
+      <cor:String Name="API" String="API"/>
+      <cor:String Name="APIVal" String="list"/>
+      <cor:String Name="Page" String="Page"/>
+      <cor:String Name="PageVal" String="1"/>
+      <cor:String Name="Records" String="Records"/>
+      <cor:String Name="RecordsVal" String="20"/>
+      <cor:String Name="Format" String="Format"/>
+      <cor:String Name="FormatVal" String="XML"/>
+      <cor:String Name="Table" String="Table"/>
+      <cor:String Name="TableVal" String="Availability"/>
+
+
+
+      <ArrayListDataSet Name ="WineFilterData">
+        <Source>
+          <EditableText EditableText="[Vintage]"/>
+          <EditableText EditableText="[Varietal]"/>
+          <EditableText EditableText="[Country]"/>
+          <EditableText EditableText="[Region]"/>
+          <EditableText EditableText="[WineType]"/>
+        </Source>
+      </ArrayListDataSet>
+      
+      <cor:String Name="sVarietal" String="MasterVarietal"/>
+      <cor:String Name="sSearch" String="szSearch"/>
+      <cor:String Name="sRegion" String="Region"/>
+      <cor:String Name="sVintage" String="Vintage"/>
+      <cor:String Name="sCountry" String="Country"/>
+      <cor:String Name="sType" String="Type"/>
+
+      <Command Name="GetWineData"/>
+      <ScrollingData Name="WineScrollingData"/>
+      <ScrollingData Name="WineFilterScroller"/>
+      <ScrollingHandler Name="ScrollingHandler" HandlerStage="Bubbled"/>
+    </Locals>
+
+    <Rules>
+      <Default Target="[ScrollingHandler.ScrollingData]" Value="[WineFilterScroller]"/>
+      <Default Target="[WineFilterScroller.Repeater]" Value="[CellarContentRepeater]"/>
+      <Changed Source="[Vintage.Value]">
+        <Actions>
+
+          <Invoke Target="[QueryPairs.Remove]" key ="[sVintage]" InvokePolicy="Synchronous" />
+          <Invoke Target="[QueryPairs.Add]" key="[sVintage]" value ="[Vintage.Value]" InvokePolicy="Synchronous"/>
+
+          <Set Target="[MyUri.QueryPairs]" Value="[QueryPairs]" InvokePolicy="Synchronous"/>
+          <Set Target="[MyResource.RequestUri]" Value="[MyUri]" InvokePolicy="Synchronous"/>
+
+          <Invoke Target="[MyResource.GetDataFromResource]" InvokePolicy="Synchronous"/>
+
+          <DebugTrace Message="Vintage Changed"/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[Varietal.Value]">
+        <Actions>
+
+          <Invoke Target="[QueryPairs.Remove]" key ="[sVarietal]" InvokePolicy="Synchronous" />
+          <Invoke Target="[QueryPairs.Add]" key="[sVarietal]" value ="[Varietal.Value]" InvokePolicy="Synchronous"/>
+
+          <Set Target="[MyUri.QueryPairs]" Value="[QueryPairs]" InvokePolicy="Synchronous"/>
+          <!--Unneeded?-->
+          <Set Target="[MyResource.RequestUri]" Value="[MyUri]" InvokePolicy="Synchronous"/>
+          <!--Unneeded?-->
+
+          <Invoke Target="[MyResource.GetDataFromResource]" InvokePolicy="Synchronous"/>
+
+          <DebugTrace Message="Varietal Changed"/>
+        </Actions>
+      </Changed>
+
+
+      <Changed Source="[Country.Value]">
+        <Actions>
+          <Invoke Target="[QueryPairs.Remove]" key ="[sCountry]" InvokePolicy="Synchronous" />
+          <Invoke Target="[QueryPairs.Add]" key="[sCountry]" value ="[Country.Value]" InvokePolicy="Synchronous"/>
+
+          <Set Target="[MyUri.QueryPairs]" Value="[QueryPairs]" InvokePolicy="Synchronous"/>
+          <!--Unneeded?-->
+          <Set Target="[MyResource.RequestUri]" Value="[MyUri]" InvokePolicy="Synchronous"/>
+          <!--Unneeded?-->
+
+          <Invoke Target="[MyResource.GetDataFromResource]" InvokePolicy="Synchronous"/>
+
+        </Actions>
+      </Changed>
+
+      <Changed Source="[Region.Value]">
+        <Actions>
+          <Invoke Target="[QueryPairs.Remove]" key ="[sRegion]" InvokePolicy="Synchronous" />
+          <Invoke Target="[QueryPairs.Add]" key="[sRegion]" value ="[Region.Value]" InvokePolicy="Synchronous"/>
+
+          <Set Target="[MyUri.QueryPairs]" Value="[QueryPairs]" InvokePolicy="Synchronous"/>
+          <!--Unneeded?-->
+          <Set Target="[MyResource.RequestUri]" Value="[MyUri]" InvokePolicy="Synchronous"/>
+          <!--Unneeded?-->
+
+          <Invoke Target="[MyResource.GetDataFromResource]" InvokePolicy="Synchronous"/>
+
+        </Actions>
+      </Changed>
+
+      <Changed Source="[WineType.Value]">
+        <Actions>
+
+
+          <Invoke Target="[QueryPairs.Remove]" key ="[sType]" InvokePolicy="Synchronous" />
+          <Invoke Target="[QueryPairs.Add]" key="[sType]" value ="[WineType.Value]" InvokePolicy="Synchronous"/>
+
+          <Set Target="[MyUri.QueryPairs]" Value="[QueryPairs]" InvokePolicy="Synchronous"/>
+          <!--Unneeded?-->
+          <Set Target="[MyResource.RequestUri]" Value="[MyUri]" InvokePolicy="Synchronous"/>
+          <!--Unneeded?-->
+
+          <Invoke Target="[MyResource.GetDataFromResource]" InvokePolicy="Synchronous"/>
+
+        </Actions>
+      </Changed>
+      
+      <Rule>
+        <Actions>
+
+          <Set Target="[MyUri.FullString]" Value="[CTUri]" InvokePolicy="Synchronous"/>
+
+          <Invoke Target="[QueryPairs.Clear]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[MyUri.QueryPairs.Clear]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[QueryPairs.Add]" key="[user]" value="[Settings.Default.Username]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[password]" value="[Settings.Default.Password]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[API]" value="[APIVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Page]" value="[PageVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Records]" value="[RecordsVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Format]" value="[FormatVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Table]" value="[TableVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          
+           <Set Target="[MyUri.QueryPairs]" Value="[QueryPairs]"/>
+          <Set Target="[MyResource.RequestUri]" Value="[MyUri]" InvokePolicy="Synchronous"/>
+
+          <Invoke Target="[MyResource.GetDataFromResource]" InvokePolicy="Synchronous"/>
+          <!--<Set Target="[Wine1.Vintage]" Value="[MyResource.Mappings.#Vintage!da:XmlRemoteValue.String]"/>-->
+          <DebugTrace Message="GetDataFromResource URI {0}">
+            <Params>
+              <ObjectPath ObjectPath="[MyResource.RequestUri.FullString]"/>
+            </Params>
+          </DebugTrace>
+
+        </Actions>
+      </Rule>
+      <Changed Source="[WineRepeater.Source]">
+        
+        <Actions>
+          <Invoke Target="[WineRepeater.NavigateInto]"/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[MyResource.Status]">
+        <Actions>
+          <DebugTrace Message="Status: {0}" >
+            <Params >
+              <ObjectPath ObjectPath="[MyResource.Status]"/>
+            </Params>
+          </DebugTrace>
+        </Actions>
+      </Changed>
+      
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form" >
+        <Children>
+          <Panel Name="HeaderPanel" Layout="VerticalFlow" Padding="50,0,0,0">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0,0" Top="Parent,0,0" Bottom="Parent,.2,0"/>
+            </LayoutInput>
+            <Children>
+                  <Text Name="PageTitle" Content="Cellar Drinkability" Color="DimGray" Margins="0,50,0,0"/>
+
+                  <Scroller Orientation="Horizontal" ScrollingData="[WineFilterScroller]" >
+                    <Children>
+                      <Repeater Name="CellarContentRepeater" Source="[WineFilterData]" Layout="HorizontalFlow" >
+                        <Content>
+                          <me:FilterItem Name ="F" EditableText="[RepeatedItem!EditableText]" Padding="50,0,0,0"/>
+                        </Content>
+                      </Repeater>
+                    </Children>
+                  </Scroller>
+            </Children>
+          </Panel>
+
+          <Panel Layout="VerticalFlow" Name="BodyPanel">
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,1" Left ="Parent,0" Top="Parent,0.3" Bottom="Parent,0.9"/>
+            </LayoutInput>
+            <Children>
+
+              <Scroller Name="WineScroller"  Navigation="RememberFocus, Column" FadeSize="1" Orientation="Vertical" ScrollingData="[WineScrollingData]">
+                <Children>
+                  <Repeater Name="WineRepeater" Source="[MyResource.Mappings.#Wines!da:XmlRemoteValueList.List]" Layout="VerticalFlow">
+                    <Content>
+                      <me:WineAvail Name="Wine1" WineData="[RepeatedItem!PropertySet]"></me:WineAvail>
+                    </Content>
+                  </Repeater>
+                </Children>
+              </Scroller>
+
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+  <!--Filter Item-->
+  <UI Name="FilterItem">
+    <Properties>
+      <EditableText Name="EditableText" EditableText="$Required"/>
+
+    </Properties>
+    <Locals>
+      <Command Name="Command" Description="[EditableText.Description]"/>
+      <ClickHandler Name="Clicker"/>
+      <TypingHandler Name="TypingHandler" TypingPolicy="TripleTap"/>
+    </Locals>
+
+    <Rules>
+
+      <Changed Source="[Command.Invoked]">
+        <Actions>
+          <Set Target="[Host.Source]"
+               Value="me:SimpleEditBox"/>
+          <Invoke Target="[Host.NavigateInto]"/>
+        </Actions>
+      </Changed>
+
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[Host.Source]" Value="me:SimpleEditBox"/>
+          <Invoke Target="[Host.NavigateInto]"/>
+        </Actions>
+      </Condition>
+
+      <Default Target="[Host.Source]" Value="me:SimpleButton"/>
+
+    </Rules>
+
+    <Content>
+      <me:CommonProps Name="Host" EditableText="[EditableText]" Command="[Command]"
+                      ThrowOnLoadError="false" BackColor="LightSlateGray" Color="DimGray">
+
+      </me:CommonProps>
+    </Content>
+  </UI>
+  <!--Common Props-->
+  <UI Name="CommonProps">
+    <Properties>
+      <EditableText Name="EditableText" Value="$Required"/>
+      <Command Name="Command" Command="$Required"/>
+      <Color Name="BackColor"/>
+      <Color Name="Color"/>
+    </Properties>
+  </UI>
+
+</Mcml>

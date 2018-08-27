@@ -1,0 +1,73 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+	  xmlns:cor="assembly://MSCorLib/System"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+  xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter">
+
+	<UI Name="Default">
+
+		<Properties>
+			<Color Name="MyColor" Color="White"/>
+		</Properties>
+
+		<Locals>
+      <cor:String Name="KEXP" String="http://media-wm.cac.washington.edu/KEXP-Live"/>
+      <addin:AddInHost Name="AddInHost"/>
+      
+      <FormatTransformer Name="FormatVolume" Format="Current Volume = {0}"/>
+      <FormatTransformer Name="FormatMute"   Format="Current Mute = {0}"/>
+      <Command Name="MuteCommand" Description="Mute/Unmute"/>
+      
+		</Locals>
+
+		<Rules>
+      <Changed Source="[AddInHost.MediaCenterEnvironment.AudioMixer.Volume]" InitialEvaluate="true">
+        <Actions>
+          <Set Target="[Volume.Content]" Transformer="[FormatVolume]" Value="[AddInHost.MediaCenterEnvironment.AudioMixer.Volume.ToString]"/>
+        </Actions>
+      </Changed>
+
+      <!-- Display the current Mute state -->
+      <Changed Source="[AddInHost.MediaCenterEnvironment.AudioMixer.Mute]" InitialEvaluate="true">
+        <Actions>
+          <Set Target="[Mute.Content]" Transformer="[FormatMute]" Value="[AddInHost.MediaCenterEnvironment.AudioMixer.Mute.ToString]"/>
+        </Actions>
+      </Changed>
+
+      <!-- Change the Mute state when the Mute/Unmute button is clicked -->
+      <Changed Source="[MuteCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.AudioMixer.Mute]" Value="[AddInHost.MediaCenterEnvironment.AudioMixer.Mute]">
+            <Transformer>
+              <BooleanTransformer Inverse="true"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Changed>
+		</Rules>
+
+		<Content>
+      <me:RadioStation Name="MyStation" Content="[KEXP]" Color="[MyColor]" Font="Calibri, 24">
+        
+      </Text>
+		</Content>
+
+	</UI>
+  <UI Name="RadioStation">
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+    <Rules>
+      <Condition Source="[Clicker.Clicking]" SourceValue="true">
+        
+        <Actions>
+          <Invoke Description="Play KEXP"
+                             Target="[AddInHost.MediaCenterEnvironment.PlayMedia]"
+                             mediaType="Audio"
+                             media="[KEXP]"
+                             addToQueue="false"/> 
+        </Actions>
+      </Condition>
+      
+    </Rules>
+  </UI>
+</Mcml>

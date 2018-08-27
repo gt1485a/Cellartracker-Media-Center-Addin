@@ -1,0 +1,487 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor ="assembly://MSCorLib/System"
+      xmlns:CT="assembly://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=05f62c4163dc1a19"
+      xmlns:shll="assembly://Microsoft.MediaCenter.Shell/Microsoft.MediaCenter.Shell">
+  
+  <shll:ImageSet Name="Browse.Command.Play" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Browse.Cmd.Play.png"/>
+      <Image Name="Focus" Source="res://ehres!Browse.Cmd.Play.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Browse.Cmd.Play.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Browse.Command.Add" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Browse.Cmd.Add.png"/>
+      <Image Name="Focus" Source="res://ehres!Browse.Cmd.Add.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Browse.Cmd.Add.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Browse.Command.NowPlaying" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Browse.Cmd.NowPlaying.png"/>
+      <Image Name="Focus" Source="res://ehres!Browse.Cmd.NowPlaying.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Browse.Cmd.NowPlaying.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Browse.Command.Scheduled" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Browse.Cmd.Scheduled.png"/>
+      <Image Name="Focus" Source="res://ehres!Browse.Cmd.Scheduled.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Browse.Cmd.Scheduled.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Browse.Command.AddRecording" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Browse.Cmd.Add.png"/>
+      <Image Name="Focus" Source="res://ehres!Browse.Cmd.Add.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Browse.Cmd.Add.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Browse.Command.CopyLocally" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Browse.Cmd.CopyLocally.png"/>
+      <Image Name="Focus" Source="res://ehres!Browse.Cmd.CopyLocally.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Browse.Cmd.CopyLocally.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Browse.Command.Related" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Browse.Cmd.Related.png"/>
+      <Image Name="Focus" Source="res://ehres!Browse.Cmd.Related.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Browse.Cmd.Related.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Browse.Command.Remove" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Browse.Cmd.Remove.png"/>
+      <Image Name="Focus" Source="res://ehres!Browse.Cmd.Remove.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Browse.Cmd.Remove.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Browse.Command.ManageDiscs" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Browse.Cmd.Scheduled.png"/>
+      <Image Name="Focus" Source="res://ehres!Browse.Cmd.Scheduled.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Browse.Cmd.Scheduled.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Browse.Command.Search" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Browse.Cmd.Search.png"/>
+      <Image Name="Focus" Source="res://ehres!Browse.Cmd.Search.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Browse.Cmd.Search.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Browse.Command.SeriesInfo" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Browse.Cmd.Scheduled.png"/>
+      <Image Name="Focus" Source="res://ehres!Browse.Cmd.Scheduled.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Browse.Cmd.Scheduled.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Browse.Command.Settings" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Browse.Cmd.Settings.png"/>
+      <Image Name="Focus" Source="res://ehres!Browse.Cmd.Settings.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Browse.Cmd.Settings.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Details.Command.Play" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Details.Cmd.Play.png"/>
+      <Image Name="Focus" Source="res://ehres!Details.Cmd.Play.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Details.Cmd.Play.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Details.Command.Restart" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Details.Cmd.Restart.png"/>
+      <Image Name="Focus" Source="res://ehres!Details.Cmd.Restart.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Details.Cmd.Restart.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Details.Command.Add" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Details.Cmd.Add.png"/>
+      <Image Name="Focus" Source="res://ehres!Details.Cmd.Add.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Details.Cmd.Add.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Details.Command.Remove" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Details.Cmd.Remove.png"/>
+      <Image Name="Focus" Source="res://ehres!Details.Cmd.Remove.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Details.Cmd.Remove.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Details.Command.Eject" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Details.Cmd.Eject.png"/>
+      <Image Name="Focus" Source="res://ehres!Details.Cmd.Eject.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Details.Cmd.Eject.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Details.Command.Navigation" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Details.Cmd.Navigation.png"/>
+      <Image Name="Focus" Source="res://ehres!Details.Cmd.Navigation.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Details.Cmd.Navigation.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Details.Command.Record" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Details.Cmd.Record.png"/>
+      <Image Name="Focus" Source="res://ehres!Details.Cmd.Record.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Details.Cmd.Record.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Details.Command.DoNotRecord" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Details.Cmd.DoNotRecord.png"/>
+      <Image Name="Focus" Source="res://ehres!Details.Cmd.DoNotRecord.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Details.Cmd.DoNotRecord.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Details.Command.RecordSeries" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Details.Cmd.RecordSeries.png"/>
+      <Image Name="Focus" Source="res://ehres!Details.Cmd.RecordSeries.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Details.Cmd.RecordSeries.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Details.Command.CopyCD" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Details.Cmd.CopyCD.png"/>
+      <Image Name="Focus" Source="res://ehres!Details.Cmd.CopyCD.Focus.png"/>
+      <Image Name="Dormant" Source="res://ehres!Details.Cmd.CopyCD.Dormant.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Button.Label.Background" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Button.Label.Background.png" NineGrid="7, 7, 7, 7"/>
+      <Image Name="Focus" Source="res://ehres!Button.Label.Background.Focus.png" NineGrid="7, 7, 7, 7"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Overlays.Button.NoFocus" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Overlays.Button.NoFocus.png" NineGrid="5, 5, 5, 5"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Overlays.Background.Left.Light" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Overlays.Background.Left.Light.png" NineGrid="10, 10, 10, 10" Flippable="true"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Overlays.Background.Right.Dark" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Overlays.Background.Right.Dark.png" NineGrid="10, 10, 10, 10" Flippable="true"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Overlays.Background.Top.Dark" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Overlays.Background.Top.Dark.png" NineGrid="10, 10, 10, 10" Flippable="true"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Overlays.Background.Top.Light" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Overlays.Background.Top.Light.png" NineGrid="10, 10, 10, 10" Flippable="true"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Overlays.Background.Bottom.Dark" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Overlays.Background.Bottom.Dark.png" NineGrid="10, 10, 10, 10" Flippable="true"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="Overlays.Background.Bottom.Light" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Overlays.Background.Bottom.Light.png" NineGrid="10, 10, 10, 10" Flippable="true"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="PowerMenu.Icon.Close" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Notifications.PowerMenu.Icon.Close.png"/>
+      <cor:String Name="BackgroundColor" cor:String="Red"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="PowerMenu.Icon.Logoff" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Notifications.PowerMenu.Icon.Logoff.png"/>
+      <cor:String Name="BackgroundColor" cor:String="Yellow"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="PowerMenu.Icon.Shutdown" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Notifications.PowerMenu.Icon.Shutdown.png"/>
+      <cor:String Name="BackgroundColor" cor:String="Red"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="PowerMenu.Icon.Restart" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Notifications.PowerMenu.Icon.Restart.png"/>
+      <cor:String Name="BackgroundColor" cor:String="Green"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="PowerMenu.Icon.Standby" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!Notifications.PowerMenu.Icon.Standby.png"/>
+      <cor:String Name="BackgroundColor" cor:String="Yellow"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Guide" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Guide.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Guide.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Guide.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Guide.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Backward" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Backward.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Backward.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Backward.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Backward.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Forward" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Forward.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Forward.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Forward.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Forward.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.GoBack" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.GoBack.NoFocus.png" Flippable="true" />
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.GoBack.Focus.png" Flippable="true" />
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.GoBack.Pressed.png" Flippable="true" />
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.GoBack.Disabled.png" Flippable="true" />
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Help" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Help.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Help.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Help.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Help.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Menu" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Menu.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Menu.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Menu.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Menu.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Minus" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Minus.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Minus.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Minus.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Minus.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Mute" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Mute.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Mute.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Mute.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Mute.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.MuteOn" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.MuteOn.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.MuteOn.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.MuteOn.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.MuteOn.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Next" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Next.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Next.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Next.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Next.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Pause" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Pause.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Pause.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Pause.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Pause.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Play" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Play.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Play.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Play.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Play.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Plus" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Plus.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Plus.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Plus.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Plus.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Previous" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Previous.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Previous.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Previous.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Previous.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Record" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Record.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Record.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Record.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Record.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Stop" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Stop.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Stop.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Stop.Pressed.png"/>
+      <Image Name="Disabled" Source="res://ehres!TwoFoot.Control.Stop.Disabled.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Exit" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Exit.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Exit.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Exit.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Maximize" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.maximize.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.maximize.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.maximize.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Minimize" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Minimize.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Minimize.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Minimize.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Restore" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Restore.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Restore.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Restore.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Teletext" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Teletext.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Teletext.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Teletext.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Red" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Red.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Red.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Red.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Green" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Green.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Green.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Green.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Yellow" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Yellow.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Yellow.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Yellow.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Blue" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Blue.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Blue.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Blue.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Reveal" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Reveal.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Reveal.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Reveal.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Hold" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Hold.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Hold.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Hold.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Hold.Locked" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Hold.Locked.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Hold.Locked.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Hold.Locked.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Text" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Text.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.Text.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.Text.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.D" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.D.NoFocus.png"/>
+      <Image Name="Focus" Source="res://ehres!TwoFoot.Control.D.Focus.png"/>
+      <Image Name="Pressed" Source="res://ehres!TwoFoot.Control.D.Pressed.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.ToolBars.Divider" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.Control.Divider.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.FullScreen.BottomBar.Left" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.FullScreen.BottomBar.Left.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.FullScreen.BottomBar.Right" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.FullScreen.BottomBar.Right.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.FullScreen.TopBar.Left" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.FullScreen.TopBar.Left.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="TwoFoot.FullScreen.TopBar.Right" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!TwoFoot.FullScreen.TopBar.Right.png"/>
+    </Values>
+  </shll:ImageSet>
+  <shll:ImageSet Name="CheckBox.Checked" DefaultImageName="Default">
+    <Values>
+      <Image Name="Default" Source="res://ehres!NowPlaying.Check.Enabled.png" Flippable="true"/>
+    </Values>
+  </shll:ImageSet>
+</Mcml>

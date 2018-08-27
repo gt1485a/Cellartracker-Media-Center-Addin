@@ -1,0 +1,55 @@
+<Mcml 
+  xmlns="http://schemas.microsoft.com/2006/mcml"
+  xmlns:b="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Scenarios.SimpleButton.mcml">
+
+  <!-- PlaySound actions are used in "expanded" rule syntax for adding -->
+  <!-- sound effects.                                                  -->
+
+  <!-- This sample demonstrates how to use the PlaySound action to     -->
+  <!-- play a sound when a user clicks a button.                       -->
+
+  <UI Name="PlaySoundAction">
+
+    <Locals>
+      <Command Name="Charge" Description="Click me!"/>
+    </Locals>
+
+    <Rules>
+      
+      <!-- Watch for the click event. -->
+      <Changed Source="[Charge.Invoked]">
+        <Actions>
+
+          <!-- Play a sound. -->
+          <PlaySound Sound="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!ChaChing.wav"/>
+
+          <!-- Display a message. -->
+          <Set Target="[Label.Visible]" Value="true"/>
+
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical" ItemAlignment="Center"/>
+        </Layout>
+
+        <Children>
+
+          <b:SimpleButton Command="[Charge]"/>
+
+          <Text Name="Label" Color="Red" Visible="false" 
+                Content="Charged $2341.89 to your credit card. (Just kidding!)"/>
+
+        </Children>
+
+      </Panel>
+
+    </Content>
+  </UI>
+
+</Mcml>

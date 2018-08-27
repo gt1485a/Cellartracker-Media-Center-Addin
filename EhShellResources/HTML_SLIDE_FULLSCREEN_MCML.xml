@@ -1,0 +1,1 @@
+<Mcml xmlns ="http://schemas.microsoft.com/2006/mcml" xmlns:me ="Me"><UI Name="FullScreen"><Locals><ClickHandler Name="Clicker"/></Locals><Rules><Default Target="[Input.KeyInteractive]" Value="true"/></Rules><Content><Panel Layout="Form" MouseInteractive="false" TouchInteractive="true"/></Content></UI></Mcml>

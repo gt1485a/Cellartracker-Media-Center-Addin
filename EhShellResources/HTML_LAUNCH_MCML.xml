@@ -1,0 +1,778 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor ="assembly://MsCorLib/System" 
+      xmlns:shl ="assembly://Microsoft.MediaCenter.Shell/Microsoft.MediaCenter.Shell" 
+      xmlns:ucp ="assembly://ehshell/ServiceBus.UIFramework" 
+      xmlns:comm="res://Microsoft.MediaCenter.Shell!Globals.mcml" 
+      xmlns:ctl ="res://Microsoft.MediaCenter.Shell!Controls.mcml" 
+      xmlns:me ="Me">
+  
+  <UI Name="Launch" Flippable="false">
+    <Locals>
+      <Environment Name="Environment"/>
+      <BooleanChoice Name="IsPika" Value="false" />
+      <BooleanChoice Name="IsExtender" Value="false" />
+      <ucp:UCPUtility Name="UCPUtility" />
+      <Timer Name="HideTimer" Interval="5000" Enabled="false" AutoRepeat="false" />
+      <Timer Name="SoundTimer" Interval="150" Enabled="false" AutoRepeat="false" />
+      <Image Name="imgBackground" Image="res://ehres!Common.Animated.Background.png" Flippable="false"/>
+      <cor:Boolean Name="PlayedSound" Boolean="false" />
+      <cor:Boolean Name="PlayedAnimation" Boolean="false" />
+    </Locals>
+    <Rules>
+      <Default Target="[IsPika.Value]" Value="[Environment.Is2DAnimationExperience]" />
+      <Default Target="[IsExtender.Value]" Value="[Environment.IsExtender]" />
+      <Rule TraceName="Start synchronized animations, sound and timers when layout is complete">
+        <Conditions>
+          <Equality Source="[PlayedAnimation]" Value="false" />
+          <Modified Source="[Environment.InitialLayoutComplete]" InitialEvaluate="true" />
+          <Equality Source="[Environment.InitialLayoutComplete]" Value="true" />
+          <Equality Source="[UCPUtility.UCPService.NeedToPlayStartupAnimation]" Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[HideTimer.Enabled]" Value="true" InvokePolicy="Synchronous" />
+          <Set Target="[AnimatingPanel.Visible]" Value="true" InvokePolicy="Synchronous" />
+          <Set Target="[PlayedAnimation]" Value="true" />
+        </Actions>
+      </Rule>
+      <Rule TraceName="Set a timer to play the Pika launch sound">
+        <Conditions>
+          <Equality Source="[PlayedSound]" Value="false" />
+          <Equality Source="[IsPika.Value]" Value="true" />
+          <Modified Source="[Environment.InitialLayoutComplete]" InitialEvaluate="true" />
+          <Equality Source="[Environment.InitialLayoutComplete]" Value="true" />
+          <Equality Source="[UCPUtility.UCPService.NeedToPlayStartupSound]" Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[SoundTimer.Enabled]" Value="true" />
+          <Set Target="[PlayedSound]" Value="true" />
+        </Actions>
+      </Rule>
+      <Rule TraceName="Play the console intro sound">
+        <Conditions>
+          <Equality Source="[PlayedSound]" Value="false" />
+          <Equality Source="[IsPika.Value]" Value="false" />
+          <Modified Source="[Environment.InitialLayoutComplete]" InitialEvaluate="true" />
+          <Equality Source="[Environment.InitialLayoutComplete]" Value="true" />
+          <Equality Source="[UCPUtility.UCPService.NeedToPlayStartupSound]" Value="true" />
+        </Conditions>
+        <Actions>
+          <PlaySound Sound="res://ehres!Intro_a.wav" />
+          <Set Target="[PlayedSound]" Value="true" />
+        </Actions>
+      </Rule>
+      <Rule TraceName="Play the intro sound for Pika">
+        <Conditions>
+          <Modified Source="[SoundTimer.Tick]"/>
+        </Conditions>
+        <Actions>
+          <PlaySound Sound="res://ehres!Intro_a.wav" />
+        </Actions>
+      </Rule>
+      <Rule TraceName="Hide image background for high-contrast">
+        <Conditions>
+          <Equality Source="[Environment.ColorScheme]" ConditionOp="NotEquals" Value="Default" />
+        </Conditions>
+        <Actions >
+          <Set Target="[ImageBackground.Visible]" Value="false"/>
+        </Actions>
+      </Rule>
+      <Rule TraceName="Specialize Launch animation shards for Extender">
+        <Conditions>
+          <Modified Source="[IsExtender.Value]" InitialEvaluate="true" />
+          <Equality Source="[IsExtender.Value]" Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[LaunchShards.Visible]" Value="false" />
+        </Actions>
+      </Rule>
+      <Rule TraceName="Hide everything when the timer ticks">
+        <Conditions>
+          <Modified Source="[HideTimer.Tick]" />
+        </Conditions>
+        <Actions>
+          <Set Target="[Everything.Visible]" Value="false" />
+        </Actions>
+      </Rule>
+      <Default Target="[AnimatingPanel.Visible]" Value="false">
+        <Conditions>
+          <Equality Source="[PlayedAnimation]" Value="false" />
+        </Conditions>
+      </Default>
+    </Rules>
+    <Content>
+      <Panel Layout="Anchor" Name="Everything">
+        <Children>
+          <Panel Name="AnimatingPanel" Layout="Form">
+            <Children>
+              <me:MediaCenterLogo Name="MediaCenterLogo" IsExtender="[IsExtender]">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Parent, 0, 0" Top="Parent, 0, -60" ContributesToWidth="false" ContributesToHeight="false"/>
+                </LayoutInput>
+              </me:MediaCenterLogo>
+              <me:LaunchShards Name="LaunchShards" />
+              <Graphic Name="ImageBackground" Content="[imgBackground]" Layout="Form">
+                <Animations>
+                  <SelectByIntensityAnimation>
+                    <Intensive>
+                      <IntensiveAnimation Source="animation://me:Launch.ImageBackground" />
+                    </Intensive>
+                    <Standard>
+                      <Animation>
+                        <Keyframes>
+                          <PositionKeyframe Time="0.0" Value="0,0,0" RelativeTo="Final" />
+                          <PositionKeyframe Time="0.1" Value="0,0,0" RelativeTo="Final" />
+                        </Keyframes>
+                      </Animation>
+                    </Standard>
+                  </SelectByIntensityAnimation>
+                </Animations>
+              </Graphic>
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+  <UI Name="IntensiveBackground">
+    <Properties>
+      <Image Name="imgGrad1" Source="res://ehres!Common.Background.Grad1.png" Flippable="false"/>
+      <Image Name="imgGrad2" Source="res://ehres!Common.Background.Grad2.png" Flippable="false"/>
+      <Image Name="imgNewGrad" Source="res://ehres!Common.Background.NewGrad.png" Flippable="false"/>
+      <Image Name="imgLayer3" Source="res://ehres!Common.Background.Layer3A.png" Flippable="false"/>
+      <Image Name="imgLayer4" Source="res://ehres!Common.Background.Layer4.png" Flippable="false"/>
+      <Image Name="imgLayer5" Source="res://ehres!Common.Background.Layer5.png" Flippable="false"/>
+      <Image Name="imgLayer6" Source="res://ehres!Common.Background.Layer6.png" Flippable="false"/>
+    </Properties>
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Graphic Name="Grad1" Content="[imgGrad1]" Alpha="0.2">
+            <LayoutInput>
+              <AnchorLayoutInput Right="Parent, 1" Bottom="Parent, 1" Left="Parent, 0" Top="Parent, 0" />
+            </LayoutInput>
+          </Graphic>
+          <Graphic Name="Grad2" Content="[imgGrad2]" Alpha="0.09">
+            <LayoutInput>
+              <AnchorLayoutInput Right="Parent, 1" Bottom="Parent, 1" Left="Parent, 0" Top="Parent, 0"/>
+            </LayoutInput>
+          </Graphic>
+          <Graphic Name="NewGrad" Content="[imgNewGrad]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0" Top="Parent,0" Right="Parent,1" Bottom="Parent,1"/>
+            </LayoutInput>
+            <Animations>
+              <Animation Animation="animation://me:Launch.NewGrad" />
+            </Animations>
+          </Graphic>
+          <Graphic Name="Layer6" Content="[imgLayer6]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0" Top="Parent,0" Right="Parent,1" Bottom="Parent,1"/>
+            </LayoutInput>
+            <Animations>
+              <Animation Animation="animation://me:Launch.Layer6" />
+            </Animations>
+          </Graphic>
+          <Graphic Name="Layer5" Content="[imgLayer5]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0" Top="Parent,0" Right="Parent,1" Bottom="Parent,1"/>
+            </LayoutInput>
+            <Animations>
+              <Animation Animation="animation://me:Launch.Layer5" />
+            </Animations>
+          </Graphic>
+          <Graphic Name="Layer4" Content="[imgLayer4]">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Parent,0" Top="Parent,0" Right="Parent,1" Bottom="Parent,1"/>
+            </LayoutInput>
+            <Animations>
+              <Animation Animation="animation://me:Launch.Layer4" />
+            </Animations>
+          </Graphic>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+  <UI Name="MediaCenterLogo" Flippable="false">
+    <Properties>
+      <BooleanChoice Name="IsExtender" BooleanChoice="$Required" />
+      <Image Name="imgSkittleBottom" Source="res://ehres!Skittle.Bottom.Piece.png" Flippable="false" />
+      <Image Name="imgSmallSkittleBottom" Source="res://ehres!Skittle.Bottom.Piece.NonIntensive.png" Flippable="false" />
+      <Image Name="imgFlare" Source="res://ehres!Launch.Flare.png" Flippable="false" />
+    </Properties>
+    <Rules>
+      <Rule TraceName="Specialize Media Center Logo for Extender">
+        <Conditions>
+          <Modified Source="[IsExtender.Value]" InitialEvaluate="true"/>
+          <Equality Source="[IsExtender.Value]" Value="true" />
+        </Conditions>
+        <Actions>
+          <Set Target="[SkittleBase.Content]" Value="[imgSmallSkittleBottom]" InvokePolicy="Synchronous" />
+          <Set Target="[HiddenOnExtender.Visible]" Value="false" InvokePolicy="Synchronous" />
+        </Actions>
+      </Rule>
+    </Rules>
+    <Content>
+      <Panel Layout="Form" Name="Everything">
+        <Children>
+          <Panel Name="HiddenOnExtender" Layout="Form">
+            <Children>
+              <Graphic Content="res://ehres!Launch.Text.png" MaintainAspectRatio="true" CenterPointPercent="0.5, 0.5, 0.0">
+                <Animations>
+                  <Animation Animation="animation://me:Launch.Text" />
+                </Animations>
+              </Graphic>
+              <Graphic Content="res://ehres!Launch.Text.MotionBlur.png" CenterPointPercent="0.5, 0.5, 0.0">
+                <Animations>
+                  <Animation Animation="animation://me:Launch.Text.MotionBlur" />
+                </Animations>
+              </Graphic>
+              <Graphic Content="res://ehres!Skittle.flag.piece.png" MinimumSize="230, 0" MaintainAspectRatio="true" CenterPointPercent="0.5, 0.5, 0.0">
+                <Animations>
+                  <Animation Animation="animation://me:Launch.Flag" />
+                </Animations>
+              </Graphic>
+              <Graphic Content="res://ehres!Skittle.SubBottom.Glow.png" MinimumSize="329, 0" MaintainAspectRatio="true" CenterPointPercent="0.5, 0.5, 0.0">
+                <Animations>
+                  <Animation Animation="animation://me:Launch.Skittle.Base.MotionBlur" />
+                </Animations>
+              </Graphic>
+              <Graphic Content="res://ehres!Skittle.Top.Piece.png" MinimumSize="329, 0" MaintainAspectRatio="true" CenterPointPercent="0.5, 0.5, 0.0">
+                <Animations>
+                  <Animation Animation="animation://me:Launch.Skittle.Top" />
+                </Animations>
+              </Graphic>
+              <Graphic Content="res://ehres!Skittle.Middle.Gleam.Piece.png" MinimumSize="329, 0" MaintainAspectRatio="true" CenterPointPercent="0.5, 0.5, 0.0">
+                <Animations>
+                  <Animation Animation="animation://me:Launch.Skittle.Middle.Gleam" />
+                </Animations>
+              </Graphic>
+              <Graphic Content="res://ehres!Skittle.Middle.Piece.png" MinimumSize="329, 0" MaintainAspectRatio="true" CenterPointPercent="0.5, 0.5, 0.0">
+                <Animations>
+                  <Animation Animation="animation://me:Launch.Skittle.Middle" />
+                </Animations>
+              </Graphic>
+              <Graphic Content="[imgFlare]" Rotation="70deg;0,0,1">
+                <LayoutInput>
+                  <AnchorLayoutInput Left="Parent, 0, 550" Top="Parent, 0, 425" ContributesToWidth="false" ContributesToHeight="false"/>
+                </LayoutInput>
+                <Animations>
+                  <Animation Animation="animation://me:Launch.Flare" />
+                </Animations>
+              </Graphic>
+            </Children>
+          </Panel>
+          <Graphic Name="SkittleBase" Content="[imgSkittleBottom]" MinimumSize="329, 0" MaintainAspectRatio="true" CenterPointPercent="0.5, 0.5, 0.0">
+            <Animations>
+              <SelectByIntensityAnimation>
+                <Intensive>
+                  <IntensiveAnimation Source="animation://me:Launch.Skittle.Base" />
+                </Intensive>
+                <Standard>
+                  <Animation>
+                    <Keyframes>
+                      <PositionKeyframe Time="0.0" Value="0,0,0" RelativeTo="Final" />
+                      <PositionKeyframe Time="0.1" Value="0,0,0" RelativeTo="Final" />
+                    </Keyframes>
+                  </Animation>
+                </Standard>
+              </SelectByIntensityAnimation>
+            </Animations>
+          </Graphic>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+  <UI Name="LaunchShards" Flippable="false">
+    <Properties>
+      <Image Name="imgGoodShard" Source="res://ehres!Common.Background.GoodShard.png" Flippable="false"/>
+      <Image Name="imgLiteShard" Source="res://ehres!Common.Background.LiteShard.png" Flippable="false"/>
+      <Image Name="imgShardA1" Source="res://ehres!Common.Background.ShardA1.png" Flippable="false"/>
+      <Image Name="imgShardA2" Source="res://ehres!Common.Background.ShardA2.png" Flippable="false"/>
+      <Image Name="imgShardB1" Source="res://ehres!Common.Background.ShardB1.png" Flippable="false"/>
+      <Image Name="imgShardB2" Source="res://ehres!Common.Background.ShardB2.png" Flippable="false"/>
+      <Image Name="imgShardB3" Source="res://ehres!Common,Background.ShardB3.png" Flippable="false"/>
+    </Properties>
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Graphic Content="[imgGoodShard]">
+            <Animations>
+              <Animation Animation="animation://me:Launch.Shard1" />
+            </Animations>
+          </Graphic>
+          <Graphic Content="[imgLiteShard]">
+            <Animations>
+              <Animation Animation="animation://me:Launch.Shard2" />
+            </Animations>
+          </Graphic>
+          <Graphic Content="[imgShardA1]">
+            <Animations>
+              <Animation Animation="animation://me:Launch.ShardA1.1" />
+            </Animations>
+          </Graphic>
+          <Graphic Content="[imgShardA1]">
+            <Animations>
+              <Animation Animation="animation://me:Launch.ShardA1.2" />
+            </Animations>
+          </Graphic>
+          <Graphic Content="[imgShardA2]">
+            <Animations>
+              <Animation Animation="animation://me:Launch.ShardA2.1" />
+            </Animations>
+          </Graphic>
+          <Graphic Content="[imgShardA2]">
+            <Animations>
+              <Animation Animation="animation://me:Launch.ShardA2.2" />
+            </Animations>
+          </Graphic>
+          <Graphic Content="[imgShardB1]">
+            <Animations>
+              <Animation Animation="animation://me:Launch.ShardB1.1" />
+            </Animations>
+          </Graphic>
+          <Graphic Content="[imgShardB1]">
+            <Animations>
+              <Animation Animation="animation://me:Launch.ShardB1.2" />
+            </Animations>
+          </Graphic>
+          <Graphic Content="[imgShardB1]">
+            <Animations>
+              <Animation Animation="animation://me:Launch.ShardB1.3" />
+            </Animations>
+          </Graphic>
+          <Graphic Content="[imgShardB2]" >
+            <Animations>
+              <Animation Animation="animation://me:Launch.ShardB2.1" />
+            </Animations>
+          </Graphic>
+          <Graphic Content="[imgShardB2]">
+            <Animations>
+              <Animation Animation="animation://me:Launch.ShardB2.2" />
+            </Animations>
+          </Graphic>
+          <Graphic Content="[imgShardB3]">
+            <Animations>
+              <Animation Animation="animation://me:Launch.ShardB3" />
+            </Animations>
+          </Graphic>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+  <Animation Name="Launch.InvisibleElement">
+    <Keyframes>
+      <AlphaKeyframe Time="0.0" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.1" Value="0.0" RelativeTo="Absolute"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Text">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0" Value="3.0, 3.0, 1.0" Interpolation="EaseIn, 2.0, 0.80"/>
+      <ScaleKeyframe Time="1.0" Value="1.0,1.0, 1.0" />
+      <ScaleKeyframe Time="2.2" Value="0.85,0.85, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.7" Value="0.75, 0.75, 1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.0" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.133" Value="0.0" RelativeTo="Absolute" Interpolation="SCurve"/>
+      <AlphaKeyframe Time="0.833" Value="0.75" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="1.5" Value="1.0" RelativeTo="Absolute" Interpolation="SCurve"/>
+      <AlphaKeyframe Time="2.0" Value="1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="2.7" Value="0.00" RelativeTo="Absolute"/>
+      <PositionKeyframe Time="0.0" Value="50,600,0" Interpolation="EaseIn, 2.0, 0.80" />
+      <PositionKeyframe Time="1.0" Value="0,200,0" />
+      <PositionKeyframe Time="2.2" Value="0,170,0" />
+      <PositionKeyframe Time="2.7" Value="0,150,0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Text.MotionBlur">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0" Value="3.0, 3.0, 1.0" Interpolation="EaseIn, 2.0, 0.80"/>
+      <ScaleKeyframe Time="1.0" Value="1.0,1.0, 1.0" />
+      <ScaleKeyframe Time="2.2" Value="0.85,0.85, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.7" Value="0.75, 0.75, 1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.0" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.50" Value="0.50" RelativeTo="Absolute" Interpolation="SCurve"/>
+      <AlphaKeyframe Time="0.6" Value="0.40" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.7" Value="0.20" RelativeTo="Absolute" Interpolation="SCurve"/>
+      <AlphaKeyframe Time="0.8" Value="0.00" RelativeTo="Absolute"/>
+      <PositionKeyframe Time="0.0" Value="50,600,0" Interpolation="EaseIn, 2.0, 0.80" />
+      <PositionKeyframe Time="1.0" Value="0,200,0" />
+      <PositionKeyframe Time="2.2" Value="0,170,0" />
+      <PositionKeyframe Time="2.7" Value="0,150,0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Flag">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0" Value="3.0, 3.0, 1.0" Interpolation="EaseIn, 2.0, 0.80"/>
+      <ScaleKeyframe Time="1.0" Value="1.0,1.0, 1.0" />
+      <ScaleKeyframe Time="2.2" Value="0.85,0.85, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.3" Value="0.85,0.85, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.7" Value="0.75, 0.75, 1.0" />
+      <AlphaKeyframe Time="0.0" Value="1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.25" Value="0.7" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.5" Value="0.35" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time=".75" Value="0.0" RelativeTo="Absolute"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Skittle.Base.MotionBlur" Intensity="Intensive">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0" Value="3.0, 3.0, 1.0" Interpolation="EaseIn, 2.0, 0.80"/>
+      <ScaleKeyframe Time="1.0" Value="1.0,1.0, 1.0" />
+      <ScaleKeyframe Time="2.2" Value="0.85,0.85, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.6" Value="0.75, 0.75, 1.0" />
+      <AlphaKeyframe Time="0.0" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.3" Value="0.5" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.5" Value="0.25" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.7" Value="0.0" RelativeTo="Absolute"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Skittle.Top">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0" Value="3.0, 3.0, 1.0" Interpolation="EaseIn, 2.0, 0.80"/>
+      <ScaleKeyframe Time="1.0" Value="1.0,1.0, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.2" Value="0.85,0.85, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.6" Value="0.75, 0.75, 1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.0" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="1.2" Value="0.60" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="1.70" Value="1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="2.55" Value="1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="2.7" Value="0.00" RelativeTo="Absolute"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Skittle.Base">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0" Value="3.0, 3.0, 1.0" Interpolation="EaseIn, 2.0, 0.80"/>
+      <ScaleKeyframe Time="1.0" Value="1.0,1.0, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.2" Value="0.85,0.85, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.6" Value="0.75, 0.75, 1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.0" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.80" Value="0.60" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="1.0" Value="1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="2.0" Value="1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="2.7" Value="0.00" RelativeTo="Absolute"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Skittle.Middle">
+    <Keyframes>
+      <RotateKeyframe Time="0.0" Value="0deg;0,0,1"/>
+      <RotateKeyframe Time="1.0" Value="0deg;0,0,1"/>
+      <RotateKeyframe Time="1.1" Value="10deg;0,0,1"/>
+      <RotateKeyframe Time="1.3" Value="30deg;0,0,1"/>
+      <RotateKeyframe Time="2.0" Value="65deg;0,0,1"/>
+      <AlphaKeyframe Time="0.0" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="1.2" Value="0.60" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="1.70" Value="1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="2.0" Value="1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="2.7" Value="0.00" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="0.0" Value="3.0, 3.0, 1.0" Interpolation="EaseIn, 2.0, 0.80"/>
+      <ScaleKeyframe Time="1.0" Value="1.0,1.0, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.2" Value="0.85,0.85, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.6" Value="0.75, 0.75, 1.0" RelativeTo="Absolute"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Skittle.Middle.Gleam">
+    <Keyframes>
+      <RotateKeyframe Time="0.0" Value="0deg;0,0,1"/>
+      <RotateKeyframe Time="1.0" Value="0deg;0,0,1"/>
+      <RotateKeyframe Time="1.1" Value="30deg;0,0,1"/>
+      <RotateKeyframe Time="1.3" Value="50deg;0,0,1"/>
+      <RotateKeyframe Time="2.0" Value="85deg;0,0,1"/>
+      <AlphaKeyframe Time="0.0" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.133" Value="0.0" RelativeTo="Absolute" Interpolation="SCurve"/>
+      <AlphaKeyframe Time="1.0" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="1.50" Value="0.80" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="2.0" Value="1.0" RelativeTo="Absolute" Interpolation="SCurve"/>
+      <AlphaKeyframe Time="2.3" Value="0.5" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="2.4" Value="0.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="0.0" Value="3.0, 3.0, 1.0" Interpolation="EaseIn, 2.0, 0.80"/>
+      <ScaleKeyframe Time="1.0" Value="1.0,1.0, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.2" Value="0.85,0.85, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.3" Value="0.85,0.85, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.6" Value="0.75, 0.75, 1.0" RelativeTo="Absolute"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Flare">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0" Value="1.20, 1.20, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.05" Value="1.20, 1.20, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="2.5" Value="1.75, 1.75, 1.0" RelativeTo="Absolute"/>
+      <RotateKeyframe Time="0.0" Value="-245deg;0,0,1" RelativeTo="Absolute" />
+      <RotateKeyframe Time="1.00" Value="-245deg;0,0,1" RelativeTo="Absolute"/>
+      <RotateKeyframe Time="2.0" Value="-220deg;0,0,1" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.0" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="1.00" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="1.50" Value="0.55" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="2.0" Value="0.0" RelativeTo="Absolute"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Layer4" CenterPointOffset="1279,768,0">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0" Value="2.0, 3.0, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="1.5" Value="1.33, 1.67, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="3.0" Value="1.0, 1.0, 1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.0" Value="0.30" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="3.0" Value="0.10" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="3.1" Value="0.0" RelativeTo="Absolute"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Layer5" CenterPointOffset="1279,768,0">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0" Value="2.0, 3.0, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="1.5" Value="1.33, 1.67, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="3.0" Value="1.0, 1.0, 1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.0" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="3.0" Value="0.10" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="3.1" Value="0.0" RelativeTo="Absolute"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Layer6" CenterPointOffset="1279,768,0">
+    <Keyframes>
+      <ScaleKeyframe Time="0.0" Value="2.0, 3.0, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="1.5" Value="1.33, 1.67, 1.0" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="3.0" Value="1.0, 1.0, 1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="0.0" Value="0.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="3.0" Value="0.10" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="3.1" Value="0.0" RelativeTo="Absolute"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.ImageBackground">
+    <Keyframes>
+      <AlphaKeyframe Time="0.0" Value="1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="2.0" Value="1.0" RelativeTo="Absolute"/>
+      <AlphaKeyframe Time="3.0" Value="0.0" RelativeTo="Absolute"/>
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Shard1" CenterPointOffset="0,484,0">
+    <Keyframes>
+      <AlphaKeyframe Time="0.0" Value="0.0" />
+      <AlphaKeyframe Time="0.7" Value="0.00" />
+      <AlphaKeyframe Time="1.5" Value="0.25"/>
+      <AlphaKeyframe Time="2.167" Value="0.0" />
+      <RotateKeyframe Time="0.0" Value="-5deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="2.333" Value="-5deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="3.0" Value="0deg;0,0,1" RelativeTo="Final"/>
+      <PositionKeyframe Time="0.0" Value="164, 152, 0" />
+      <PositionKeyframe Time="2.5" Value="264, 152, 0" />
+      <PositionKeyframe Time="3.00" Value="268, 135, 0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.Shard2" CenterPointOffset="11,583,0">
+    <Keyframes>
+      <PositionKeyframe Time="0.0" Value="-378, 19, 0" />
+      <PositionKeyframe Time="2.5" Value="-403, 22, 0" />
+      <PositionKeyframe Time="3.0" Value="-450, 30, 0" />
+      <RotateKeyframe Time="0.0" Value="15deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="2.333" Value="0deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="3.0" Value="-15deg;0,0,1" RelativeTo="Final"/>
+      <AlphaKeyframe Time="0.0" Value="0.0" />
+      <AlphaKeyframe Time="0.7" Value="0.00" />
+      <AlphaKeyframe Time="1.0" Value="0.20" />
+      <AlphaKeyframe Time="2.167" Value="0.20" />
+      <AlphaKeyframe Time="2.4" Value="0.00" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.ShardA1.1" CenterPointOffset="12,483,0">
+    <Keyframes>
+      <PositionKeyframe Time="0.0" Value="234, 110, 0" />
+      <PositionKeyframe Time="2.5" Value="527, 186, 0" />
+      <PositionKeyframe Time="3.0" Value="550, 190, 0" />
+      <RotateKeyframe Time="0.0" Value="15deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="2.0" Value="30deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="3.0" Value="45deg;0,0,1" RelativeTo="Final"/>
+      <ScaleKeyframe Time="0.0" Value="1.5, 1.5, 1.0" />
+      <ScaleKeyframe Time="1.5" Value="1.25, 1.25, 1.0" />
+      <ScaleKeyframe Time="3.0" Value="1.0, 1.0, 1.0" />
+      <AlphaKeyframe Time="0.0" Value="0.00" />
+      <AlphaKeyframe Time="0.7" Value="0.00" />
+      <AlphaKeyframe Time="0.8" Value="0.35" />
+      <AlphaKeyframe Time="2.1" Value="0.20" />
+      <AlphaKeyframe Time="2.8" Value="0.0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.ShardA1.2" CenterPointOffset="12,483,0">
+    <Keyframes>
+      <PositionKeyframe Time="0.0" Value="200, 156, 0" />
+      <PositionKeyframe Time="2.5" Value="314, 236, 0"/>
+      <PositionKeyframe Time="3.0" Value="414, 384, 0" />
+      <RotateKeyframe Time="0.0" Value="15deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="2.0" Value="35deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="3.0" Value="44deg;0,0,1" RelativeTo="Final"/>
+      <ScaleKeyframe Time="0.0" Value="0.0, 0.75, 1.0" />
+      <ScaleKeyframe Time="1.5" Value="0.0, 0.75, 1.0" />
+      <ScaleKeyframe Time="3.0" Value="0.0, 0.75, 1.0" />
+      <AlphaKeyframe Time="0.0" Value="0.00" />
+      <AlphaKeyframe Time="0.7" Value="0.00" />
+      <AlphaKeyframe Time="0.9" Value="0.30" />
+      <AlphaKeyframe Time="2.1" Value="0.20" />
+      <AlphaKeyframe Time="3.0" Value="0.0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.ShardA2.1" CenterPointOffset="71,649,0">
+    <Keyframes>
+      <PositionKeyframe Time="0.0" Value="127, -157, 0" RelativeTo="Final" />
+      <PositionKeyframe Time="2.0" Value="360, -105, 0" RelativeTo="Final" />
+      <PositionKeyframe Time="3.0" Value="360, 23, 0" RelativeTo="Final"/>
+      <RotateKeyframe Time="0.0" Value="15deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="2.0" Value="23deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="3.0" Value="30deg;0,0,1" RelativeTo="Final"/>
+      <ScaleKeyframe Time="0.0" Value="1.5, 1.5, 1.0" />
+      <ScaleKeyframe Time="1.5" Value="1.25, 1.25, 1.0" />
+      <ScaleKeyframe Time="3.0" Value="1.0, 1.0, 1.0" />
+      <AlphaKeyframe Time="0.0" Value="0.00" />
+      <AlphaKeyframe Time="0.7" Value="0.00" />
+      <AlphaKeyframe Time="0.9" Value="0.35" />
+      <AlphaKeyframe Time="2.1" Value="0.20" />
+      <AlphaKeyframe Time="3.0" Value="0.0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.ShardA2.2" CenterPointOffset="71,649,0">
+    <Keyframes>
+      <PositionKeyframe Time="0.0" Value="175, 131, 0"/>
+      <PositionKeyframe Time="2.0" Value="299, 63, 0" />
+      <PositionKeyframe Time="3.0" Value="325, 0, 0" />
+      <RotateKeyframe Time="0.0" Value="10deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="2.0" Value="25deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="3.0" Value="35deg;0,0,1" RelativeTo="Final"/>
+      <ScaleKeyframe Time="0.0" Value="1.5, 1.5, 1.0" />
+      <ScaleKeyframe Time="1.5" Value="1.25, 1.25, 1.0" />
+      <ScaleKeyframe Time="3.0" Value="1.0, 1.0, 1.0" />
+      <AlphaKeyframe Time="0.0" Value="0.00" />
+      <AlphaKeyframe Time="0.7" Value="0.00" />
+      <AlphaKeyframe Time="0.9" Value="0.25" />
+      <AlphaKeyframe Time="2.1" Value="0.11" />
+      <AlphaKeyframe Time="2.7" Value="0.0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.ShardB1.1" CenterPointOffset="12,483,0">
+    <Keyframes>
+      <PositionKeyframe Time="0.0" Value="136, -192, 0" />
+      <PositionKeyframe Time="2.5" Value="345, -168, 0" />
+      <PositionKeyframe Time="3.0" Value="374, -100, 0" />
+      <RotateKeyframe Time="0.0" Value="3deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="2.0" Value="17deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="3.0" Value="28deg;0,0,1" RelativeTo="Final"/>
+      <ScaleKeyframe Time="0.0" Value="1.0, 1.0, 1.0" />
+      <ScaleKeyframe Time="1.5" Value="1.25, 1.25, 1.0" />
+      <ScaleKeyframe Time="3.0" Value="1.5, 1.5, 1.0" />
+      <AlphaKeyframe Time="0.0" Value="0.00" />
+      <AlphaKeyframe Time="0.7" Value="0.00" />
+      <AlphaKeyframe Time="0.9" Value="0.65" />
+      <AlphaKeyframe Time="2.1" Value="0.43" />
+      <AlphaKeyframe Time="3.0" Value="0.0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.ShardB1.2" CenterPointOffset="12,483,0">
+    <Keyframes>
+      <PositionKeyframe Time="0.0" Value="116, -152, 0" />
+      <PositionKeyframe Time="2.5" Value="290, -174, 0"/>
+      <PositionKeyframe Time="3.0" Value="300, -198, 0" />
+      <RotateKeyframe Time="0.0" Value="3deg;0,0,1" RelativeTo="Absolute"/>
+      <RotateKeyframe Time="2.0" Value="11deg;0,0,1" RelativeTo="Absolute"/>
+      <RotateKeyframe Time="3.0" Value="23deg;0,0,1" RelativeTo="Absolute"/>
+      <ScaleKeyframe Time="0.0" Value="1.0, 1.0, 1.0" />
+      <ScaleKeyframe Time="1.5" Value="1.0, 1.40, 1.0" />
+      <ScaleKeyframe Time="3.0" Value="1.0, 1.5, 1.0" />
+      <AlphaKeyframe Time="0.0" Value="0.00" />
+      <AlphaKeyframe Time="0.7" Value="0.00" />
+      <AlphaKeyframe Time="0.9" Value="0.43" />
+      <AlphaKeyframe Time="2.1" Value="0.33" />
+      <AlphaKeyframe Time="3.0" Value="0.0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.ShardB1.3" CenterPointOffset="12,483,0">
+    <Keyframes>
+      <PositionKeyframe Time="0.0" Value="-218, 42, 0" />
+      <PositionKeyframe Time="2.5" Value="-180, 189, 0" />
+      <PositionKeyframe Time="3.0" Value="-127, 232, 0" />
+      <RotateKeyframe Time="0.0" Value="-15deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="2.0" Value="-27deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="3.0" Value="-35deg;0,0,1" RelativeTo="Final"/>
+      <ScaleKeyframe Time="0.0" Value="1.5, 1.5, 1.0"/>
+      <ScaleKeyframe Time="1.5" Value="1.25, 1.25, 1.0" />
+      <ScaleKeyframe Time="3.0" Value="1.25, 1.25, 1.0" />
+      <AlphaKeyframe Time="0.0" Value="0.00" />
+      <AlphaKeyframe Time="0.7" Value="0.00" />
+      <AlphaKeyframe Time="0.9" Value="0.35" />
+      <AlphaKeyframe Time="2.1" Value="0.23" />
+      <AlphaKeyframe Time="3.0" Value="0.0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.ShardB2.1" CenterPointOffset="42,583,0">
+    <Keyframes>
+      <PositionKeyframe Time="0.0" Value="-100, 159, 0" />
+      <PositionKeyframe Time="2.5" Value="-175, -103, 0" />
+      <PositionKeyframe Time="3.0" Value="-175, -79, 0" />
+      <RotateKeyframe Time="0.0" Value="-12deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="2.0" Value="-20deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="3.0" Value="-30deg;0,0,1" RelativeTo="Final"/>
+      <ScaleKeyframe Time="0.0" Value="1.0, 1.0, 1.0" />
+      <ScaleKeyframe Time="1.5" Value="1.25, 1.25, 1.0" />
+      <ScaleKeyframe Time="3.0" Value="1.5,1.5, 1.0" />
+      <AlphaKeyframe Time="0.0" Value="0.00" />
+      <AlphaKeyframe Time="0.7" Value="0.00" />
+      <AlphaKeyframe Time="0.9" Value="0.15" />
+      <AlphaKeyframe Time="2.1" Value="0.15" />
+      <AlphaKeyframe Time="3.0" Value="0.0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.ShardB2.2" CenterPointOffset="39,629,0">
+    <Keyframes>
+      <PositionKeyframe Time="0.0" Value="-195, -171, 0" />
+      <PositionKeyframe Time="2.0" Value="-266, 82, 0" />
+      <PositionKeyframe Time="3.0" Value="-287, 137, 0"/>
+      <RotateKeyframe Time="0.0" Value="-15deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="2.0" Value="-30deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="3.0" Value="-35deg;0,0,1" RelativeTo="Final"/>
+      <ScaleKeyframe Time="0.0" Value="1.25, 1.25, 1.0" />
+      <ScaleKeyframe Time="1.5" Value="1.40, 1.40, 1.0" />
+      <ScaleKeyframe Time="3.0" Value="1.5,1.5, 1.0"/>
+      <AlphaKeyframe Time="0.0" Value="0.00" />
+      <AlphaKeyframe Time="0.7" Value="0.00" />
+      <AlphaKeyframe Time="0.9" Value="0.75" />
+      <AlphaKeyframe Time="2.1" Value="0.25" />
+      <AlphaKeyframe Time="3.0" Value="0.0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.ShardB1" CenterPointOffset="12,693,0">
+    <Keyframes>
+      <PositionKeyframe Time="0.0" Value="-127, 196, 0" />
+      <PositionKeyframe Time="2.2" Value="-77, 157, 0" />
+      <PositionKeyframe Time="3.0" Value="-89, 126, 0" />
+      <RotateKeyframe Time="0.0" Value="-30deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="2.0" Value="-38deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="3.0" Value="-40deg;0,0,1" RelativeTo="Final"/>
+      <ScaleKeyframe Time="0.0" Value="0.75, 0.75, 1.0" />
+      <ScaleKeyframe Time="1.5" Value="1.0, 1.0, 1.0" />
+      <ScaleKeyframe Time="3.0" Value="1.0, 1.0, 1.0" />
+      <AlphaKeyframe Time="0.0" Value="0.00" />
+      <AlphaKeyframe Time="0.7" Value="0.00" />
+      <AlphaKeyframe Time="0.9" Value="0.35" />
+      <AlphaKeyframe Time="2.1" Value="0.20" />
+      <AlphaKeyframe Time="3.0" Value="0.0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.ShardB3" CenterPointOffset="12,693,0">
+    <Keyframes>
+      <PositionKeyframe Time="0.0" Value="250, -106, 0"/>
+      <PositionKeyframe Time="2.2" Value="283, 27, 0" />
+      <PositionKeyframe Time="3.0" Value="310, 82, 0" />
+      <RotateKeyframe Time="0.0" Value="8deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="2.0" Value="18deg;0,0,1" RelativeTo="Final"/>
+      <RotateKeyframe Time="3.0" Value="25deg;0,0,1" RelativeTo="Final"/>
+      <ScaleKeyframe Time="0.0" Value="1.0, 1.0, 1.0" />
+      <ScaleKeyframe Time="1.5" Value="1.33, 1.33, 1.0" />
+      <ScaleKeyframe Time="3.0" Value="1.5, 1.5, 1.0" />
+      <AlphaKeyframe Time="0.0" Value="0.00" />
+      <AlphaKeyframe Time="1.0" Value="0.35" />
+      <AlphaKeyframe Time="2.1" Value="0.22" />
+      <AlphaKeyframe Time="3.0" Value="0.0" />
+    </Keyframes>
+  </Animation>
+  <Animation Name="Launch.NewGrad" CenterPointOffset="0.469,0.478,0">
+    <Keyframes>
+      <AlphaKeyframe Time="0.0" Value="1.80" />
+      <AlphaKeyframe Time="1.25" Value="0.00" />
+      <AlphaKeyframe Time="2.0" Value="0.00" />
+      <AlphaKeyframe Time="3.0" Value="0.0" />
+    </Keyframes>
+  </Animation>
+</Mcml>

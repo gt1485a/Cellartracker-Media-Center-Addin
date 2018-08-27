@@ -1,0 +1,9 @@
+﻿<application title="CellarTrackerAddIn" id="{0a79b467-c60d-48d8-86e1-220193ea2f54}">
+	<entrypoint id="{e494b156-85c1-43f7-9138-f0308028671f}"
+				addin="CellarTrackerAddIn.MyAddIn, CellarTrackerAddIn,Culture=Neutral,Version=1.0.0.0,PublicKeyToken=05f62c4163dc1a19"
+				title="CellarTrackerAddIn"
+				description="CellarTrackerAddIn Description"
+				ImageUrl=".\Application.png">
+		<category category="More Programs"/>
+	</entrypoint>
+</application>

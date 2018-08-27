@@ -1,0 +1,358 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+      xmlns:cor="assembly://MsCorLib/System"
+      xmlns:sprite="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Fun.Sprite.mcml">
+
+  <UI Name="Test">
+    <Properties>
+      <ArrayListDataSet Name="IdleSequence">
+        <Source>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Idle.png"/>
+        </Source>
+      </ArrayListDataSet>
+
+      <ArrayListDataSet Name="WaitSequence">
+        <Source>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Wait1.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Wait2.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Wait1.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Wait2.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Wait1.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Wait2.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Smoke1.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Smoke1.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Smoke2.png"/>
+        </Source>
+      </ArrayListDataSet>
+
+      <ArrayListDataSet Name="SpinSequence">
+        <Source>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Idle.png"/>
+        </Source>
+      </ArrayListDataSet>
+
+      <ArrayListDataSet Name="CrouchSequence">
+        <Source>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Idle.png"/>
+        </Source>
+      </ArrayListDataSet>
+
+      <ArrayListDataSet Name="WalkSequence">
+        <Source>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Walk1.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Walk2.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Walk1.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Walk2.png"/>
+        </Source>
+      </ArrayListDataSet>
+
+      <ArrayListDataSet Name="JumpSequence">
+        <Source>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Idle.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Jump1.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Jump2.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Jump2.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Jump1.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Jump2.png"/>
+          <Image Image="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Sprite.Jump2.png"/>
+        </Source>
+      </ArrayListDataSet>
+
+      <Animation Name="JumpAnimation" Type="Idle" CenterPointPercent="0.5,0.5,0.0">
+        <Keyframes>
+          <ScaleKeyframe Time="0.0" RelativeTo="Current" Interpolation="Log"/>
+          <ScaleKeyframe Time="0.35" Value="1.3,1.3,1.0"/>
+          <ScaleKeyframe Time="0.55" Value="1.3,1.3,1.0" Interpolation="Exp"/>
+          <ScaleKeyframe Time="0.75"/>
+
+          <PositionKeyframe Time="0.0" RelativeTo="Current" Interpolation="Log"/>
+          <PositionKeyframe Time="0.70" Value="0,-100,0"/>
+          <PositionKeyframe Time="0.55" Value="0,-100,0" Interpolation="Exp"/>
+          <PositionKeyframe Time="0.75"/>
+        </Keyframes>
+      </Animation>
+
+      <Animation Name="CrouchAnimation" Type="Idle" CenterPointPercent="0.5,0.5,0.0">
+        <Keyframes>
+          <ScaleKeyframe Time="0.0" RelativeTo="Current" Interpolation="Log"/>
+          <ScaleKeyframe Time="0.15" Value="0.75,0.75,1.0"/>
+          <ScaleKeyframe Time="0.25" Value="0.75,0.75,1.0" Interpolation="Exp"/>
+          <ScaleKeyframe Time="0.35"/>
+        </Keyframes>
+      </Animation>
+
+      <Animation Name="RotateLeftAnimation" Type="Idle" CenterPointPercent="0.5,0.5,0.0">
+        <Keyframes>
+          <RotateKeyframe Time="0.0" RelativeTo="Current" Interpolation="SCurve"/>
+          <RotateKeyframe Time="0.3" Value="-360deg;0,0,1"/>
+        </Keyframes>
+      </Animation>
+
+      <Animation Name="RotateRightAnimation" Type="Idle" CenterPointPercent="0.5,0.5,0.0">
+        <Keyframes>
+          <RotateKeyframe Time="0.0" RelativeTo="Current" Interpolation="SCurve"/>
+          <RotateKeyframe Time="0.3" Value="360deg;0,0,1"/>
+        </Keyframes>
+      </Animation>
+
+      <Animation Name="MoveUpAnimation" Type="Idle">
+        <Keyframes>
+          <PositionKeyframe Time="0.0" RelativeTo="Current" Interpolation="Log"/>
+          <PositionKeyframe Time="0.30" Value="0,-200,0"/>
+          <PositionKeyframe Time="0.50" Value="0,-200,0" Interpolation="Exp"/>
+          <PositionKeyframe Time="0.70"/>
+        </Keyframes>
+      </Animation>
+
+      <Animation Name="MoveLeftAnimation" Type="Idle">
+        <Keyframes>
+          <PositionKeyframe Time="0.0" RelativeTo="Current" Interpolation="Log"/>
+          <PositionKeyframe Time="0.30" Value="-200,0,0"/>
+          <PositionKeyframe Time="0.50" Value="-200,0,0" Interpolation="Exp"/>
+          <PositionKeyframe Time="0.70"/>
+        </Keyframes>
+      </Animation>
+
+      <Animation Name="MoveDownAnimation" Type="Idle">
+        <Keyframes>
+          <PositionKeyframe Time="0.0" RelativeTo="Current" Interpolation="Log"/>
+          <PositionKeyframe Time="0.30" Value="0,200,0"/>
+          <PositionKeyframe Time="0.50" Value="0,200,0" Interpolation="Exp"/>
+          <PositionKeyframe Time="0.70"/>
+        </Keyframes>
+      </Animation>
+
+      <Animation Name="MoveRightAnimation" Type="Idle">
+        <Keyframes>
+          <PositionKeyframe Time="0.0" RelativeTo="Current" Interpolation="Log"/>
+          <PositionKeyframe Time="0.30" Value="200,0,0"/>
+          <PositionKeyframe Time="0.50" Value="200,0,0" Interpolation="Exp"/>
+          <PositionKeyframe Time="0.70"/>
+        </Keyframes>
+      </Animation>
+    </Properties>
+
+    <Locals>
+      <!-- Jump -->
+      <KeyHandler Name="Jump" Key="Space"/>
+
+      <!-- Crouch -->
+      <KeyHandler Name="Crouch" Key="Control"/>
+
+      <!-- Rotate -->
+      <KeyHandler Name="RotateLeft" Key="Q"/>
+      <KeyHandler Name="RotateRight" Key="E"/>
+
+      <!-- Walk -->
+      <KeyHandler Name="MoveUp2" Key="W"/>
+      <KeyHandler Name="MoveLeft2" Key="A"/>
+      <KeyHandler Name="MoveDown2" Key="S"/>
+      <KeyHandler Name="MoveRight2" Key="D"/>
+      <KeyHandler Name="MoveUp" Key="Up"/>
+      <KeyHandler Name="MoveDown" Key="Down"/>
+      <KeyHandler Name="MoveLeft" Key="Left"/>
+      <KeyHandler Name="MoveRight" Key="Right"/>
+
+
+      <MathTransformer Name="MultiplyBy1000" Multiply="1000.0" Type="Int32"/>
+
+      <cor:String Name="State" String="Idle"/>
+      <Timer Name="ActionTimeout" Enabled="false" AutoRepeat="false"/>
+      <Timer Name="WaitTimeout" Interval="4000" Enabled="true" AutoRepeat="false"/>
+    </Locals>
+
+    <Rules>
+      
+      <!-- Move right -->
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Modified Source="[MoveRight.Invoked]"/>
+          <Modified Source="[MoveRight2.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Sprite.AttachAnimation]" animation="[MoveRightAnimation]"/>
+          <Set Target="[State]" Value="Walking"/>
+        </Actions>
+      </Rule>
+
+      <!-- Move down -->
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Modified Source="[MoveDown.Invoked]"/>
+          <Modified Source="[MoveDown2.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Sprite.AttachAnimation]" animation="[MoveDownAnimation]"/>
+          <Set Target="[State]" Value="Walking"/>
+        </Actions>
+      </Rule>
+
+      <!-- Move left -->
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Modified Source="[MoveLeft.Invoked]"/>
+          <Modified Source="[MoveLeft2.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Sprite.AttachAnimation]" animation="[MoveLeftAnimation]"/>
+          <Set Target="[State]" Value="Walking"/>
+        </Actions>
+      </Rule>
+
+      <!-- Move up -->
+      <Rule ConditionLogicalOp="Or">
+        <Conditions>
+          <Modified Source="[MoveUp.Invoked]"/>
+          <Modified Source="[MoveUp2.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Invoke Target="[Sprite.AttachAnimation]" animation="[MoveUpAnimation]"/>
+          <Set Target="[State]" Value="Walking"/>
+        </Actions>
+      </Rule>
+
+      <!-- Rotate right -->
+      <Changed Source="[RotateRight.Invoked]">
+        <Actions>
+          <Invoke Target="[Sprite.AttachAnimation]" animation="[RotateRightAnimation]"/>
+          <Set Target="[State]" Value="Spinning"/>
+        </Actions>
+      </Changed>
+
+      <!-- Rotate left -->
+      <Changed Source="[RotateLeft.Invoked]">
+        <Actions>
+          <Invoke Target="[Sprite.AttachAnimation]" animation="[RotateLeftAnimation]"/>
+          <Set Target="[State]" Value="Spinning"/>
+        </Actions>
+      </Changed>
+
+      <!-- Crouch -->
+      <Changed Source="[Crouch.Invoked]">
+        <Actions>
+          <Invoke Target="[Sprite.AttachAnimation]" animation="[CrouchAnimation]"/>
+          <Set Target="[State]" Value="Crouching"/>
+        </Actions>
+      </Changed>
+
+      <!-- Jump -->
+      <Changed Source="[Jump.Invoked]">
+        <Actions>
+          <Invoke Target="[Sprite.AttachAnimation]" animation="[JumpAnimation]"/>
+          <Set Target="[State]" Value="Jumping"/>
+        </Actions>
+      </Changed>
+
+      <!-- Start jump sequence -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[State]" ConditionOp="ChangedTo" Value="Jumping"/>
+        </Conditions>
+        <Actions>
+          <DebugTrace Message="Jumping"/>
+          <Set Target="[Sprite.Content]" Value="[JumpSequence]"/>
+          <Set Target="[Sprite.SequenceName]" Value="Jump"/>
+          <Set Target="[Sprite.Loop]" Value="0"/>
+          <Set Target="[Sprite.Duration]" Value="1.0"/>
+        </Actions>
+      </Rule>
+
+      <!-- Start walk sequence -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[State]" ConditionOp="ChangedTo" Value="Walking"/>
+        </Conditions>
+        <Actions>
+          <DebugTrace Message="Walking"/>
+          <Set Target="[Sprite.Content]" Value="[WalkSequence]"/>
+          <Set Target="[Sprite.SequenceName]" Value="Walk"/>
+          <Set Target="[Sprite.Loop]" Value="-1"/>
+          <Set Target="[Sprite.Duration]" Value="0.8"/>
+        </Actions>
+      </Rule>
+
+      <!-- Start crouch sequence -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[State]" ConditionOp="ChangedTo" Value="Crouching"/>
+        </Conditions>
+        <Actions>
+          <DebugTrace Message="Crouching"/>
+          <Set Target="[Sprite.Content]" Value="[CrouchSequence]"/>
+          <Set Target="[Sprite.SequenceName]" Value="Crouch"/>
+          <Set Target="[Sprite.Loop]" Value="0"/>
+          <Set Target="[Sprite.Duration]" Value="0.5"/>
+        </Actions>
+      </Rule>
+
+      <!-- Start spin sequence -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[State]" ConditionOp="ChangedTo" Value="Spinning"/>
+        </Conditions>
+        <Actions>
+          <DebugTrace Message="Spinning"/>
+          <Set Target="[Sprite.Content]" Value="[SpinSequence]"/>
+          <Set Target="[Sprite.SequenceName]" Value="Spin"/>
+          <Set Target="[Sprite.Loop]" Value="0"/>
+          <Set Target="[Sprite.Duration]" Value="0.5"/>
+        </Actions>
+      </Rule>
+
+      <!-- Long idle sequence -->
+      <Changed Source="[WaitTimeout.Tick]">
+        <Actions>
+          <DebugTrace Message="Long idle..."/>
+          <Set Target="[Sprite.Content]" Value="[WaitSequence]"/>
+          <Set Target="[Sprite.SequenceName]" Value="Wait"/>
+          <Set Target="[Sprite.Loop]" Value="-1"/>
+          <Set Target="[Sprite.Duration]" Value="2.6"/>
+        </Actions>
+      </Changed>
+
+      <!-- Start idle sequence -->
+      <Rule>
+        <Actions>
+          <DebugTrace Message="Idle"/>
+          <Set Target="[Sprite.Content]" Value="[IdleSequence]"/>
+          <Set Target="[Sprite.SequenceName]" Value="Idle"/>
+          <Set Target="[Sprite.Loop]" Value="0"/>
+          <Set Target="[Sprite.Duration]" Value="1.0"/>
+        </Actions>
+      </Rule>
+
+      <!-- Start action timer -->
+      <Rule>
+        <Conditions>
+          <Equality Source="[State]" ConditionOp="NotEquals" Value="Idle"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[ActionTimeout.Interval]" Value="[Sprite.Duration]" Transformer="[MultiplyBy1000]"/>
+          <Invoke Target="[ActionTimeout.Start]"/>
+        </Actions>
+      </Rule>
+
+      <!-- Action timer completed -->
+      <Changed Source="[ActionTimeout.Tick]">
+        <Actions>
+          <DebugTrace Message="Done with action"/>
+          <Set Target="[State]" Value="Idle"/>
+          <Invoke Target="[WaitTimeout.Start]"/>
+        </Actions>
+      </Changed>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Center">
+        <Children>
+
+          <sprite:Sprite Name="Sprite" Content="[IdleSequence]"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+
+</Mcml>

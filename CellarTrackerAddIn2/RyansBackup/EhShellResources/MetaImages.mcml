@@ -1,0 +1,711 @@
+<Mcml xmlns="assembly://Microsoft.MediaCenter.UI/Microsoft.MediaCenter.UI.Drawing">
+  <MetaImage Name="Common.Button.Left.Focus" Description="Common Button Left, Focus" DefaultSize="251, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.Left.Focus.png" SplitX="20, 231" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.Left.NoFocus" Description="Common Button Left, NoFocus" DefaultSize="251, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.NoFocus.Full.png" SplitX="20, 231" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Glassy.Button.Focus" Description="Glassy Button, Focus" DefaultSize="251, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Glassy.Button.Focus.png" SplitX="20, 231" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.Left.Disabled" Description="Common Button Left, Disabled" DefaultSize="251, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.Disabled.Full.png" SplitX="20, 231" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.Left.FocusOverlay" Description="Common Button Left, FocusOverlay" DefaultSize="251, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.Left.FocusOverlay.png" SplitX="20, 231" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.Right.Focus" Description="Common Button Right, Focus" DefaultSize="611, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.Right.Focus.png" SplitX="20, 591" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.Right.NoFocus" Description="Common Button Right, NoFocus" DefaultSize="611, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.NoFocus.Full.png" SplitX="20, 591" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.Right.Disabled" Description="Common Button Right, Disabled" DefaultSize="611, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.Disabled.Full.png" SplitX="20, 591" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.Right.FocusOverlay" Description="Common Button Right, FocusOverlay" DefaultSize="611, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.Right.FocusOverlay.png" SplitX="20, 591" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Notifications.DropShadow" Description="Notifications, Drop Shadow" DefaultSize="968, 210">
+    <Drawer>
+      <NineGridMetaDrawer/>
+    </Drawer>
+    <Children>
+      <SolidFillPart Color="0x00000000" SourceSize="4, 4"/>
+      <SolidFillPart Color="0x00000000" SourceSize="943, 4"/>
+      <ImagePart Source="@res://ehres!Notification.DropShadow.TopRight.png"/>
+      <SolidFillPart Color="0x00000000" SourceSize="4, 185"/>
+      <SolidFillPart Color="0x00000000" SourceSize="943, 185"/>
+      <ImagePart Source="@res://ehres!Notification.DropShadow.Right.png"/>
+      <ImagePart Source="@res://ehres!Notification.DropShadow.BottomLeft.png"/>
+      <ImagePart Source="@res://ehres!Notification.DropShadow.Bottom.png"/>
+      <ImagePart Source="@res://ehres!Notification.DropShadow.BottomRight.png"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Overlays.Shadow" Description="Overlays, Shadow" DefaultSize="321, 456">
+    <Drawer>
+      <NineGridMetaDrawer/>
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Overlays.Shadow.png" SplitX="40, 280" SplitY="40, 408"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Overlays.Outline" Description="Overlays, Outline" DefaultSize="287, 86">
+    <Drawer>
+      <NineGridMetaDrawer/>
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Overlays.Outline.png" SplitX="4, 283" SplitY="4, 82"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Overlays.Background.Dark" Description="Overlays, Background (dark)" DefaultSize="150, 60">
+    <Drawer>
+      <NineGridMetaDrawer/>
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Overlays.Background.Dark.png" SplitX="4, 146" SplitY="4, 56"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Overlays.Background.Medium" Description="Overlays, Background (medium)" DefaultSize="562, 210">
+    <Drawer>
+      <NineGridMetaDrawer/>
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Overlays.Background.Medium.png" SplitX="10, 552" SplitY="10, 200"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="ChannelBrowser.Background" Description="Overlays, Channel Browser" DefaultSize="690, 215">
+    <Drawer>
+      <NineGridMetaDrawer/>
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!ChannelBrowser.Background.png" SplitX="10, 638" SplitY="10, 75" />
+    </Children>
+  </MetaImage>
+  <MetaImage Name="InfoBar.Background" Description="Info Bar background" DefaultSize="654, 91">
+    <Drawer>
+      <NineGridMetaDrawer/>
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!InfoBar.Background.png" SplitX="10, 644" SplitY="10, 81"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="EASInfoBar.Background" Description="EAS Info Bar background" DefaultSize="940, 85">
+    <Drawer>
+      <NineGridMetaDrawer/>
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!TV.InfoBar.Backgroundlong.png" SplitX="10, 930" SplitY="10, 75"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="SeekBar.Background" Description="Seek Bar background" DefaultSize="947, 56">
+    <Drawer>
+      <NineGridMetaDrawer/>
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!SeekBar.Background.png" SplitX="10, 937" SplitY="10, 46"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="SeekBar.Progress.Background" Description="Seek Bar background" DefaultSize="610, 20">
+    <Drawer>
+      <NineGridMetaDrawer/>
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!SeekBar.Progress.Background.png" SplitX="9, 601" SplitY="9, 11"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="SeekBar.Progress.Full" Description="Seek Bar background" DefaultSize="610, 20">
+    <Drawer>
+      <NineGridMetaDrawer/>
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!SeekBar.Progress.Full.png" SplitX="9, 601" SplitY="9, 11"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Overlays.Volume.Bar.On" Description="Volume bar" DefaultSize="150, 10">
+    <Drawer>
+      <NineGridMetaDrawer/>
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Overlays.Volume.Bar.On.png" SplitX="4, 146" SplitY="2, 8"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="FirstRun.SignalMeter.Bar0" Description="Signal meter, no bars (all empty)" DefaultSize="90,48">
+    <Children>
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="0,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="15,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="30,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="45,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="60,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="75,14" />
+    </Children>
+  </MetaImage>
+  <MetaImage Name="FirstRun.SignalMeter.Bar1" Description="Signal meter, 1 bar" DefaultSize="90,48">
+    <Children>
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Weak.png" DestinationSize="15,20" DestinationPosition="0,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="15,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="30,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="45,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="60,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="75,14" />
+    </Children>
+  </MetaImage>
+  <MetaImage Name="FirstRun.SignalMeter.Bar2" Description="Signal meter, 2 bars" DefaultSize="90,48">
+    <Children>
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Weak.png" DestinationSize="15,20" DestinationPosition="0,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Weak.png" DestinationSize="15,20" DestinationPosition="15,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="30,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="45,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="60,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="75,14" />
+    </Children>
+  </MetaImage>
+  <MetaImage Name="FirstRun.SignalMeter.Bar3" Description="Signal meter, 3 bars" DefaultSize="90,48">
+    <Children>
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Medium.png" DestinationSize="15,20" DestinationPosition="0,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Medium.png" DestinationSize="15,20" DestinationPosition="15,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Medium.png" DestinationSize="15,20" DestinationPosition="30,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="45,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="60,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="75,14" />
+    </Children>
+  </MetaImage>
+  <MetaImage Name="FirstRun.SignalMeter.Bar4" Description="Signal meter, 4 bars" DefaultSize="90,48">
+    <Children>
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Medium.png" DestinationSize="15,20" DestinationPosition="0,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Medium.png" DestinationSize="15,20" DestinationPosition="15,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Medium.png" DestinationSize="15,20" DestinationPosition="30,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Medium.png" DestinationSize="15,20" DestinationPosition="45,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="60,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="75,14" />
+    </Children>
+  </MetaImage>
+  <MetaImage Name="FirstRun.SignalMeter.Bar5" Description="Signal meter, 5 bars" DefaultSize="90,48">
+    <Children>
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Strong.png" DestinationSize="15,20" DestinationPosition="0,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Strong.png" DestinationSize="15,20" DestinationPosition="15,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Strong.png" DestinationSize="15,20" DestinationPosition="30,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Strong.png" DestinationSize="15,20" DestinationPosition="45,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Strong.png" DestinationSize="15,20" DestinationPosition="60,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Empty.png" DestinationSize="15,20" DestinationPosition="75,14" />
+    </Children>
+  </MetaImage>
+  <MetaImage Name="FirstRun.SignalMeter.Bar6" Description="Signal meter, 6 bars" DefaultSize="90,48">
+    <Children>
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Strong.png" DestinationSize="15,20" DestinationPosition="0,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Strong.png" DestinationSize="15,20" DestinationPosition="15,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Strong.png" DestinationSize="15,20" DestinationPosition="30,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Strong.png" DestinationSize="15,20" DestinationPosition="45,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Strong.png" DestinationSize="15,20" DestinationPosition="60,14" />
+      <ImagePart Source="@res://ehres!FirstRun.SignalMeter.Strong.png" DestinationSize="15,20" DestinationPosition="75,14" />
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Star0" Description="Star0" DefaultSize="112, 21"></MetaImage>
+  <MetaImage Name="Common.StarHalf" Description="StarHalf" DefaultSize="112, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.StarHalf.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="28, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="56, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="84, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Star1" Description="Star1" DefaultSize="112, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="28, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="56, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="84, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Star1Half" Description="Star1Half" DefaultSize="112, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarHalf.png" DestinationPosition="28, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="56, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="84, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Star2" Description="Star2" DefaultSize="112, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="28, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="56, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="84, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Star2Half" Description="Star2Half" DefaultSize="112, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="28, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarHalf.png" DestinationPosition="56, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="84, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Star3" Description="Star3" DefaultSize="112, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="28, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="56, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="84, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Star3Half" Description="Star3Half" DefaultSize="112, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="28, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="56, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarHalf.png" DestinationPosition="84, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Star4" Description="Star4" DefaultSize="112, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="28, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="56, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="84, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Star5" Description="Star5" DefaultSize="142, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="28, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="56, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="84, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="112, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.ExpandedStar0" Description="Star4" DefaultSize="142, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="30, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="60, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="90, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="120, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.ExpandedStar1" Description="Star4" DefaultSize="142, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="30, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="60, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="90, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="120, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.ExpandedStar2" Description="Star4" DefaultSize="142, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="30, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="60, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="90, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="120, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.ExpandedStar3" Description="Star4" DefaultSize="142, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="30, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="60, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="90, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="120, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.ExpandedStar4" Description="Star4" DefaultSize="142, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="30, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="60, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="90, 0"/>
+      <ImagePart Source="@res://ehres!Common.StarEmpty.png" DestinationPosition="120, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.ExpandedStar5" Description="Star4" DefaultSize="142, 21" Flippable="true">
+    <Children>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="0, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="30, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="60, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="90, 0"/>
+      <ImagePart Source="@res://ehres!Common.Star.png" DestinationPosition="120, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="TV.BigInset.Focus" Description="TV BigInset, Focus" DefaultSize="568, 428">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Selector.png" SplitX="4, 12" SplitY="4, 12"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="TV.BigInset.FocusOverlay" Description="TV BigInset, FocusOverlay" DefaultSize="568, 428">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Selector.png" SplitX="4, 16" SplitY="0, 12"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="JumpInList.ModeSwitch.Box" Description="JumpInList, ModeSwitch Box" DefaultSize="107,107">
+    <Children>
+      <SolidFillPart Color="0x95BFDAF4" SourceSize="107,107" DestinationSize="107,107"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.Left.Dormant" Description="Common Button Left, Dormant" DefaultSize="251, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.Dormant.Full.png" SplitX="20, 231" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.FirstRun.Dormant" Description="Common Button First Run, Dormant" DefaultSize="148, 32">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.FirstRun.Dormant.Full.png" SplitX="3, 145" SplitY="3, 29"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.OSK.Done.NoFocus" Description="Common Button OSK Done, NoFocus" DefaultSize="148, 32">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Osk.KeyboardBackground.png" SplitX="6, 638" SplitY="6, 228"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.OSK.KeyboardButton" Description="Common Button OSK Keyboard Button, Focus" DefaultSize="38, 38">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.Left.Focus.png" SplitX="15, 236" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Guide.Button.Focus" Description="Guide Button, Focus" DefaultSize="251, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Guide.Button.Focus.png" SplitX="20, 231" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Epg.Button.Focus" Description="Guide Button, Focus" DefaultSize="270, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Epg.Cell.Focus.png" SplitX="230, 231" SplitY="106, 107"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.FirstRun.NoFocus" Description="Common Button First Run, NoFocus" DefaultSize="148, 32">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.FirstRun.NoFocus.Full.png" SplitX="3, 145" SplitY="3, 29"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.EPG.GuidePanel.Button.NoFocus" Description="Video EPG GuidePanel Button, NoFocus" DefaultSize="251, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Video.EPG.GuidePanel.Button.NoFocus.Full.png" SplitX="20, 231" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Common.Button.Right.Dormant" Description="Common Button Right, Dormant" DefaultSize="251, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Common.Button.Dormant.Full.png" SplitX="20, 231" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.EPG.Disabled" Description="Video EPG Button, Disabled" DefaultSize="247, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Video.EPG.Disabled.Full.png" SplitX="20, 227" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.EPG.Filtered" Description="Video EPG Button, Filtered" DefaultSize="247, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Video.EPG.Filtered.Full.png" SplitX="20, 227" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.EPG.Focus" Description="Video EPG Button, Focus" DefaultSize="247, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Video.EPG.Focus.Full.png" SplitX="20, 227" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.EPG.Future" Description="Video EPG Button, Future" DefaultSize="247, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Video.EPG.Future.Full.png" SplitX="20, 227" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.EPG.NoFocus" Description="Video EPG Button, NoFocus" DefaultSize="247, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Video.EPG.NoFocus.Full.png" SplitX="20, 227" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.EPG.Pressed" Description="Video EPG Button, Pressed" DefaultSize="247, 51">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <GridPart Source="@res://ehres!Video.EPG.Pressed.Full.png" SplitX="20, 227" SplitY="12, 41"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Notifications.DropShadow" Description="Notifications, Drop Shadow" DefaultSize="968, 210" >
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <SolidFillPart Color="0x00000000" SourceSize="4, 4"/>
+      <SolidFillPart Color="0x00000000" SourceSize="943, 4"/>
+      <ImagePart Source="@res://ehres!Notification.DropShadow.TopRight.png"/>
+      <SolidFillPart Color="0x00000000" SourceSize="4, 185"/>
+      <SolidFillPart Color="0x00000000" SourceSize="943, 185"/>
+      <ImagePart Source="@res://ehres!Notification.DropShadow.Right.png"/>
+      <ImagePart Source="@res://ehres!Notification.DropShadow.BottomLeft.png"/>
+      <ImagePart Source="@res://ehres!Notification.DropShadow.Bottom.png"/>
+      <ImagePart Source="@res://ehres!Notification.DropShadow.BottomRight.png"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.EPG.Panel.Background" Description="Video EPG Panel, Background" DefaultSize="4, 246" >
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <SolidFillPart Color="0x00000000" SourceSize="0, 38"/>
+      <ImagePart Source="@res://ehres!Video.EPG.GuidePanel.Glow.png" SourceSize="4, 38"/>
+      <SolidFillPart Color="0x00000000" SourceSize="0, 38"/>
+      <SolidFillPart Color="0x00000000" SourceSize="0, 208"/>
+      <SolidFillPart Color="0xff264583" SourceSize="4, 208"/>
+      <SolidFillPart Color="0x00000000" SourceSize="0, 208"/>
+      <SolidFillPart Color="0x00000000" SourceSize="0, 0"/>
+      <SolidFillPart Color="0xff264583" SourceSize="4, 0"/>
+      <SolidFillPart Color="0x00000000" SourceSize="0, 0"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Zoom.Normal.Button" Description="VideoZoom, NormalButton" DefaultSize="315, 315">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Zoom.Normal.Button.png" DestinationPosition="117, 85"/>
+      <ImagePart Source="@res://ehres!common.video.glow.png" DestinationSize="315,315" DestinationPosition="0, -20"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Zoom.Stretch.Button" Description="VideoZoom, StretchButton" DefaultSize="315, 315">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Zoom.Stretch.Button.png" DestinationPosition="117, 85"/>
+      <ImagePart Source="@res://ehres!common.video.glow.png" DestinationSize="315,315" DestinationPosition="0, -20"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Zoom.Zoom.Button" Description="VideoZoom, ZoomButton" DefaultSize="315, 315">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Zoom.Zoom.Button.png" DestinationPosition="117, 85"/>
+      <ImagePart Source="@res://ehres!common.video.glow.png" DestinationSize="315,315" DestinationPosition="0, -20"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Zoom.NonLinear.Button" Description="VideoZoom, NonLinearButton" DefaultSize="315, 315">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Zoom.NonLinear.Button.png" DestinationPosition="117, 85"/>
+      <ImagePart Source="@res://ehres!common.video.glow.png" DestinationSize="315,315" DestinationPosition="0, -20"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Button.NoFocus" Description="Video Teletext, NoFocus" DefaultSize="51, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Button.png"/>
+      <ImagePart Source="@res://ehres!Video.EPG.GuidePanel.Button.NoFocus.mi" DestinationSize="51, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Button.Focus" Description="Video Teletext, Focus" DefaultSize="51, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Button.png"/>
+      <ImagePart Source="@res://ehres!Common.Button.Left.Focus.mi" DestinationSize="51, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Fastext.Blue.Button.NoFocus" Description="Video Teletext FastextBlue, NoFocus" DefaultSize="60, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Fastext.Blue.Button.png"/>
+      <ImagePart Source="@res://ehres!Video.EPG.GuidePanel.Button.NoFocus.mi" DestinationSize="60, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Fastext.Blue.Button.Focus" Description="Video Teletext FastextBlue, Focus" DefaultSize="60, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Fastext.Blue.Button.png"/>
+      <ImagePart Source="@res://ehres!Common.Button.Left.Focus.mi" DestinationSize="60, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Fastext.Green.Button.NoFocus" Description="Video Teletext FastextGreen, NoFocus" DefaultSize="60, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Fastext.Green.Button.png"/>
+      <ImagePart Source="@res://ehres!Video.EPG.GuidePanel.Button.NoFocus.mi" DestinationSize="60, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Fastext.Green.Button.Focus" Description="Video Teletext FastextGreen, Focus" DefaultSize="60, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Fastext.Green.Button.png"/>
+      <ImagePart Source="@res://ehres!Common.Button.Left.Focus.mi" DestinationSize="60, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Fastext.Red.Button.NoFocus" Description="Video Teletext FastextRed, NoFocus" DefaultSize="60, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Fastext.Red.Button.png"/>
+      <ImagePart Source="@res://ehres!Video.EPG.GuidePanel.Button.NoFocus.mi" DestinationSize="60, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Fastext.Red.Button.Focus" Description="Video Teletext FastextRed, Focus" DefaultSize="60, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Fastext.Red.Button.png"/>
+      <ImagePart Source="@res://ehres!Common.Button.Left.Focus.mi" DestinationSize="60, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Fastext.Yellow.Button.NoFocus" Description="Video Teletext FastextYellow, NoFocus" DefaultSize="60, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Fastext.Yellow.Button.png"/>
+      <ImagePart Source="@res://ehres!Video.EPG.GuidePanel.Button.NoFocus.mi" DestinationSize="60, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Fastext.Yellow.Button.Focus" Description="Video Teletext FastextYellow, Focus" DefaultSize="60, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Fastext.Yellow.Button.png"/>
+      <ImagePart Source="@res://ehres!Common.Button.Left.Focus.mi" DestinationSize="60, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Hold.Button.Checked.NoFocus" Description="Video Teletext HoldChecked, NoFocus" DefaultSize="80, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Hold.Button.Checked.png"/>
+      <ImagePart Source="@res://ehres!Video.EPG.GuidePanel.Button.NoFocus.mi" DestinationSize="80, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Hold.Button.Checked.Focus" Description="Video Teletext HoldChecked, Focus" DefaultSize="80, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Hold.Button.Checked.png"/>
+      <ImagePart Source="@res://ehres!Common.Button.Left.Focus.mi" DestinationSize="80, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Hold.Button.NoFocus" Description="Video Teletext Hold, NoFocus" DefaultSize="80, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Hold.Button.png"/>
+      <ImagePart Source="@res://ehres!Video.EPG.GuidePanel.Button.NoFocus.mi" DestinationSize="80, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Hold.Button.Focus" Description="Video Teletext Hold, Focus" DefaultSize="80, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Hold.Button.png"/>
+      <ImagePart Source="@res://ehres!Common.Button.Left.Focus.mi" DestinationSize="80, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Mix.Button.NoFocus" Description="Video Teletext Mix, NoFocus" DefaultSize="61, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Mix.Button.png"/>
+      <ImagePart Source="@res://ehres!Video.EPG.GuidePanel.Button.NoFocus.mi" DestinationSize="61, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Mix.Button.Focus" Description="Video Teletext Mix, Focus" DefaultSize="61, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Mix.Button.png"/>
+      <ImagePart Source="@res://ehres!Common.Button.Left.Focus.mi" DestinationSize="61, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Reveal.Button.NoFocus" Description="Video Teletext Reveal, NoFocus" DefaultSize="60, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Reveal.Button.png"/>
+      <ImagePart Source="@res://ehres!Video.EPG.GuidePanel.Button.NoFocus.mi" DestinationSize="60, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Video.Teletext.Reveal.Button.Focus" Description="Video Teletext Reveal, Focus" DefaultSize="60, 35">
+    <Children>
+      <ImagePart Source="@res://ehres!Video.Teletext.Reveal.Button.png"/>
+      <ImagePart Source="@res://ehres!Common.Button.Left.Focus.mi" DestinationSize="60, 35"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Listmaker.Overlay" Description="Listmaker, Overlay" DefaultSize="1024, 768">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.TopLeft.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.Top.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.TopRight.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.Left.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.Right.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.BottomLeft.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.Bottom.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.BottomRight.png"/>
+    </Children>
+  </MetaImage>
+  <MetaImage Name="Listmaker.Overlay.NoStatus" Description="Listmaker, Overlay.NoStatus" DefaultSize="1024, 768">
+    <Drawer>
+      <NineGridMetaDrawer />
+    </Drawer>
+    <Children>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.TopLeft.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.Top.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.TopRight.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.Left.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.Right.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.NoStatus.BottomLeft.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.NoStatus.Bottom.png"/>
+      <ImagePart Source="@res://ehres!Listmaker.Overlay.NoStatus.BottomRight.png"/>
+    </Children>
+  </MetaImage>
+</Mcml>

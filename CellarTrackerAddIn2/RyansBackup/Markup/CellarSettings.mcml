@@ -1,0 +1,74 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:CT="assembly://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=05f62c4163dc1a19"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:me="Me">
+
+  <Aggregate Source="resx://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=05f62c4163dc1a19/CellarTrackerAddIn2.Resources/Controls"/>
+  
+  <UI Name="CellarSettings">
+    <Properties>
+      <CT:CellarTrackerAddIn2.Properties.Settings Name="Settings"/>
+    </Properties>
+
+    <Locals>
+
+     
+      
+      <EditableText Name="UserNameVal" 
+                    Description="User Name" 
+                    Value="[Settings.Default.Username]"/>
+      <EditableText Name="PasswordVal"
+                    Description="Password" 
+                    Value="[Settings.Default.Password]"/>
+      
+      <Command Name="SaveUserName"/>
+      <Command Name="SavePassword"/>
+      <Command Name="SaveAll" Description="Save All"/>
+      
+    </Locals>
+
+    <Rules>
+      
+      <Changed Source="[SaveUserName.Invoked]">
+        <Actions>
+          <Set Target="[Settings.Default.Username]" Value="[UserNameVal.Value]"/>
+          <Invoke Target="[Settings.Default.Save]"/>
+          <DebugTrace Message="Username Saved"/>
+        </Actions>
+      </Changed>
+      
+      <Changed Source="[SavePassword.Invoked]">
+        <Actions>
+          <Set Target="[Settings.Default.Password]" Value="[PasswordVal.Value]"/>
+          <Invoke Target="[Settings.Default.Save]"/>
+          <DebugTrace Message="Password Saved"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[SaveAll.Invoked]">
+        <Actions>
+          <Set Target="[Settings.Default.Username]" Value="[UserNameVal.Value]"/>
+          <Set Target="[Settings.Default.Password]" Value="[PasswordVal.Value]"/>
+          <Invoke Target="[Settings.Default.Save]"/>
+          <DebugTrace Message="All Saved"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Name="Body" Layout="Center">
+        <Children>
+          <Panel Layout="VerticalFlow">
+            <Children>
+              <me:LabeledEditBox Name="UserNameBox" CommandOnEnter="[SaveUserName]" EditableText="[UserNameVal]"/>
+              <me:LabeledEditBox Name="PasswordBox" CommandOnEnter="[SavePassword]" EditableText="[PasswordVal]"/>
+              <me:SimpleButton Name="Save" Command="[SaveAll]"/>
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+</Mcml>

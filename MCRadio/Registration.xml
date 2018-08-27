@@ -1,0 +1,9 @@
+﻿<application title="MCRadio" id="{0be88a49-eaaf-4649-887a-822928b5334c}">
+	<entrypoint id="{4ccaa453-9fa0-4488-a8a0-5612b53b5e5e}"
+				addin="MCRadio.MyAddIn, MCRadio,Culture=Neutral,Version=1.0.0.0,PublicKeyToken=insert_public_key_token_here"
+				title="MCRadio"
+				description="MCRadio Description"
+				ImageUrl=".\Application.png">
+		<category category="More Programs"/>
+	</entrypoint>
+</application>

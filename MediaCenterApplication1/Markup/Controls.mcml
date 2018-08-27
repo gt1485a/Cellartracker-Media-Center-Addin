@@ -1,0 +1,3 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml">
+	<Aggregate Source="resx://MediaCenterApplication1/MediaCenterApplication1.Resources/Button"/>
+</Mcml>

@@ -1,0 +1,9 @@
+﻿<application title="CellarTrackerAddIn2" id="{B3338890-E09E-4a64-8F08-9EA2E15C6925}"  Description="View your Cellar in Media Center">
+	<entrypoint id="{29371D88-018F-4d6c-8703-E4A5156BBE40}"
+				addin="CellarTrackerAddIn2.MyAddIn,CellarTrackerAddIn2,Culture=Neutral,Version=1.0.0.0,PublicKeyToken=275706189cd468f2"
+				title="CellarTrackerAddIn2"
+				description="View your Cellar in Media Center"
+				ImageUrl=".\WineBarrel.jpg">
+		<category category="More Programs"/>
+	</entrypoint>
+</application>

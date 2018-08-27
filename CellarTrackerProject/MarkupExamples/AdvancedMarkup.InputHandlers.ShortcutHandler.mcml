@@ -1,0 +1,75 @@
+<Mcml
+  xmlns="http://schemas.microsoft.com/2006/mcml" >
+
+  <!-- ShortcutHandler sample.                                              -->
+
+  <!-- Shortcut handler provide shortcut-command input behavior.            -->
+  <!-- They also have commands associated and the Invoke method on the      -->
+  <!-- command will be called when the shortcut is invoked.                 -->
+
+  <!--  This example implements UI element (ShortcutUI) that has the        -->
+  <!--  text 'Press the stop key.'                                          -->
+
+  <!--  When the stop key is pressed from either the keyboard or the remote -->
+  <!--  it changes the background color and label color                     -->
+  <!--  of the UI element.                                                  -->
+  <UI Name="ShortcutUI">
+
+    <!-- Define the properties for this object. -->
+    <Properties>
+
+      <!-- Background color properties. -->
+      <Color Name="BackgroundColor" Color="DimGray"/>
+      <Color Name="BackgroundPressedColor" Color="White"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor" Color="White"/>
+      <Color Name="LabelPressedColor" Color="FireBrick"/>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont" Font="Arial,20"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- Use the Shortcut handler to handle 'stop' shortcut. -->
+      <ShortcutHandler Name="StopHandler" Shortcut="Stop"/>
+
+    </Locals>
+
+    <!-- Define how to handle the input using rules. -->
+    <Rules>
+
+      <!-- Rule to define the behavior when the 'stop' shortcut is invoked. -->
+      <!-- Change the background and label color using the colors above.    -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[StopHandler.Invoked]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Background.Content]" Value="[BackgroundPressedColor]" />
+          <Set Target="[Label.Color]" Value="[LabelPressedColor]" />
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+
+      <!-- Solid background color. -->
+      <ColorFill Name="Background" Content="[BackgroundColor]" Padding="5,5,5,5">
+        <Children>
+
+          <!-- The label to display. -->
+          <Text Name="Label"  Content="Press the stop key!" Color="[LabelColor]" 
+                Font="[LabelFont]"/>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

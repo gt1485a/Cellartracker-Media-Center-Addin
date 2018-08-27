@@ -1,0 +1,251 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+	  xmlns:cor="assembly://MSCorLib/System"
+    xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+    xmlns:coll="assembly://MsCorLib/System.Collections"
+    xmlns:btn="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Scenarios.SimpleButton.mcml"
+    xmlns:me="Me">
+
+
+  <UI Name="Default">
+    <Locals>
+      <Command Name="GetDataCommand" Description="Get Data"/>
+      <coll:IDictionary Name="QueryPairs" IDictionary="[MyUri.QueryPairs]"/>
+      
+      <cor:String Name="TestUriOne" String="http://www.cellartracker.com/api_read.asp"/>
+      <cor:String Name="user" String="user"/>
+      <cor:String Name="userVal" String="gt1485a"/>
+      <cor:String Name="password" String="password"/>
+      <cor:String Name="passwordVal" String="Darwin1"/>
+      <cor:String Name="API" String="API"/>
+      <cor:String Name="APIVal" String="list"/>
+      <cor:String Name="Page" String="Page"/>
+      <cor:String Name="PageVal" String="1"/>
+      <cor:String Name="Records" String="Records"/>
+      <cor:String Name="RecordsVal" String="20"/>
+      <cor:String Name="Format" String="Format"/>
+      <cor:String Name="FormatVal" String="XML"/>
+                  
+      <cor:String Name="ResponseStat" String="None"/>
+      <cor:String Name="ResponseCode" String="None"/>
+
+      <!-- The ScrollingHandler which reacts to user keyboard input. -->
+      <!-- NOTE: HandlerStage must be "Bubbled."                     -->
+      <ScrollingHandler Name="ScrollingHandler" HandlerStage="Bubbled"/>
+
+      <!-- ScrollingData contains many ways to customize how scrolling -->
+      <!-- should behave. It has methods to change the current scroll  -->
+      <!-- position and it also reports the position. In this case,    -->
+      <!-- the default values are used for the sample.                 -->
+      <ScrollingData Name="ScrollingData" />
+      
+      <ArrayListDataSet Name="WineSortData">
+        <Source>
+          <cor:String String="Wine Name"/>
+          <cor:String String="Vintage"/>
+          <cor:String String="Region"/>
+          <cor:String String="Wine Type"/>
+        </Source>
+      </ArrayListDataSet>
+      
+      <TypingHandler Name="Typer" HandlerStage="Bubbled" MaxLength="5" TypingPolicy="TripleTap"/>
+      
+    </Locals>
+
+    <Properties>
+      <da:RemoteResourceUri Name="MyUri"/>
+      <da:XmlRemoteResource Name="MyResource">
+        <Mappings>
+          <da:XmlRemoteValueList Name="Wines" RepeatedType="PropertySet" Source="/cellartracker/list/row" SortBy="Entries.#Wine" >
+            <Mappings>
+              <da:XmlRemoteValue Name="WineName" Property="Entries.#Wine" Source="/Wine"/>
+              <da:XmlRemoteValue Name="WineVintage" Property="Entries.#Vintage" Source="/Vintage"/>
+              <da:XmlRemoteValue Name="WineType" Property="Entries.#Type" Source="/Type"/>
+              <da:XmlRemoteValue Name="WineID" Property="Entries.#iWine" Source="/iWine"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+        </Mappings>
+      </da:XmlRemoteResource>
+    </Properties>
+
+    <Rules>
+      <!-- Give ScrollingData to ScrollingHandler. -->
+      <Default Target="[ScrollingHandler.ScrollingData]" Value="[ScrollingData]"/>
+
+      <!-- Give Repeater to ScrollingData. -->
+      <Default Target="[ScrollingData.Repeater]" Value="[WineRepeater]"/>
+      
+      <Changed Source="[GetDataCommand.Invoked]">
+        <Actions>
+          
+          <Set Target="[MyUri.FullString]" Value="[TestUriOne]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[QueryPairs.Clear]"/>
+          
+          <Invoke Target="[QueryPairs.Add]" key="[user]" value="[userVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[password]" value="[passwordVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[API]" value="[APIVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Page]" value="[PageVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Records]" value="[RecordsVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Format]" value="[FormatVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          
+          <Set Target="[MyUri.QueryPairs]" Value="[QueryPairs]"/>
+          <Set Target="[MyResource.RequestUri]" Value="[MyUri]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[MyResource.GetDataFromResource]" InvokePolicy="Synchronous"/>
+          <!--<Set Target="[Wine1.Vintage]" Value="[MyResource.Mappings.#Vintage!da:XmlRemoteValue.String]"/>-->
+          
+        </Actions>
+      </Changed>
+      
+      <!--<Binding Source="[MyResource.Mappings.#Vintage!da:XmlRemoteValue.String]" Target="[Vintage.Content]"/>-->
+      <!--  <Condition ConditionOp="Equals" SourceValue="[MyCellar.Mappings.#RowNum].String" Value="asdas" Source="[MyCellar.Mappings.#RowNum!PropertySet.Entries.#Vintage!da:XmlRemoteValue.String]" Target="[Vintage.Content]"/>-->
+    </Rules>
+    
+    <Content>
+      
+      <Panel Layout="VerticalFlow" >
+        <Children>
+          <Scroller  Orientation="Vertical" ScrollingData="[ScrollingData]" MaximumSize="0,400">
+            <Children>
+             <Repeater Name="WineRepeater" Source="[MyResource.Mappings.#Wines!da:XmlRemoteValueList.List]">
+               <Layout>
+                 <GridLayout Orientation="Vertical" AllowWrap="true" Spacing="10,10"/>
+               </Layout>
+                    <Content>
+                      <me:Wine Name="Wine1" WineData="[RepeatedItem!PropertySet]"></me:Wine>
+                    </Content>
+              </Repeater>
+            </Children>
+          </Scroller>
+          <me:SimpleButton Command="[GetDataCommand]"></me:SimpleButton>
+        </Children>
+      </Panel>
+    </Content>
+    
+  </UI>
+  <!-- Simple button -->
+  <UI Name="SimpleButton">
+
+    <Properties>
+
+      <!-- Command is a required parameter. -->
+      <ICommand Name="Command" ICommand="$Required"/>
+
+      <!-- Background color properties. -->
+      <Color Name="BackgroundColor" Color="DimGray"/>
+      <Color Name="BackgroundFocusedColor" Color="DarkGray"/>
+      <Color Name="BackgroundHoverColor" Color="PaleGoldenrod"/>
+      <Color Name="BackgroundPressedColor" Color="White"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor" Color="White"/>
+      <Color Name="LabelFocusedColor" Color="White"/>
+      <Color Name="LabelHoverColor" Color="DimGray"/>
+      <Color Name="LabelPressedColor" Color="Black"/>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont" Font="Arial,20"/>
+
+    </Properties>
+
+    <Locals>
+
+      <!-- React to "click" input. -->
+      <ClickHandler Name="Clicker" Command="[Command]"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- The command description is displayed by the text box. A  -->
+      <!-- binding is used in case the description changes at       -->
+      <!-- runtime.                                                 -->
+      <Binding Source="[Command.Description]" Target="[Label.Content]"/>
+
+      <Binding Source="[Command]" Target="[Clicker.Command]"/>
+
+      <!-- Change color on click. -->
+      <Condition Source="[Clicker.Clicking]" SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]" Value="[BackgroundPressedColor]"/>
+          <Set Target="[Label.Color]" Value="[LabelPressedColor]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Change color on mouse focus. -->
+      <Condition Source="[Input.MouseFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]" Value="[BackgroundHoverColor]"/>
+          <Set Target="[Label.Color]" Value="[LabelHoverColor]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Change color on key focus. -->
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]" Value="[BackgroundFocusedColor]"/>
+          <Set Target="[Label.Color]" Value="[LabelFocusedColor]"/>
+        </Actions>
+      </Condition>
+
+    </Rules>
+
+    <Content>
+
+      <!-- Solid background color. -->
+      <ColorFill Name="Background" Content="[BackgroundColor]" Padding="5,5,5,5">
+        <Children>
+
+          <!-- The label to display. -->
+          <Text Name="Label" Color="[LabelColor]" Font="[LabelFont]"/>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+  
+  <UI Name="Wine" >
+      <Properties>
+        <PropertySet Name="WineData" PropertySet="$Required" />
+      </Properties>
+    
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+    
+    <Content>
+      <ColorFill Name="Background" Content="SlateGray" Padding="5,5,5,5">
+        <Children>
+          <Panel Layout ="HorizontalFlow">
+            <Children>
+              <Text Name="tVintage" Color="White" Content="A" />
+              <Text Name="tType" Color="White" Content="B" />
+              <Text Name="tWineName" Color="White" Content="C" />
+            </Children>
+          </Panel>
+        </Children>
+      </ColorFill>
+    </Content>
+    
+    <Rules>
+      
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]" Value="LightGoldenrodYellow"/>
+          <Set Target="[tVintage.Color]" Value="Black"/>
+          <Set Target="[tType.Color]" Value="Black"/>
+          <Set Target="[tWineName.Color]" Value="Black"/>
+        </Actions>
+      </Condition>
+      <Condition Source="[WineData.Entries.Count]"  SourceValue="0"  ConditionOp="GreaterThan">
+        <Actions>
+          <Set Target="[tVintage.Content]" Value="[WineData.Entries.#Vintage!cor:String]"/>
+          <Set Target="[tType.Content]" Value="[WineData.Entries.#Wine!cor:String]"/>
+          <Set Target="[tWineName.Content]" Value="[WineData.Entries.#Type!cor:String]"/>
+          <!--<Set Target="[WineID]" Value="[WineData.Entries.#iWine!cor:String"/>-->
+        </Actions>
+      </Condition>
+    </Rules>
+  </UI>
+  
+</Mcml>

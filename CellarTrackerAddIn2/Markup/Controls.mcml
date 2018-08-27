@@ -1,0 +1,595 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:UI="assembly://Microsoft.MediaCenter.UI/Microsoft.MediaCenter.UI"
+      xmlns:CT="assembly://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=275706189cd468f2"
+      xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:me="Me">
+  
+ 
+  
+  <!--SimpleEditBox-->
+  <UI Name="SimpleEditBox">
+
+    <Properties>
+
+      <!-- EditableText is a required parameter. -->
+      <EditableText Name="EditableText" EditableText="$Required"/>
+      <cor:Int32 Name="Height" Int32="0"/>
+      <cor:Int32 Name="Width" Int32="325"/>
+      <!-- Background color properties. -->
+      <Color Name="BackgroundColor" Color="DimGray"/>
+      <Color Name="BackgroundFocusedColor" Color="DarkGray"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor" Color="White"/>
+      <Color Name="LabelFocusedColor" Color="White"/>
+
+      <cor:Boolean Name="PasswordMasked" Boolean="false"/>
+      <cor:Boolean Name="Wrap" Boolean="false"/>
+      <Command Name="RemoteCommand"/>
+    </Properties>
+
+    <Locals>
+
+      <!-- React to "typing" input. -->
+      <TypingHandler Name="TypingHandler" EditableText="[EditableText]" TypingPolicy="TripleTap"/>
+      <addin:AddInHost Name="AddInHost"/>
+      <ShortcutHandler Name="RemoteHandler" Command="[RemoteCommand]"/>
+      <UI:Size Name="CustomSize" Width="[Width]" Height="[Height]"/>
+      
+    </Locals>
+
+    <Rules>
+      <Changed Source="[RemoteCommand.Invoked]">
+        <Actions>
+          <Invoke           Target="[AddInHost.MediaCenterEnvironment.ShowOnscreenKeyboard]"
+                            editableText="[EditableText]"
+                            passwordMasked="false"
+                            maxLength="255"
+                            />
+        </Actions>
+      </Changed>
+      <!-- The editable text value is bound to the label text value. -->
+      <Binding Source="[TypingHandler.DisplayValue]" Target="[Label.Content]"/>
+
+      <!-- Change color if in overtype mode. -->
+      <Condition Source="[EditableText.Overtype]" SourceValue="true">
+        <Actions>
+          <Set Target="[Overtype.Visible]" Value="true"/>
+          <Set Target="[Caret.Visible]" Value="false"/>
+        </Actions>
+      </Condition>
+
+      <!-- Change color of key focus. -->
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[Background.Content]" Value="[BackgroundFocusedColor]"/>
+          <Set Target="[Label.Color]" Value="[LabelFocusedColor]"/>
+          <Set Target="[Caret.Visible]" Value="true"/>
+        </Actions>
+      </Condition>
+
+      <!-- Is this a password field? -->
+      <Binding Source="[PasswordMasked]" Target="[TypingHandler.PasswordMasked]"/>
+      
+      <!--<Condition Source="[Height]" ConditionOp="GreaterThan" SourceValue="0">
+        <Actions>
+          --><!--<Set Target="[MinSize.Height]" Value="[Height]"/>--><!--
+          <Set Target="[Background.MinimumSize]" Value="[MinSize]"/>
+        </Actions>
+      </Condition>-->
+    </Rules>
+
+    <Content>
+
+      <!-- Solid background color. -->
+      <ColorFill Name="Background" Content="[BackgroundColor]"
+                 MouseInteractive="true" Padding="5,5,5,5" 
+                  Layout="Anchor" MinimumSize="[CustomSize]" MaximumSize="[CustomSize]">
+        <Children>
+
+          <!-- Display of the current value. -->
+          <Text Name="Label" Color="[LabelColor]" Font="Arial,20"
+                HorizontalAlignment="Far" Margins="0,0,10,0" MinimumSize="0,30" WordWrap="[Wrap]"/>
+
+          <!-- Display of the caret. -->
+          <ColorFill Name="Caret" Content="[LabelFocusedColor]" Visible="false"
+                     MinimumSize="12,4">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Label,1,-10" Top="Label,0" Bottom="Label,1"
+                                 Vertical="Far"/>
+            </LayoutInput>
+          </ColorFill>
+
+          <!-- Overtype fill. -->
+          <ColorFill Name="Overtype" Content="Black" Visible="false">
+            <LayoutInput>
+              <AnchorLayoutInput Left="Label,0" Right="Label,1" Top="Label,0"
+                                 Bottom="Label,1"/>
+            </LayoutInput>
+          </ColorFill>
+
+        </Children>
+      </ColorFill>
+
+    </Content>
+
+  </UI>
+ 
+
+  <!--LabeledEditBox-->
+  <UI Name="LabeledEditBox">
+    <Properties>
+      <EditableText Name="EditableText" EditableText="$Required"/>
+      <ICommand Name="CommandOnEnter" ICommand="$Required"/>
+      <cor:Int32 Name="Height" Int32="0"/>
+      <cor:Int32 Name="Width" Int32="325"/>
+      <cor:Boolean Name="Wrap" Boolean="false"/>
+    </Properties>
+
+    <Rules>
+      
+
+      <!--<Binding Source="[Command]" Target="[Clicker.Command]"/>-->
+      <Changed Source="[EditableText.Submitted]" >
+        <Actions>
+          <Invoke Target="[CommandOnEnter.Invoke]"/>
+        </Actions>
+      </Changed>
+    </Rules>
+    <Content>
+      <Panel Layout="HorizontalFlow">
+        <Layout>
+          <FlowLayout AllowWrap="false"/>
+        </Layout>
+        <Children>
+           <Text Name="myLabel" Content="[EditableText.Description]" Color="AliceBlue"/>
+           <me:SimpleEditBox Name="myText" EditableText="[EditableText]" Height="[Height]" Width="[Width]" Wrap="[Wrap]"/>
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+  <!--SimpleButton-->
+  <UI Name="SimpleButton">
+
+    <Properties>
+
+      <!-- Command is a required parameter. -->
+      <ICommand Name="Command" ICommand="$Required"/>
+      <cor:String Name="Description" String=""/>
+
+      <!-- Background color properties. -->
+      <Color Name="BackgroundColor" Color="DimGray"/>
+      <Color Name="BackgroundFocusedColor" Color="DarkGray"/>
+      <Color Name="BackgroundHoverColor" Color="PaleGoldenrod"/>
+      <Color Name="BackgroundPressedColor" Color="White"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor" Color="DimGray"/>
+      <Color Name="LabelFocusedColor" Color="White"/>
+      <Color Name="LabelHoverColor" Color="White"/>
+      <Color Name="LabelPressedColor" Color="Black"/>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont" Font="Arial,20"/>
+      <cor:Int32 Name="Zero" Int32="0"/>
+    </Properties>
+
+    <Locals>
+
+      <!-- React to "click" input. -->
+      <ClickHandler Name="Clicker"/>
+
+    </Locals>
+
+    <Rules>
+
+     <!-- The command description is displayed by the text box. A  -->
+     <!-- binding is used in case the description changes at       -->
+     <!-- runtime.                                                 -->
+      <!--<Default Value="[Command.Description]"  Target="[Label.Content]"/>-->
+
+      <Binding Source="[Command]" Target="[Clicker.Command]"/>
+      <Default Target="[Label.BackColor]" Value="0,0,0,0"/>
+      <Default Target="[Label.Scale]" Value="1,1,1"/>
+
+      <Condition Source="[Description.Length]" SourceValue="[Zero]" ConditionOp="GreaterThan"  >
+        <Actions>
+          <Set Value="[Description]" Target="[Label.Content]" InvokePolicy="Synchronous"/>
+          <!--<Set Value="[Command.Description]" Target="[Label.Content]" InvokePolicy="Synchronous"/>-->
+        </Actions>
+      </Condition>
+      
+      <Condition Source="[Description.Length]" SourceValue="[Zero]" ConditionOp="Equals" >
+        <Actions>
+          <Set Value="[Command.Description]" Target="[Label.Content]" InvokePolicy="Synchronous"/>
+        </Actions>
+      </Condition>
+      
+      <!-- Change color on click. -->
+      <Condition Source="[Clicker.Clicking]" SourceValue="true">
+        <Actions>
+          <Set Target="[Label.BackColor]" Value="[BackgroundPressedColor]"/>
+          <Set Target="[Label.Color]" Value="[LabelPressedColor]"/>
+          <!--<Set Value="[Command.Description]" Target="[Label.Content]" InvokePolicy="Synchronous"/>-->
+        </Actions>
+      </Condition>
+
+      <!-- Change color on mouse focus. -->
+      <Condition Source="[Input.MouseFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[Label.Scale]" Value="1.2,1.2,1.2"/>
+          <Set Target="[Label.BackColor]" Value="[BackgroundHoverColor]"/>
+          <Set Target="[Label.Color]" Value="[LabelHoverColor]"/>
+        </Actions>
+      </Condition>
+
+      <!-- Change color on key focus. -->
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[Label.Scale]" Value="1.2,1.2,1.2"/>
+          <Set Target="[Label.BackColor]" Value="[BackgroundFocusedColor]"/>
+          <Set Target="[Label.Color]" Value="[LabelFocusedColor]"/>
+        </Actions>
+      </Condition>
+
+    </Rules>
+
+    <Content>
+
+      <!-- Solid background color. -->
+
+          <!-- The label to display. -->
+          <Text Name="Label"  Color="[LabelColor]" Font="[LabelFont]"/>
+
+
+    </Content>
+
+  </UI>
+  <!--Wine-->
+  <UI Name="Wine" >
+    <Properties>
+      <PropertySet Name="WineData" PropertySet="$Required" />
+      <cor:String Name="WineID" String="1"/>
+      <cor:Int32 Name="JIndex" Int32="0"/>
+      <Command Name="FocusCallback" Command="$Required"/>
+    </Properties>
+
+    <Locals>
+      <CT:CellarTrackerAddIn2.MyAddIn Name="CTAddIn"/>
+      <ClickHandler Name="Clicker">
+        <Command>
+          <NavigateCommand Description="Cellar Wine Detail"
+                            Source="@resx://CellarTrackerAddIn2/CellarTrackerAddIn2.Resources/CellarWineDetail"
+                            WineID="[WineData.Entries.#iWine]"/>
+        </Command>
+      </ClickHandler>
+
+     
+      
+    </Locals>
+
+    <Content>
+      <Panel Name="Background" Padding="5,5,5,5"  Layout="Dock" MaximumSize="0,60">
+            <Children>
+              <Text Name="tVintage" Color="DimGray" Content="" Margins="10,2,0,0" MaximumSize="80,40" MinimumSize="80,40">
+                <LayoutInput>
+                  <DockLayoutInput Alignment="Center" Position="Left"/>
+                </LayoutInput>
+              </Text>
+              <Text Name="tType" Color="DimGray" Content="" Margins="10,2,0,0" MaximumSize="100,40" MinimumSize="80,40">
+                <LayoutInput>
+                  <DockLayoutInput Alignment="Center" Position="Left"/>
+                </LayoutInput>
+              </Text>
+              <Text Name="tWineName" Color="DimGray" Content="" Margins="10,2,0,0" MaximumSize="600,40">
+                <LayoutInput>
+                  <DockLayoutInput Alignment="Center" Position="Left"/>
+                </LayoutInput>
+              </Text>
+              <Text Name="tNote" Color="DimGray" Content="" Margins="10,2,0,0" MaximumSize="80,40" MinimumSize="80,40">
+                <LayoutInput>
+                  <DockLayoutInput Alignment="Center" Position="Right"/>
+                </LayoutInput>
+              </Text>
+              <Text Name="notecount" Color="DimGray" Content="Notes: " Margins="10,2,0,0" MinimumSize="0,40">
+                <LayoutInput>
+                  <DockLayoutInput Alignment="Center" Position="Right"/>
+                </LayoutInput>
+              </Text>
+              <Text Name="tScore" Color="DimGray" Content="" Margins="10,2,0,0" MaximumSize="80,40" MinimumSize="80,40">
+                <LayoutInput>
+                  <DockLayoutInput Alignment="Center" Position="Right"/>
+                </LayoutInput>
+              </Text>
+              <Text Name="score" Color="DimGray" Content="Score: " Margins="10,2,30,0" MinimumSize="0,40">
+                <LayoutInput>
+                  <DockLayoutInput Alignment="Center" Position="Right"/>
+                </LayoutInput>
+              </Text>
+            </Children>
+      </Panel>
+    </Content>
+
+    <Rules>
+      <Default Target="[tVintage.BackColor]" Value="0,0,0,0"/>
+      <Default Target="[tType.BackColor]" Value="0,0,0,0"/>
+      <Default Target="[tWineName.BackColor]" Value="0,0,0,0"/>
+      <Default Target="[score.BackColor]" Value="0,0,0,0"/>
+      <Default Target="[tScore.BackColor]" Value="0,0,0,0"/>
+      <Default Target="[notecount.BackColor]" Value="0,0,0,0"/>
+      <Default Target="[tNote.BackColor]" Value="0,0,0,0"/>
+      
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[tVintage.BackColor]" Value="LightGoldenrodYellow"/>
+          <Set Target="[tVintage.Color]" Value="White"/>
+          <Set Target="[tType.BackColor]" Value="LightGoldenrodYellow"/>
+          <Set Target="[tType.Color]" Value="White"/>
+          <Set Target="[tWineName.BackColor]" Value="LightGoldenrodYellow"/>
+          <Set Target="[tWineName.Color]" Value="White"/>
+          <Set Target="[score.BackColor]" Value="LightGoldenrodYellow"/>
+          <Set Target="[score.Color]" Value="White"/>
+          <Set Target="[tScore.BackColor]" Value="LightGoldenrodYellow"/>
+          <Set Target="[tScore.Color]" Value="White"/>
+          <Set Target="[notecount.BackColor]" Value="LightGoldenrodYellow"/>
+          <Set Target="[notecount.Color]" Value="White"/>
+          <Set Target="[tNote.BackColor]" Value="LightGoldenrodYellow"/>
+          <Set Target="[tNote.Color]" Value="White"/>
+          <Set Target="[FocusCallback.Description]" Value="[JIndex.ToString]"/>
+          <Invoke Target="[FocusCallback.Invoke]"/>
+        </Actions>
+      </Condition>
+
+      <!--<Changed Source="[NameFilter]" >
+        <Conditions>
+          <Equality Source="[NameFilter.Length]" Value="0" ConditionOp="GreaterThan"/>
+          --><!--<Equality Source="[tWineName.Content.ToLower]" Value="[NameFilter.ToLower]" ConditionOp="GreaterThan"/>--><!--
+        </Conditions>
+        <Actions>
+          <Set Target="[tWineName.Content]" Value=""/>
+        </Actions>
+      </Changed>-->
+      
+      <Condition Source="[WineData.Entries.Count]"  SourceValue="0"  ConditionOp="GreaterThan">
+        
+        <Actions>
+          <Set Target="[tVintage.Content]" Value="[WineData.Entries.#Vintage!cor:String]"/>
+          <Set Target="[tType.Content]" Value="[WineData.Entries.#Type!cor:String]"/>
+          <Set Target="[tWineName.Content]" Value="[WineData.Entries.#Wine!cor:String]"/>
+          <Invoke Target="[CTAddIn.RoundString]" Input="[WineData.Entries.#CScore!cor:String]" places="1" InvokePolicy="Synchronous" ResultTarget="[tScore.Content]"/>
+          <Set Target="[tNote.Content]" Value="[WineData.Entries.#CNotes!cor:String]"/>
+          <Set Target="[WineID]" Value="[WineData.Entries.#iWine!cor:String]"/>
+          <Invoke Target="[tVintage.Content.Replace]" ResultTarget="[tVintage.Content]" oldValue="1001" newValue="N.V." InvokePolicy="Synchronous"/>
+        </Actions>
+      </Condition>
+      
+    </Rules>
+  </UI>
+  <!--WineAvail-->
+  <UI Name="WineAvail" >
+    <Properties>
+      <PropertySet Name="WineData" PropertySet="$Required" />
+      <cor:String Name="WineID" String="1"/>
+    </Properties>
+    <Locals>
+      <CT:CellarTrackerAddIn2.MyAddIn Name="CTAddIn"/>
+      <ClickHandler Name="Clicker">
+        <Command>
+          <NavigateCommand Description="Cellar Wine Detail"
+                            
+                            Source="@resx://CellarTrackerAddIn2/CellarTrackerAddIn2.Resources/CellarWineDetail"
+                            WineID="[WineData.Entries.#iWine]"/>
+        </Command>
+      </ClickHandler>
+
+    </Locals>
+    <Content>
+      <Panel Name="Backgrounds" Padding="5,5,5,5"  Layout="Dock" MaximumSize="0,60">
+        <Children>
+          <Text Name="tAvail" Color="DimGray" Content="" Margins="10,2,0,0" MaximumSize="80,40" MinimumSize="80,40">
+            <LayoutInput>
+              <DockLayoutInput Alignment="Near" Position="Left"/>
+            </LayoutInput>
+          </Text>
+          <Text Name="tVintage" Color="DimGray" Content="" Margins="10,2,0,0" MaximumSize="80,40" MinimumSize="80,40">
+            <LayoutInput>
+              <DockLayoutInput Alignment="Near" Position="Left"/>
+            </LayoutInput>
+          </Text>
+          <Text Name="tType" Color="DimGray" Content="" Margins="10,2,0,0" MaximumSize="100,40" MinimumSize="80,40">
+            <LayoutInput>
+              <DockLayoutInput Alignment="Near" Position="Left"/>
+            </LayoutInput>
+          </Text>
+          <Text Name="tWineName" Color="DimGray" Content="" Margins="10,2,0,0" MaximumSize="600,40">
+            <LayoutInput>
+              <DockLayoutInput Alignment="Near" Position="Left"/>
+            </LayoutInput>
+          </Text>
+          <Text Name="tNote" Color="DimGray" Content="" Margins="10,2,0,0" MaximumSize="80,40" MinimumSize="80,40">
+            <LayoutInput>
+              <DockLayoutInput Alignment="Near" Position="Right"/>
+            </LayoutInput>
+          </Text>
+          <Text Name="notecount" Color="DimGray" Content="Notes: " Margins="10,2,0,0">
+            <LayoutInput>
+              <DockLayoutInput Alignment="Near" Position="Right"/>
+            </LayoutInput>
+          </Text>
+          <Text Name="tScore" Color="DimGray" Content="" Margins="10,2,0,0" MaximumSize="80,40" MinimumSize="80,40">
+            <LayoutInput>
+              <DockLayoutInput Alignment="Near" Position="Right"/>
+            </LayoutInput>
+          </Text>
+          <Text Name="score" Color="DimGray" Content="Score: " Margins="10,2,0,0">
+            <LayoutInput>
+              <DockLayoutInput Alignment="Near" Position="Right"/>
+            </LayoutInput>
+          </Text>
+        </Children>
+      </Panel>
+    </Content>
+    <Rules>
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          
+          <Set Target="[tVintage.Color]" Value="White"/>
+          <Set Target="[tType.Color]" Value="White"/>
+          <Set Target="[tWineName.Color]" Value="White"/>
+          <Set Target="[score.Color]" Value="White"/>
+          <Set Target="[tScore.Color]" Value="White"/>
+          <Set Target="[notecount.Color]" Value="White"/>
+          <Set Target="[tNote.Color]" Value="White"/>
+          <Set Target="[tAvail.Color]" Value="White"/>
+        </Actions>
+      </Condition>
+      <Condition Source="[WineData.Entries.Count]"  SourceValue="0"  ConditionOp="GreaterThan">
+        <Actions>
+          
+          <Set Target="[tVintage.Content]" Value="[WineData.Entries.#Vintage!cor:String]"/>
+          <Invoke Target="[tVintage.Content.Replace]" ResultTarget="[tVintage.Content]" oldValue="1001" newValue="N.V." InvokePolicy="Synchronous"/>
+          <Set Target="[tType.Content]" Value="[WineData.Entries.#Type!cor:String]"/>
+          <Set Target="[tWineName.Content]" Value="[WineData.Entries.#Wine!cor:String]"/>
+          <Invoke Target="[CTAddIn.RoundString]" Input="[WineData.Entries.#CScore!cor:String]" places="1" InvokePolicy="Synchronous" ResultTarget="[tScore.Content]"/>
+          <!--<Set Target="[tScore.Content]" Value="[WineData.Entries.#CScore!cor:String]">
+            <Transformer>
+              <FormatTransformer Format="{0}" ExtendedFormat="N0"/>
+            </Transformer>
+          </Set>-->
+          <Set Target="[tNote.Content]" Value="[WineData.Entries.#CNotes!cor:String]"/>
+          <!--<Invoke Target="[CTAddIn.RoundString]" Input="[WineData.Entries.#Avail!cor:String]" places="1" InvokePolicy="Synchronous" ResultTarget="[tAvail.Content]"/>-->
+          <Set Target="[tAvail.Content]" Value="[WineData.Entries.#Avail!cor:String]"/>
+          <Set Target="[WineID]" Value="[WineData.Entries.#iWine!cor:String]"/>
+        </Actions>
+      </Condition>
+    </Rules>
+  </UI>
+  <!--SimpleSpinner-->
+  <UI Name="SimpleSpinner">
+
+    <Properties>
+      <!-- Spinner requires a model that has a value and can be incremented -->
+      <!-- to a next or previous value.  The IValueRange interface covers   -->
+      <!-- those requirements, and includes both RangedValue and Choice.    -->
+      <Choice Name="Model" Choice="$Required"/>
+
+      <!-- Background color properties. -->
+      <Color Name="BackgroundColor" Color="Transparent"/>
+
+      <!-- This transformer lets consumers of the spinner configure how to  -->
+      <!-- format the text representation of their value.                   -->
+      <FormatTransformer Name="LabelTransformer" Format="{0}"/>
+
+      <!-- Button color properties. -->
+      <Color Name="ButtonColor" Color="DimGray"/>
+      <Color Name="ButtonFocusedColor" Color="DarkGray"/>
+      <Color Name="ButtonHoverColor" Color="PaleGoldenrod"/>
+      <Color Name="ButtonPressedColor" Color="White"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor" Color="White"/>
+      <Color Name="LabelFocusedColor" Color="White"/>
+      <Color Name="LabelHoverColor" Color="DimGray"/>
+      <Color Name="LabelPressedColor" Color="Black"/>
+    </Properties>
+
+    <Locals>
+
+      <!-- Create two Commands to represent previous and next motion within -->
+      <!-- the value model.                                                 -->
+      <InvokeCommand Name="Previous" Description="-" Target="[Model.PreviousValue]"/>
+      <InvokeCommand Name="Next" Description="+" Target="[Model.NextValue]"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- Bind the current value to a label. -->
+      <Binding Source="[Model!IValueRange.Value]" Target="[Value.Content]"
+               Transformer="[LabelTransformer]"/>
+
+      <!-- If we cannot navigate any further within the value range disable -->
+      <!-- the associated Command.                                          -->
+      <Binding Source="[Model.HasNextValue]" Target="[Next.Available]"/>
+      <Binding Source="[Model.HasPreviousValue]" Target="[Previous.Available]"/>
+
+    </Rules>
+
+    <Content>
+
+      <Panel Padding="2,2,2,2">
+        <Layout>
+          <FlowLayout Orientation="Horizontal" ItemAlignment="Center"
+                      Spacing="3,0"/>
+        </Layout>
+        <Children>
+
+          <!-- Current value -->
+          <Text Name="Value" Font="Arial, 20" Color="[LabelColor]"/>
+
+          <!-- Previous button -->
+          <me:SimpleButton Command="[Previous]"
+                            BackgroundColor="[ButtonColor]"
+                            BackgroundFocusedColor="[ButtonFocusedColor]"
+                            BackgroundHoverColor="[ButtonHoverColor]"
+                            BackgroundPressedColor="[ButtonPressedColor]"
+                            LabelColor="[LabelColor]"
+                            LabelFocusedColor="[LabelFocusedColor]"
+                            LabelHoverColor="[LabelHoverColor]"
+                            LabelPressedColor="[LabelPressedColor]"/>
+
+          <!-- Next button -->
+          <me:SimpleButton Command="[Next]"
+                            BackgroundColor="[ButtonColor]"
+                            BackgroundFocusedColor="[ButtonFocusedColor]"
+                            BackgroundHoverColor="[ButtonHoverColor]"
+                            BackgroundPressedColor="[ButtonPressedColor]"
+                            LabelColor="[LabelColor]"
+                            LabelFocusedColor="[LabelFocusedColor]"
+                            LabelHoverColor="[LabelHoverColor]"
+                            LabelPressedColor="[LabelPressedColor]"/>
+
+        </Children>
+      </Panel>
+    </Content>
+  </UI>
+  
+  <!--OverlayPanel-->
+  <UI Name="OverlayPanel">
+    
+    <Properties>
+      <da:SortableList Name="Data"/>
+      <EditableText Name="EditableText" Description="$Required"/>
+      <Command Name="CallBack"/>
+      <cor:String Name="DialogTitle" String=""/>
+    </Properties>
+
+    <Rules>
+      <Changed Source="[CallBack.Invoke]">
+        <Actions>
+          <DebugTrace Message="CallbackInvoked"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content> 
+      <ColorFill MinimumSize="800,600" Content="DarkBlue" >
+        <Layout>
+          <FlowLayout Orientation="Vertical"/>
+        </Layout>
+        <Children>
+          <Text Content="DialogTitle" Color="DimGray"/>
+          <me:SimpleButton Description="A" Command="[CallBack]" />
+          <me:SimpleButton Description="B" Command="[CallBack]" />
+          <me:SimpleButton Description="C" Command="[CallBack]" />
+          <me:SimpleButton Description="D" Command="[CallBack]" />
+          <me:SimpleButton Description="E" Command="[CallBack]" />
+        </Children>
+      </ColorFill>
+      
+    </Content>
+    
+  </UI>
+</Mcml>

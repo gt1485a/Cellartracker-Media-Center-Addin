@@ -1,0 +1,43 @@
+<Mcml
+    xmlns="http://schemas.microsoft.com/2006/mcml"
+    xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+    xmlns:b="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Scenarios.SimpleButton.mcml">
+
+  <!-- The Windows Media Center extensibility platform includes a        -->
+  <!-- NavigateToPage API to direct Windows Media Center to navigate to  -->
+  <!-- a specified page in the Windows Media Center user interface. This -->
+  <!-- API takes a page ID as an input parameter. In some cases, it also -->
+  <!-- takes a set of additional parameters to provide context data to   -->
+  <!-- the page. A full list of supported page ID values can be found in -->
+  <!-- the Windows Media Center SDK documentation.                       -->
+
+  <!-- This sample demonstrates how to use the NavigateToPage API to     -->
+  <!-- navigate to the Picture Library page in markup.                   -->
+
+  <UI Name="NavigateToPage">
+
+    <Locals>
+
+      <!-- AddInHost is where all Windows Media Center-specific services start -->
+      <!-- from. It must appear in the Locals section of a markup file.        -->
+      <addin:AddInHost Name="AddInHost"/>
+
+    </Locals>
+
+    <Content>
+
+      <!-- A button that will navigate to the MyPictures pageId when clicked -->
+      <b:SimpleButton>
+        <Command>
+          <InvokeCommand Description="Click to go to the Picture Library"
+                         Target="[AddInHost.MediaCenterEnvironment.NavigateToPage]"
+                         pageId="MyPictures"
+                         pageParameters="null"/>
+        </Command>
+      </b:SimpleButton>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

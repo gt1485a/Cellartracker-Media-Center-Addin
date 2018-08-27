@@ -1,0 +1,46 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml"
+    xmlns:fn="assembly://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35/Samples.Fundamentals">
+
+  <!-- MCML separates code and data from UI logic. This model-view          -->
+  <!-- separation enables a clean divison between a program's logic and its -->
+  <!-- presentation. All UI development is done using MCML and is bound to  -->
+  <!-- data via rich binding mechanisms. All data and code are              -->
+  <!-- strictly non-visual.                                                 -->
+
+  <UI Name="ModelViewSeparation">
+
+    <Locals>
+
+      <!-- SimpleContact was defined in code and contains two properties: -->
+      <!-- Name and Email. Both properties are string types.              -->
+
+      <!-- Create an instance of the SimpleContact object. -->
+      <fn:SimpleContact Name="Contact"/>
+
+    </Locals>
+
+    <Content>
+
+      <!-- Background image -->
+      <Graphic Content="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!CircuitBoard.png" Padding="2,2,8,8" 
+               MinimumSize="159,126">
+
+        <Layout>
+          <FlowLayout Orientation="Vertical" ItemAlignment="Center"/>
+        </Layout>
+
+        <Children>
+
+          <!-- Bind the text elements to properties on the SimpleContact. -->
+          <Text Content="[Contact.Name]" Font="Tahoma,25" Color="Navy"/>
+          <Text Content="[Contact.Email]" Font="Tahoma,10" Color="Black"/>
+
+        </Children>
+
+      </Graphic>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

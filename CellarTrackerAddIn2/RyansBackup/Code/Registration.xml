@@ -1,0 +1,12 @@
+﻿<application id="{B2E2049D-450E-45a7-8BF6-F018CC502015}"
+             Title="Veronica's Radio v1"
+             Description="Listen to internet radio in Windows Media Center.">
+  <entrypoint id="{240D1B97-4756-4397-9293-0E095BC74084}"
+              addin="Microsoft.MediaCenter.Hosting.WebAddIn,Microsoft.MediaCenter"
+              title="Veronica's Radio v1"
+              Description="Listen to internet radio in Windows Media Center."
+              ImageUrl="http://retrosight.com/samples/veronicasradio/windowsvista/default.png"
+              context="http://retrosight.com/samples/veronicasradio/windowsvista/default.mcml">
+    <category category="More Programs"/>
+  </entrypoint>
+</application>

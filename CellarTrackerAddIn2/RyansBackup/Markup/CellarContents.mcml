@@ -1,0 +1,502 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:CT="assembly://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=05f62c4163dc1a19"
+      xmlns:me="Me">
+  
+  <Aggregate Source="resx://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=05f62c4163dc1a19/CellarTrackerAddIn2.Resources/Controls"/>
+<!--CellarContents-->
+  <UI Name="CellarContents">
+    <Properties>
+      <Font Name="SmallFont" Font="Segoe Media Center,28"/>
+      <Font Name="NormalFont" Font="Segoe Media Center,32"/>
+      <Font Name="BigFont" Font="Segoe Media Center,34"/>
+      <CT:CellarTrackerAddIn2.Properties.Settings Name="Settings"/>
+      
+      <da:RemoteResourceUri Name="MyUri"/>
+      
+      <da:XmlRemoteResource Name="MyCellarData">
+        <Mappings>
+          <da:XmlRemoteValueList Name="Wines" RepeatedType="PropertySet" Source="/cellartracker/list/row" SortBy="Entries.#Wine" >
+            <Mappings>
+              <da:XmlRemoteValue Name="WineName" Property="Entries.#Wine" Source="/Wine"/>
+              <da:XmlRemoteValue Name="WineVintage" Property="Entries.#Vintage" Source="/Vintage"/>
+              <da:XmlRemoteValue Name="WineType" Property="Entries.#Type" Source="/Type"/>
+              <da:XmlRemoteValue Name="WineID" Property="Entries.#iWine" Source="/iWine"/>
+              <da:XmlRemoteValue Name="WineLocale" Property="Entries.#Locale" Source="/Locale"/>
+              <da:XmlRemoteValue Name="WinePrice" Property="Entries.#Price" Source="/Price"/>
+              <da:XmlRemoteValue Name="WineNoteCount" Property="Entries.#CNotes" Source="/CNotes"/>
+              <da:XmlRemoteValue Name="WineComScore" Property="Entries.#CScore" Source="/CScore"/>
+              <da:XmlRemoteValue Name="WineSize" Property="Entries.#Size" Source="/Size"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+        </Mappings>
+      </da:XmlRemoteResource>
+
+      <da:XmlRemoteResource Name="MyCellarRegionData"><!--Table=Region-->
+        <Mappings>
+          <da:XmlRemoteValueList Name="Regions" RepeatedType="PropertySet" Source="/cellartracker/pivot/row" SortBy="Entries.#Region">
+            <Mappings>
+              <da:XmlRemoteValue Name="Country" Property="Entries.#Country" Source="/Country"/>
+              <da:XmlRemoteValue Name="Region" Property="Entries.#Region" Source="/Region"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+         </Mappings>
+      </da:XmlRemoteResource>
+
+      <da:XmlRemoteResource Name="MyCellarColorTypeData"><!--Table=Type-->
+        <Mappings>
+          <da:XmlRemoteValueList Name="ColorsTypes" RepeatedType="PropertySet" Source="/cellartracker/pivot/row" SortBy="Entries.#Type">
+            <Mappings>
+              <da:XmlRemoteValue Name="Color" Property="Entries.#Color" Source="/Color"/>
+              <da:XmlRemoteValue Name="ColorCount" Property="Entries.#ColorCount" Source="/ColorBottles"/>
+              <da:XmlRemoteValue Name="ColorPending" Property="Entries.#ColorPending" Source="/ColorPending"/>
+              <da:XmlRemoteValue Name="Type" Property="Entries.#Type" Source="/Type"/>
+              <da:XmlRemoteValue Name="TypeCount" Property="Entries.#TypeCount" Source="/TypeBottles"/>
+              <da:XmlRemoteValue Name="TypePending" Property="Entries.#TypePending" Source="/TypePending"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+        </Mappings>
+      </da:XmlRemoteResource>
+
+      <da:XmlRemoteResource Name="MyCellarVintageData"><!--Table=Vintage-->
+        <Mappings>
+          <da:XmlRemoteValueList Name="Vintages" RepeatedType="PropertySet" Source="/cellartracker/pivot/row" SortBy="Entries.#Vintage">
+            <Mappings>
+              <da:XmlRemoteValue Name="Vintage" Property="Entries.#Vintage" Source="/Vintage"/>
+              <da:XmlRemoteValue Name="VintageCount" Property="Entries.#VintageCount" Source="/VintageBottles"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+        </Mappings>
+      </da:XmlRemoteResource>
+      
+      <ScrollingData Name="WineScrollingData" LockedAlignment=".1" LockedPosition=".1"/>
+
+      <EditableText Name="WineName" Value="" Description="Wine"/>
+      <EditableText Name="Vintage" Value="" Description="Vintage"/>
+      <EditableText Name="Country" Value="" Description="Country"/>
+      <EditableText Name="Region" Value="" Description="Region"/>
+      <EditableText Name="WineType" Value="" Description="Wine Type"/>
+      <EditableText Name="TypingValue"/>
+    </Properties>
+    
+    <Locals>
+
+      <Command Name="AZCommand" Description ="JumpCommand"/>
+      <ArrayListDataSet Name="JumpListData">
+        <Source>
+          <cor:String String="A"/>
+          <cor:String String="B"/>
+          <cor:String String="C"/>
+          <cor:String String="D"/>
+          <cor:String String="E"/>
+          <cor:String String="F"/>
+          <cor:String String="G"/>
+          <cor:String String="H"/>
+          <cor:String String="I"/>
+          <cor:String String="J"/>
+          <cor:String String="K"/>
+          <cor:String String="L"/>
+          <cor:String String="M"/>
+          <cor:String String="N"/>
+          <cor:String String="O"/>
+          <cor:String String="P"/>
+          <cor:String String="Q"/>
+          <cor:String String="R"/>
+          <cor:String String="S"/>
+          <cor:String String="T"/>
+          <cor:String String="U"/>
+          <cor:String String="V"/>
+          <cor:String String="W"/>
+          <cor:String String="X"/>
+          <cor:String String="Y"/>
+          <cor:String String="Z"/>
+        </Source>
+      </ArrayListDataSet>
+      <ArrayListDataSet Name ="WineFilterData">
+        <Source>
+          <EditableText EditableText="[WineName]"/>
+          <EditableText EditableText="[Vintage]"/>
+          <EditableText EditableText="[Country]"/>
+          <EditableText EditableText="[Region]"/>
+          <EditableText EditableText="[WineType]"/>
+        </Source>
+      </ArrayListDataSet>
+      
+      
+      <coll:IDictionary Name="QueryPairs" IDictionary="[MyUri.QueryPairs]"/>
+
+      <cor:String Name="CTUri" String="http://www.cellartracker.com/api_read.asp"/>
+      <cor:String Name="user" String="user"/>
+      <cor:String Name="password" String="password"/>
+      <cor:String Name="API" String="API"/>
+      <cor:String Name="APIVal" String="list"/>
+      <cor:String Name="Page" String="Page"/>
+      <cor:String Name="PageVal" String="1"/>
+      <cor:String Name="Records" String="Records"/>
+      <cor:String Name="RecordsVal" String="1000"/>
+      <cor:String Name="Format" String="Format"/>
+      <cor:String Name="FormatVal" String="XML"/>
+      <cor:String Name="Table" String="Table"/>
+      <cor:String Name="TableVal" String="Wine"/>
+      <cor:String Name="sSearch" String="szSearch"/>
+      <cor:String Name="sRegion" String="Region"/>
+      <cor:String Name="sVintage" String="Vintage"/>
+      <cor:String Name="sCountry" String="Country"/>
+      <cor:String Name="sType" String="Type"/>
+
+
+      
+      <Command Name="GetWineData"/>
+      <ScrollingData Name="JumpScrollData" LockedPosition="0" LockedAlignment="0"/>
+      <ScrollingHandler Name="JumpScrollHandler" HandlerStage="Bubbled"/>
+      
+      <ScrollingData Name="WineFilterScroller" />
+      <ScrollingHandler Name="ScrollingHandler" HandlerStage="Bubbled" HandleMouseWheel="true"/>
+
+      <cor:Int32 Name="Jumps" Int32="0"/>
+      <cor:Int32 Name="AZJumps" Int32="0"/>
+      <cor:Int32 Name="AZIndex" Int32="0"/>
+      <cor:Int32 Name="FilterEdited" Int32="0"/>
+      <cor:Object Name="WineNameJump"/>
+      
+      <CT:CellarTrackerAddIn2.MyAddIn Name="CTAddIn"/>
+      <cor:Int32 Name="WineLetterIndex" Int32="0"/>
+      <cor:Int32 Name="Zero" Int32="0"/>
+      <cor:String Name="WineIndex" String="0"/>
+      <Command Name="WineFocusCallback"/>
+      <TypingHandler Name="ContentsTyping" EditableText="[TypingValue]" HandlerStage="Bubbled" TypingPolicy="TripleTap"/>
+    </Locals>
+    
+    <Rules>
+      <Changed Source="[WineFocusCallback.Invoked]">
+        <Actions>
+   
+          <Set Target="[WineIndex]" Value="[WineFocusCallback.Description]"/>
+        </Actions>
+      </Changed>
+      
+      
+      <Default Target="[WineName.Value]" Value=""/>
+      <Default Target="[Vintage.Value]" Value=""/>
+      <Default Target="[Country.Value]" Value=""/>
+      <Default Target="[Region.Value]" Value=""/>
+      <Default Target="[WineType.Value]" Value=""/>
+      
+      <Default Target="[ScrollingHandler.ScrollingData]" Value="[WineFilterScroller]"/>
+      <Default Target="[WineFilterScroller.Repeater]" Value="[FilterRepeater]"/>
+      <Binding Source="[MyUri]" Target="[MyCellarData.RequestUri]"/>
+      <Binding Source="[WineScrollingData]" Target="[WineScroller.ScrollingData]"/>
+
+      <Binding Target="[JumpScrollHandler.ScrollingData]" Source="[JumpScrollData]"/>
+      
+      <Changed Source="[TypingValue.Value]">
+        <Actions>
+          <DebugTrace Message="Current Page:{0}, Total Pages:{1}, TypedValue: {2}">
+            <Params>
+              <ObjectPath ObjectPath="[JumpScrollData.CurrentPage]"/>
+              <ObjectPath ObjectPath="[JumpScrollData.TotalPages]"/>
+              <ObjectPath ObjectPath="[TypingValue.Value]"/>
+            </Params>
+          </DebugTrace>
+          <Invoke Target="[JumpListData!coll:IList.get_Item]" index="[JumpScrollData.CurrentPage!cor:Int32]" ResultTarget="[WineNameJump]"/>
+          <Invoke Target="[CTAddIn.GetJumps]"
+                  CurrentPos="[WineIndex]"
+                  WineName="[TypingValue.Value]"
+                  Items="[MyCellarData.Mappings.#Wines!da:XmlRemoteValueList]"
+                  ResultTarget="[AZJumps]"/>
+          
+        </Actions>
+      </Changed>
+
+      <Changed Source="[AZJumps]">
+        <Conditions>
+          <Equality Source="[AZJumps]" Value="-1" ConditionOp="GreaterThan"/>
+        </Conditions>
+        <Actions>
+          <!--<Invoke Target="[WineScroller.NavigateInto]" InvokePolicy="Synchronous"/>-->
+          <!--<Invoke Target="[WineScrollingData.Scroll]" amount="[AZJumps]" InvokePolicy="Synchronous"/>-->
+          <!--<Invoke Target="[WineRepeater.NavigateInto]" InvokePolicy="Synchronous"/>-->
+          <Invoke Target="[WineRepeater.NavigateIntoIndex]" index="[AZJumps]" InvokePolicy="Synchronous"/>
+
+          <DebugTrace Message="AZJumps: {0}">
+            <Params>
+              <ObjectPath ObjectPath="[AZJumps]"/>
+              <!--<ObjectPath ObjectPath="[WineName.Value.ToString]"/>
+              <ObjectPath ObjectPath="[WineScrollingData.TotalPages]"/>
+              <ObjectPath ObjectPath="[WineScrollingData.CurrentPage]"/>-->
+            </Params>
+          </DebugTrace>
+          <Set Target="[AZJumps]" Value="[Zero]" InvokePolicy="Synchronous"/>
+
+        </Actions>
+      </Changed>
+      
+      <Changed Source="[Jumps]">
+        <Actions>
+          <!--<Invoke Target="[WineScrollingData.Scroll]" amount="[Jumps]" InvokePolicy="Synchronous"/>-->
+          <Invoke Target="[WineRepeater.NavigateIntoIndex]" index="[Jumps]" InvokePolicy="Synchronous"/>
+          
+          <Invoke Target="[FilterRepeater.NavigateIntoIndex]" index="[FilterEdited]" InvokePolicy="Synchronous" />
+          <DebugTrace Message="{0} jumps to {1} {2} total pages. Scroller at {4}">
+            <Params>
+              <ObjectPath ObjectPath="[Jumps]"/>
+              <ObjectPath ObjectPath="[WineName.Value]"/>
+              <ObjectPath ObjectPath="[WineScrollingData.TotalPages]"/>
+              <ObjectPath ObjectPath="[WineScrollingData.CurrentPage]"/>
+            </Params>
+          </DebugTrace>
+          
+        </Actions>
+      </Changed>
+      
+      <Changed Source="[WineName.Value]">
+        <Actions>
+          <Invoke Target="[CTAddIn.FilterList]"
+                  WineName="[WineName.Value]"
+                  WineVintage="[Vintage.Value]"
+                  WineCountry="[Country.Value]"
+                  WineRegion="[Region.Value]"
+                  WineType="[WineType.Value]"
+                  Wines="[MyCellarData.Mappings.#Wines!da:XmlRemoteValueList]"
+                  ResultTarget="[MyCellarData.Mappings.#Wines]"/>
+          <Set Target="[FilterEdited]" Value="0"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[Vintage.Value]">
+        <Actions>
+          <Invoke Target="[CTAddIn.FilterList]"
+                  WineName="[WineName.Value]"
+                  WineVintage="[Vintage.Value]"
+                  WineCountry="[Country.Value]"
+                  WineRegion="[Region.Value]"
+                  WineType="[WineType.Value]"
+                  Wines="[MyCellarData.Mappings.#Wines!da:XmlRemoteValueList]"
+                  ResultTarget="[MyCellarData.Mappings.#Wines]"/>
+          <Set Target="[FilterEdited]" Value="1"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[Country.Value]">
+        <Actions>
+          <Invoke Target="[CTAddIn.FilterList]"
+                  WineName="[WineName.Value]"
+                  WineVintage="[Vintage.Value]"
+                  WineCountry="[Country.Value]"
+                  WineRegion="[Region.Value]"
+                  WineType="[WineType.Value]"
+                  Wines="[MyCellarData.Mappings.#Wines!da:XmlRemoteValueList]"
+                  ResultTarget="[MyCellarData.Mappings.#Wines]"/>
+          <Set Target="[FilterEdited]" Value="2"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[Region.Value]">
+        <Actions>
+          <Invoke Target="[CTAddIn.FilterList]"
+                  WineName="[WineName.Value]"
+                  WineVintage="[Vintage.Value]"
+                  WineCountry="[Country.Value]"
+                  WineRegion="[Region.Value]"
+                  WineType="[WineType.Value]"
+                  Wines="[MyCellarData.Mappings.#Wines!da:XmlRemoteValueList]"
+                  ResultTarget="[MyCellarData.Mappings.#Wines]"/>
+          <Set Target="[FilterEdited]" Value="3"/>
+        </Actions>
+      </Changed>
+      <Changed Source="[WineType.Value]">
+        <Actions>
+          <Invoke Target="[CTAddIn.FilterList]"
+                  WineName="[WineName.Value]"
+                  WineVintage="[Vintage.Value]"
+                  WineCountry="[Country.Value]"
+                  WineRegion="[Region.Value]"
+                  WineType="[WineType.Value]"
+                  Wines="[MyCellarData.Mappings.#Wines!da:XmlRemoteValueList]"
+                  ResultTarget="[MyCellarData.Mappings.#Wines]"/>
+          <Set Target="[FilterEdited]" Value="4"/>
+        </Actions>
+      </Changed>
+      
+      <Rule>
+        <Actions>
+          
+          <Set Target="[MyUri.FullString]" Value="[CTUri]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[QueryPairs.Clear]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[MyUri.QueryPairs.Clear]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[QueryPairs.Add]" key="[user]" value="[Settings.Default.Username]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[password]" value="[Settings.Default.Password]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[API]" value="[APIVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <!--<Invoke Target="[QueryPairs.Add]" key="[Page]" value="[PageVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>-->
+          <Invoke Target="[QueryPairs.Add]" key="[Records]" value="[RecordsVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Format]" value="[FormatVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Set Target="[MyUri.QueryPairs]" Value="[QueryPairs]"/>
+          <Set Target="[MyCellarData.RequestUri]" Value="[MyUri]" InvokePolicy="Synchronous"/>
+          
+          <Invoke Target="[MyCellarData.GetDataFromResource]" InvokePolicy="Synchronous"/>
+         
+          <Invoke Target="[WineRepeater.NavigateInto]"/>
+         
+        </Actions>
+      </Rule>
+      
+      <Binding Source="[TypingValue.Value]" Target="[TypingText.Content]"/>
+      <Binding Source="[WineScrollingData]" Target="[WineScroller.ScrollingData]"/>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form" >
+            <Children>
+              <Panel Name="HeaderPanel">
+                <LayoutInput>
+                  <FormLayoutInput Left="Parent,0,0" Top="Parent,0,0" Bottom="Parent,.2,0" Right="Parent,1,0"/>
+                </LayoutInput>
+                <Children>
+                  <Panel Layout="VerticalFlow">
+                    <Children>
+                      <Text Name="PageTitle" Content="Cellar Contents" Color="DimGray" Margins="0,50,0,0"/>
+                      <Scroller Orientation="Horizontal" ScrollingData="[WineFilterScroller]" >
+                        <Children>
+                          <Repeater Name="FilterRepeater" Source="[WineFilterData]" Layout="HorizontalFlow" >
+                            <Content>
+                              <me:FilterItem Name ="F" EditableText="[RepeatedItem!EditableText]" CellarQueryPairs="[QueryPairs]" Padding="50,0,0,0"/>
+                              <!--<Text Content="A"/>-->
+                            </Content>
+                          </Repeater>
+                        </Children>
+                      </Scroller>
+                    </Children>
+                  </Panel>
+                </Children>
+              </Panel>
+              <!--<Panel Name="JumpList" Layout="Center">
+                <LayoutInput>
+                  <FormLayoutInput Left="Parent,0,0" Right="Parent,0,100" Top="HeaderPanel,1,0" Bottom="Parent,1,-150"/>
+                </LayoutInput>
+                <Children>
+                  <Scroller Name="JumpListScroller"  Orientation="Vertical"  FadeSize="1" ScrollingData="[JumpScrollData]">
+                    <Children>
+                      <Repeater Name="JumpListRepeater" Source="[JumpListData]" Layout="VerticalFlow">
+                        <Content>
+                          <me:SimpleButton Command="[AZCommand]" Description="[RepeatedItem!cor:String]"/>
+                        </Content>
+                      </Repeater>
+                    </Children>
+                  </Scroller>
+                </Children>
+              </Panel>-->
+              <Panel Name="Wines">
+                <LayoutInput>
+                  <FormLayoutInput Left="Parent,0,150" Right="Parent,1,0" Top="HeaderPanel,1,0" Bottom="Parent,1,-75"/>
+                </LayoutInput>
+                <Children>
+                      <Scroller Name="WineScroller" Navigation="RememberFocus, Column" Orientation="Vertical" FadeSize="1" ScrollingData="[WineScrollingData]">
+                        <Children>
+                          <Repeater Name="WineRepeater" Source="[MyCellarData.Mappings.#Wines!da:XmlRemoteValueList.List]" Layout="VerticalFlow">
+                            <Content>
+                              <Panel Layout="HorizontalFlow">
+                                <Children>
+                                  <me:Wine Name="Wine1" FocusCallback="[WineFocusCallback]" JIndex="[RepeatedItemIndex.SourceValue]" WineData="[RepeatedItem!PropertySet]"/>
+                                  <Text Content="D" Color="WhiteSmoke"/>
+                                  
+
+                                  <!--me:SimpleButton>
+                                    <Command>
+                                      <NavigateCommand Description="Drink"
+                                                       Source="@resx://CellarTrackerAddIn2/CellarTrackerAddIn2.Resources/CellarDrinkWine"
+                                                       WineName="[RepeatedItem!PropertySet.Entries.#Wine]"
+                                                       WineVintage="[RepeatedItem!PropertySet.Entries.#Vintage]"
+                                                       WineID="[RepeatedItem!PropertySet.Entries.#iWine]"
+                                                       size="[RepeatedItem!PropertySet.Entries.#Size]"
+                                                       location="[RepeatedItem!PropertySet.Entries.#Location]"
+                                                       bin="[RepeatedItem!PropertySet.Entries.#Bin]"
+                               />
+                                    </Command>
+                                  </me:SimpleButton>-->
+                                </Children>
+                              </Panel>
+                            </Content>
+                          </Repeater>
+                        </Children>
+                      </Scroller>
+                </Children>
+              </Panel>
+              <Text Name="TypingText" Content="[TypingValue.Value]" Color="WhiteSmoke" Font="[BigFont]">
+                <LayoutInput>
+                  <FormLayoutInput Bottom="Parent,1,-150" Left="Parent,0,50" />
+                </LayoutInput>
+              </Text>
+            </Children>
+      </Panel>
+    </Content>
+  </UI>
+  <!--Filter Item-->
+  <UI Name="FilterItem">
+    <Properties>
+      <EditableText Name="EditableText" EditableText="$Required"/>
+      <coll:IDictionary Name="CellarQueryPairs" IDictionary="$Required"/>
+      <!--<da:XmlRemoteResource Name="MyCellarData" XmlRemoteResource="$Required"/>
+      <cor:String Name="QueryKey" String="$Required"/>-->
+    </Properties>
+    <Locals>
+      <Command Name="Command" Description="[EditableText.Description]"/>
+      <ClickHandler Name="Clicker"/>
+      <TypingHandler Name="TypingHandler" TypingPolicy="TripleTap"/>
+      <KeyHandler Key="Enter" HandlerStage="Bubbled" Name="EnterKeyHandler"/>
+    </Locals>
+    
+    <Rules>
+     
+      <Changed Source="[Command.Invoked]">
+        <Actions>
+          <Set Target="[Host.Source]"
+               Value="me:SimpleEditBox"/>
+          <Invoke Target="[Host.NavigateInto]"/>
+        </Actions>
+      </Changed>
+
+      <Condition Source="[EnterKeyHandler.Pressing]" SourceValue="true"  >
+        <Actions>
+          <Invoke Target="[CellarQueryPairs.Remove]" key="[EditableText.Description]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+        </Actions>
+      </Condition>
+      
+      <Condition Source="[EnterKeyHandler.Pressing]" SourceValue="true"  >
+        <Actions>
+          <Invoke Target="[CellarQueryPairs.Add]" key="[EditableText.Description]" value="[EditableText.Value]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <DebugTrace Message="QueryPairCount {0}">
+            <Params>
+              <ObjectPath ObjectPath="[CellarQueryPairs.Count]"/>
+            </Params>
+          </DebugTrace>
+        </Actions>
+      </Condition>
+      
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[Host.Source]" Value="me:SimpleEditBox"/>
+          <Invoke Target="[Host.NavigateInto]"/>
+        </Actions>
+      </Condition>
+      
+     <Default Target="[Host.Source]" Value="me:SimpleButton"/>
+      
+    </Rules>
+
+    <Content>
+      <me:CommonProps Name="Host" EditableText="[EditableText]" Command="[Command]"
+                      ThrowOnLoadError="false" BackColor="LightSlateGray" Color="DimGray">
+      
+      </me:CommonProps>
+    </Content>
+  </UI>
+  <!--Common Props-->
+  <UI Name="CommonProps">
+    <Properties>
+      <EditableText Name="EditableText" Value="$Required"/>
+      <Command Name="Command" Command="$Required"/>
+      <Color Name="BackColor"/>
+      <Color Name="Color"/>
+    </Properties>
+  </UI>
+
+</Mcml>

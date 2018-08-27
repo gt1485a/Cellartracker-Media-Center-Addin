@@ -1,0 +1,86 @@
+<Mcml 
+  xmlns="http://schemas.microsoft.com/2006/mcml"
+  xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+  xmlns:cor="assembly://MSCorLib/System"
+  xmlns:coll="assembly://MsCorLib/System.Collections">
+
+  <!-- The Windows Media Center extensibility platform includes a Capabilities -->
+  <!-- object that indicates whether certain system capabilities and           -->
+  <!-- resources are available on the current device that the code is          -->
+  <!-- running on.                                                             -->
+
+  <!-- This sample demonstrates how to use the Capabilities object to          -->
+  <!-- detect whether the current Windows Media Center session is running      -->
+  <!-- running on a Windows Media Center extender and whether the current      -->
+  <!-- display device is a TV or a traditional computer monitor.               -->
+
+  <UI Name="Capabilities">
+
+    <Locals>
+
+      <!-- AddInHost is where all Windows Media Center-specific services start -->
+      <!-- from. It must appear in the Locals section of a markup file.        -->
+      <addin:AddInHost Name="AddInHost"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- We must first check to see if it is safe to query the Console  -->
+      <!-- capability. If so, we can then check if it is set to true      -->
+      <!-- without causing a runtime null reference exception.            -->
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#Console.ToString]"/>
+          <Equality Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#Console!cor:Boolean]" Value="true"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[ConsoleVariable.Content]" Value="Capabilities.IsConsole is set to true."/>
+          <Set Target="[ConsoleDescription.Content]" Value="This is not a Windows Media Center extender."/>
+        </Actions>
+      </Rule>
+
+      <!-- We must first check to see if it is safe to query the TV       -->
+      <!-- Display capability. If so, we can then check if it is set to   -->
+      <!-- true without causing a runtime null reference exception.       -->
+      <Rule>
+        <Conditions>
+          <IsValid Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#TVDisplay.ToString]"/>
+          <Equality Source="[AddInHost.MediaCenterEnvironment.Capabilities!coll:IDictionary.#TVDisplay!cor:Boolean]" Value="true"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[TVDisplayVariable.Content]" Value="Capabilities.IsDisplayTV is set to true."/>
+          <Set Target="[TVDisplayDescription.Content]" Value="The current display is a TV."/>
+        </Actions>
+      </Rule>
+
+      <!-- Set default values to display in the UI if the capabilities are not set to true  -->
+      <Default Target="[ConsoleVariable.Content]" Value="Capabilities.IsConsole is set to false."/>
+      <Default Target="[ConsoleDescription.Content]" Value="This is a Windows Media Center extender."/>
+      <Default Target="[TVDisplayVariable.Content]" Value="Capabilities.IsDisplayTV is set to false."/>
+      <Default Target="[TVDisplayDescription.Content]" Value="The current display is not a TV."/>
+
+    </Rules>
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical" ItemAlignment="Center"/>
+        </Layout>
+
+        <Children>
+
+          <Text Name="ConsoleVariable" Color="DeepSkyBlue"/>
+          <Text Name="ConsoleDescription" Color="DeepSkyBlue"/>
+          <Text Name="TVDisplayVariable" Color="Yellow"/>
+          <Text Name="TVDisplayDescription" Color="Yellow"/>
+
+        </Children>
+        
+      </Panel>
+      
+    </Content>
+  </UI>
+
+</Mcml>

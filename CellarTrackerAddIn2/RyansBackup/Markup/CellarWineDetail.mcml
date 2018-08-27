@@ -1,0 +1,586 @@
+<Mcml
+  xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:coll="assembly://MsCorLib/System.Collections"
+      xmlns:draw ="assembly://MsCorLib/System.Drawing"
+      xmlns:CT="assembly://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=05f62c4163dc1a19"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+  <Aggregate Source="resx://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=05f62c4163dc1a19/CellarTrackerAddIn2.Resources/Controls"/>
+
+  <UI Name="CellarWineDetail">
+
+    <Properties>
+
+      <cor:String Name="WineID" String="$Required"/>
+      <CT:CellarTrackerAddIn2.Properties.Settings Name="Settings"/>
+
+      <da:RemoteResourceUri Name="MyUri"/>
+      <Font Name="SmallFont" Font="Segoe Media Center,28"/>
+      <Font Name="NormalFont" Font="Segoe Media Center,32"/>
+      <Font Name="BigFont" Font="Segoe Media Center,34"/>
+    </Properties>
+
+    <Locals>
+      <da:XmlRemoteResource Name="MyResource">
+        <Mappings>
+
+          <da:XmlRemoteValue Name="iWine"           Source="/cellartracker/Wine/row/iWine"/>
+          <da:XmlRemoteValue Name="WineVintage"     Source="/cellartracker/Wine/row/Vintage"/>
+          <da:XmlRemoteValue Name="WineName"        Source="/cellartracker/Wine/row/Wine"/>
+          <da:XmlRemoteValue Name="Locale"          Source="/cellartracker/Wine/row/Locale"/>
+          <da:XmlRemoteValue Name="WineType"        Source="/cellartracker/Wine/row/Type"/>
+          <da:XmlRemoteValue Name="Producer"        Source="/cellartracker/Wine/row/Producer"/>
+          <da:XmlRemoteValue Name="Varietal"        Source="/cellartracker/Wine/row/Varietal"/>
+          <da:XmlRemoteValue Name="MasterVarietal"  Source="/cellartracker/Wine/row/MasterVarietal"/>
+          <da:XmlRemoteValue Name="Designation"     Source="/cellartracker/Wine/row/Designation"/>
+          <da:XmlRemoteValue Name="Vineyard"        Source="/cellartracker/Wine/row/Vineyard"/>
+          <da:XmlRemoteValue Name="Country"         Source="/cellartracker/Wine/row/Country"/>
+          <da:XmlRemoteValue Name="Region"          Source="/cellartracker/Wine/row/Region"/>
+          <da:XmlRemoteValue Name="SubRegion"       Source="/cellartracker/Wine/row/SubRegion"/>
+          <da:XmlRemoteValue Name="Appellation"     Source="/cellartracker/Wine/row/Appellation"/>
+          <da:XmlRemoteValue Name="UPCCode"         Source="/cellartracker/Wine/row/UPCCode"/>
+
+          <!--<da:XmlRemoteValue Name="LabelSource"     Source="/cellartracker/Labels/row/ImageSource"/>-->
+
+          <da:XmlRemoteValueList Name="Labels" RepeatedType="PropertySet" Source="/cellartracker/Labels/row">
+            <Mappings>
+              <da:XmlRemoteValue Name="iLabel" Property="Entries.#iLabel" Source="/iLabel"/>
+              <da:XmlRemoteValue Name="ImageSource" Property="Entries.#ImageSource" Source="/ImageSource"/>
+              <da:XmlRemoteValue Name="Width" Property="Entries.#Width" Source="/Width"/>
+              <da:XmlRemoteValue Name="Height" Property="Entries.#Height" Source="/Height"/>
+              <da:XmlRemoteValue Name="Vintage" Property="Entries.#Vintage" Source="/Vintage"/>
+              <da:XmlRemoteValue Name="Score" Property="Entries.#Score" Source="/Score"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+
+          <da:XmlRemoteValue Name="MY"              Source="/cellartracker/Scores/row/MY"/>
+          <da:XmlRemoteValue Name="CT"              Source="/cellartracker/Scores/row/CT"/>
+          <da:XmlRemoteValue Name="WA"              Source="/cellartracker/Scores/row/WA"/>
+          <da:XmlRemoteValue Name="WS"              Source="/cellartracker/Scores/row/WS"/>
+          <da:XmlRemoteValue Name="IWC"             Source="/cellartracker/Scores/row/IWC"/>
+          <da:XmlRemoteValue Name="BG"              Source="/cellartracker/Scores/row/BG"/>
+          <da:XmlRemoteValue Name="WE"              Source="/cellartracker/Scores/row/WE"/>
+          <da:XmlRemoteValue Name="JR"              Source="/cellartracker/Scores/row/JR"/>
+
+
+
+          <da:XmlRemoteValueList Name="ValueAndPrice" RepeatedType="PropertySet" Source="/cellartracker/ValueAndPrice/row">
+            <Mappings>
+              <da:XmlRemoteValue Name="Size" Property="Entries.#Size" Source="/Size"/>
+              <da:XmlRemoteValue Name="Value" Property="Entries.#Value" Source="/Value"/>
+              <da:XmlRemoteValue Name="Price" Property="Entries.#Price" Source="/Price"/>
+              <da:XmlRemoteValue Name="MenuPrice" Property="Entries.#MenuPrice" Source="/MenuPrice"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+
+          <da:XmlRemoteValue Name="Bottles" Source="/cellartracker/Inventory/row/Bottles"/>
+          <da:XmlRemoteValue Name="Size"  Source="/cellartracker/Inventory/row/Size"/>
+          <da:XmlRemoteValue Name="Location" Source="/cellartracker/Inventory/row/Location"/>
+          <da:XmlRemoteValue Name="Bin" Source="/cellartracker/Inventory/row/Bin"/>
+
+          <da:XmlRemoteValueList Name="IndivBottles" RepeatedType="PropertySet" Source="/cellartracker/Bottles/row">
+            <Mappings>
+              <da:XmlRemoteValue Name="Barcode" Property="Entries.#Barcode" Source="/Barcode"/>
+              <da:XmlRemoteValue Name="Location" Property="Entries.#Location" Source="/Location"/>
+              <da:XmlRemoteValue Name="Bin" Property="Entries.#Bin" Source="/Bin"/>
+              <da:XmlRemoteValue Name="Size" Property="Entries.#Size" Source="/Size"/>
+              <da:XmlRemoteValue Name="Note" Property="Entries.#Note" Source="/Note"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+
+          <da:XmlRemoteValueList Name="Purchases" RepeatedType="PropertySet" Source="/cellartracker/Purchase/row">
+            <Mappings>
+              <da:XmlRemoteValue Name="iUser" Property="Entries.#iUser" Source="/iUser"/>
+              <da:XmlRemoteValue Name="iPurchase" Property="Entries.#iPurchase" Source="/iPurchase"/>
+              <da:XmlRemoteValue Name="StoreName" Property="Entries.#StoreName" Source="/StoreName"/>
+              <da:XmlRemoteValue Name="Quantity" Property="Entries.#Quantity" Source="/Quantity"/>
+              <da:XmlRemoteValue Name="Size" Property="Entries.#Size" Source="/Size"/>
+              <da:XmlRemoteValue Name="BottleCost" Property="Entries.#BottleCost" Source="/BottleCost"/>
+              <da:XmlRemoteValue Name="PurchaseDate" Property="Entries.#PurchaseDate" Source="/PurchaseDate"/>
+              <da:XmlRemoteValue Name="DeliveryDate" Property="Entries.#DeliveryDate" Source="/DeliveryDate"/>
+              <da:XmlRemoteValue Name="OrderNumber" Property="Entries.#OrderNumber" Source="/OrderNumber"/>
+              <da:XmlRemoteValue Name="Delivered" Property="Entries.#Delivered" Source="/Delivered"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+
+          <da:XmlRemoteValueList Name="DrinkingWindow" RepeatedType="PropertySet" Source="/cellartracker/DrinkingWindow/row">
+            <Mappings>
+              <da:XmlRemoteValue Name="Start"  Property="Entries.#Start" Source="/BeginConsume"/>
+              <da:XmlRemoteValue Name="End"  Property="Entries.#End" Source="/EndConsume"/>
+              <da:XmlRemoteValue Name="Source"  Property="Entries.#Source" Source="/Source"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+
+          <da:XmlRemoteValueList Name="Drinkability" RepeatedType="PropertySet" Source="/cellartracker/Drinkability/row">
+            <Mappings>
+              <da:XmlRemoteValue Name="iWine" Property="Entries.#iWine" Source="/iWine"/>
+              <da:XmlRemoteValue Name="Type" Property="Entries.#Type" Source="/Type"/>
+              <da:XmlRemoteValue Name="Color" Property="Entries.#Color" Source="/Color"/>
+              <da:XmlRemoteValue Name="Category" Property="Entries.#Category" Source="/Category"/>
+              <da:XmlRemoteValue Name="Available" Property="Entries.#Available" Source="/Available"/>
+              <da:XmlRemoteValue Name="Linear" Property="Entries.#Linear" Source="/Linear"/>
+              <da:XmlRemoteValue Name="Bell" Property="Entries.#Bell" Source="/Bell"/>
+              <da:XmlRemoteValue Name="Early" Property="Entries.#Early" Source="/Early"/>
+              <da:XmlRemoteValue Name="Late" Property="Entries.#Late" Source="/Late"/>
+              <da:XmlRemoteValue Name="Fast" Property="Entries.#Fast" Source="/Fast"/>
+              <da:XmlRemoteValue Name="TwinPeak" Property="Entries.#TwinPeak" Source="/TwinPeak"/>
+              <da:XmlRemoteValue Name="Simple" Property="Entries.#Simple" Source="/Simple"/>
+              <da:XmlRemoteValue Name="Purchases" Property="Entries.#Purchases" Source="/Purchases"/>
+              <da:XmlRemoteValue Name="Pending" Property="Entries.#Pending" Source="/Pending"/>
+              <da:XmlRemoteValue Name="LocalQuantity" Property="Entries.#LocalQuantity" Source="/LocalQuantity"/>
+              <da:XmlRemoteValue Name="Inventory" Property="Entries.#Inventory" Source="/Inventory"/>
+              <da:XmlRemoteValue Name="Vintage" Property="Entries.#Vintage" Source="/Vintage"/>
+              <da:XmlRemoteValue Name="Wine" Property="Entries.#Wine" Source="/Wine"/>
+              <da:XmlRemoteValue Name="Locale" Property="Entries.#Locale" Source="/Locale"/>
+              <da:XmlRemoteValue Name="WABegin" Property="Entries.#WABegin" Source="/WABegin"/>
+              <da:XmlRemoteValue Name="WAEnd" Property="Entries.#WAEnd" Source="/WAEnd"/>
+              <da:XmlRemoteValue Name="WSBegin" Property="Entries.#WSBegin" Source="/WSBegin"/>
+              <da:XmlRemoteValue Name="WSEnd" Property="Entries.#WSEnd" Source="/WSEnd"/>
+              <da:XmlRemoteValue Name="IWCBegin" Property="Entries.#IWCBegin" Source="/IWCBegin"/>
+              <da:XmlRemoteValue Name="IWCEnd" Property="Entries.#IWCEnd" Source="/IWCEnd"/>
+              <da:XmlRemoteValue Name="ComBegin" Property="Entries.#ComBegin" Source="/ComBegin"/>
+              <da:XmlRemoteValue Name="ComEnd" Property="Entries.#ComEnd" Source="/ComEnd"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+
+          <da:XmlRemoteValueList Name="CommunityValuation" RepeatedType="PropertySet" Source="/cellartracker/CommunityValuation/row">
+            <Mappings>
+              <da:XmlRemoteValue Name="AveragePrice" Property="Entries.#AvereagePrice" Source="/AveragePrice"/>
+              <da:XmlRemoteValue Name="Size" Property="Entries.#Size" Source="/Size"/>
+              <da:XmlRemoteValue Name="Users" Property="Entries.#Users" Source="/Users"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+
+          <da:XmlRemoteValueList Name="CommunityScoreSummary" RepeatedType="PropertySet" Source="/cellartracker/CommunityScoreSummary/row">
+            <Mappings>
+              <da:XmlRemoteValue Name="CScore" Property="Entries.#CScore" Source="/CScore"/>
+              <da:XmlRemoteValue Name="CMedian" Property="Entries.#CMedian" Source="/CMedian"/>
+              <da:XmlRemoteValue Name="CNotes" Property="Entries.#CNotes" Source="/CNotes"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+
+          <da:XmlRemoteValueList Name="Notes" RepeatedType="PropertySet" Source="/cellartracker/CommunityNotes/row">
+            <Mappings>
+              <da:XmlRemoteValue Name="iNote" Property="Entries.#iNote" Source="/iNote"/>
+              <da:XmlRemoteValue Name="iUser" Property="Entries.#iUser" Source="/iUser"/>
+              <da:XmlRemoteValue Name="Name" Property="Entries.#Name" Source="/Name" />
+              <da:XmlRemoteValue Name="Rating" Property="Entries.#Rating" Source="/Rating"/>
+              <da:XmlRemoteValue Name="TastingDate" Property="Entries.#TastingDate" Source="/TastingDate"/>
+              <da:XmlRemoteValue Name="TastingNote" Property="Entries.#TastingNotes" Source="/TastingNotes"/>
+            </Mappings>
+          </da:XmlRemoteValueList>
+
+          <da:XmlRemoteValueList Name="Transactions" RepeatedType="PropertySet" Source="/cellartracker/Transactions/row">
+            <Mappings>
+              <da:XmlRemoteValue Name="iWine" Property="Entries.#iWine" Source="/iWine"/>
+              <da:XmlRemoteValue Name="iUser" Property="Entries.#iUser" Source="/iUser"/>
+              <da:XmlRemoteValue Name="Name" Property="Entries.#Name" Source="/Name"/>
+              <da:XmlRemoteValue Name="TransactionSize" Property="Entries.#TransactionSize" Source="/szTransaction"/>
+              <da:XmlRemoteValue Name="TransactionDate" Property="Entries.#TransactionDate" Source="/TransactDate" />
+            </Mappings>
+          </da:XmlRemoteValueList>
+
+        </Mappings>
+      </da:XmlRemoteResource>
+
+      <ScrollingData Name="WineScrollData"/>
+      <ScrollingData Name="LabelScrollData"/>
+      <ScrollingData Name="ScoresScrollData"/>
+      <ScrollingData Name="ValuesScrollData"/>
+      <ScrollingData Name="InventoryScrollData"/>
+      <ScrollingData Name="BottlesScrollData"/>
+      <ScrollingData Name="PurchasesScrollData"/>
+      <ScrollingData Name="DrinkingWindowScrollData"/>
+      <ScrollingData Name="DrinkabilityScrollData"/>
+      <ScrollingData Name="CommValScrollData"/>
+      <ScrollingData Name="CommScoreScrollData"/>
+      <ScrollingData Name="NotesScrollData"/>
+      <ScrollingData Name="TransactionsScrollData"/>
+
+      <coll:IDictionary Name="QueryPairs" IDictionary="[MyUri.QueryPairs]"/>
+
+      <cor:String Name="CTUri" String="http://www.cellartracker.com/api_read.asp"/>
+      <cor:String Name="user" String="user"/>
+      <cor:String Name="password" String="password"/>
+      <cor:String Name="API" String="API"/>
+      <cor:String Name="APIVal" String="wine"/>
+      <cor:String Name="Format" String="Format"/>
+      <cor:String Name="FormatVal" String="XML"/>
+      <cor:String Name="iWine"  String="iWine"/>
+
+
+
+    </Locals>
+
+    <Rules>
+
+      <Binding Source="[MyResource.Mappings.Entries.#Notes!da:XmlRemoteValueList]" Target="[NotesDisplay.NotesData]"/>
+
+      <Rule>
+        <Actions>
+
+          <Set Target="[MyUri.FullString]" Value="[CTUri]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[MyUri.QueryPairs.Clear]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[QueryPairs.Clear]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[QueryPairs.Add]" key="[user]" value="[Settings.Default.Username]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[password]" value="[Settings.Default.Password]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[API]" value="[APIVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[Format]" value="[FormatVal]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Invoke Target="[QueryPairs.Add]" key="[iWine]" value="[WineID]" InvokePolicy="Synchronous" ExclusiveApply="false"/>
+          <Set Target="[MyUri.QueryPairs]" Value="[QueryPairs]"/>
+          <Set Target="[MyResource.RequestUri]" Value="[MyUri]" InvokePolicy="Synchronous"/>
+          <Invoke Target="[MyResource.GetDataFromResource]" InvokePolicy="Synchronous"/>
+
+        </Actions>
+      </Rule>
+
+      <Changed Source="[MyResource.Mappings.Entries.#Notes!da:XmlRemoteValueList.List.Count]">
+        <Actions>
+          <Set Target="[NotesDisplay.NotesData]" Value="[MyResource.Mappings.Entries.#Notes!da:XmlRemoteValueList]"/>
+          <Invoke Target="[NotesDisplay.NavigateInto]"/>
+        </Actions>
+      </Changed>
+
+      <Binding Source="[MyResource.Mappings.Entries.#Labels!da:XmlRemoteValueList]" Target="[sdf.LabelLinks]"/>
+      <Binding Source="[MyResource.Mappings.#WineVintage!da:XmlRemoteValue.String]" Target="[tVintage.Content]"/>
+      <Binding Source="[MyResource.Mappings.#WineName!da:XmlRemoteValue.String]" Target="[tWineText.Content]"/>
+      <Binding Source="[MyResource.Mappings.#Country!da:XmlRemoteValue.String]" Target="[tCountry.Content]"/>
+      <Binding Source="[MyResource.Mappings.#Region!da:XmlRemoteValue.String]" Target="[tRegion.Content]"/>
+      <Binding Source="[MyResource.Mappings.#Varietal!da:XmlRemoteValue.String]" Target="[tVarietal.Content]"/>
+      <Binding Source="[MyResource.Mappings.#Bottles!da:XmlRemoteValue.String]" Target="[tBottles.Content]"/>
+      <Binding Source="[MyResource.Mappings.#Size!da:XmlRemoteValue.String]" Target="[tSize.Content]"/>
+      <Binding Source="[MyResource.Mappings.#Location!da:XmlRemoteValue.String]" Target="[tLocation.Content]"/>
+      <Binding Source="[MyResource.Mappings.#Bin!da:XmlRemoteValue.String]" Target="[tBin.Content]"/>
+
+      <Changed Source="[tCountry.Content]">
+        <Actions>
+          <Set Target="[tWine1.Content]" Value="("/>
+          <Set Target="[tWine2.Content]" Value=","/>
+          <Set Target="[tWine3.Content]" Value=")"/>
+          <Set Target="[tVariety.Content]" Value="Variety: "/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[tBottles.Content]">
+        <Conditions>
+          <Equality ConditionOp="GreaterThan" Source="[tBottles.Content.Length]" Value="0"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[tlInventory.Content]" Value="Inventory: "/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[tSize.Content]">
+        <Actions>
+          <Set Target="[tlSize.Content]" Value="Size: "/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[tLocation.Content]">
+        <Conditions>
+          <Equality ConditionOp="GreaterThan" Source="[tLocation.Content.Length]" Value="0"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[tlLocation.Content]" Value="Location: "/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[tBin.Content]">
+        <Conditions>
+          <Equality ConditionOp="GreaterThan" Source="[tBin.Content.Length]" Value="0"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[tlBin.Content]" Value="Bin: "/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Panel Layout="Form">
+        <Children>
+          <Panel Name="Header" Layout="VerticalFlow">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0,0" Top="Parent,0,50" Right="Parent,.8,0" Bottom="Parent,.3,0"/>
+            </LayoutInput>
+            <Children>
+              <Panel Layout="HorizontalFlow" >
+                <Children>
+                  <Text Content="[MyResource.Mappings.#WineVintage!da:XmlRemoteValue.String]" Font="[BigFont]" Padding="0,0,10,0" Name="tVintage" Color="White"/>
+                  <Text Content="[MyResource.Mappings.#WineName!da:XmlRemoteValue.String]" Font="[BigFont]"  Name="tWineText" Color="White"/>
+                  <Text Name="tWine1" Content="Loading Data..." Color="DimGray" />
+                  <Text Content="[MyResource.Mappings.#Country!da:XmlRemoteValue.String]" Name="tCountry" Color="DimGray"/>
+                  <Text Name="tWine2" Content="" Color="DimGray"/>
+                  <Text Content="[MyResource.Mappings.#Region!da:XmlRemoteValue.String]" Name="tRegion" Color="DimGray"/>
+                  <Text Name="tWine3" Content="" Color="DimGray"/>
+                </Children>
+              </Panel>
+              <Panel Layout="HorizontalFlow">
+                <Children>
+                  <Text Name="tVariety" Content="" Color="DimGray"/>
+                  <Text Content="[MyResource.Mappings.#Varietal!da:XmlRemoteValue.String]" Name="tVarietal" Color="DimGray"/>
+                </Children>
+              </Panel>
+              <Panel Layout="HorizontalFlow">
+                <Children>
+                  <Text Name="tlInventory" Color="DimGray"/>
+                  <Text Content="[MyResource.Mappings.#Bottles!da:XmlRemoteValue.String]" Padding="0,0,10,0" Name="tBottles" Color="DimGray"/>
+                  <Text Name="tlSize" Color="DimGray"/>
+                  <Text Content="[MyResource.Mappings.#Size!da:XmlRemoteValue.String]" Padding="0,0,10,0" Name="tSize" Color="DimGray"/>
+                  <Text Name="tlLocation" Color="DimGray"/>
+                  <Text Content="[MyResource.Mappings.#Location!da:XmlRemoteValue.String]" Padding="0,0,10,0" Name="tLocation" Color="DimGray"/>
+                  <Text Name="tlBin" Color="DimGray"/>
+                  <Text Content="[MyResource.Mappings.#Bin!da:XmlRemoteValue.String]" Name="tBin" Color="DimGray"/>
+                </Children>
+              </Panel>
+            </Children>
+          </Panel>
+
+          <Panel Name="WineImg" Layout="Center">
+            <LayoutInput>
+              <FormLayoutInput Right="Parent,1,0" Top="Parent,0,30" Left="Header,1,0" Bottom="Body,0,0" />
+            </LayoutInput>
+            <Children>
+              <me:LabelFlipper Name="sdf" LabelLinks="[MyResource.Mappings.Entries.#Labels!da:XmlRemoteValueList]"/>
+            </Children>
+          </Panel>
+          
+          <Panel Name="SideBar">
+            <LayoutInput>
+              <FormLayoutInput Left="Parent,0,0" Right="Parent,0,150" Top="Header,1,10" Bottom="Parent,1,-200"/>
+            </LayoutInput>
+            <Children>
+              <Panel Layout="VerticalFlow">
+                <Children>
+                  <me:SimpleButton>
+                    <Command>
+                      <NavigateCommand Description="Drink"
+                                       Source="@resx://CellarTrackerAddIn2/CellarTrackerAddIn2.Resources/CellarDrinkWine"
+                                       WineID="[MyResource.Mappings.#iWine!da:XmlRemoteValue.String]"
+                                       WineName="[MyResource.Mappings.#WineName!da:XmlRemoteValue.String]"
+                                       WineVintage="[MyResource.Mappings.#WineVintage!da:XmlRemoteValue.String]"
+                                       size="[MyResource.Mappings.#Size!da:XmlRemoteValue.String]"
+                                       location="[MyResource.Mappings.#Location!da:XmlRemoteValue.String]"
+                                       bin="[MyResource.Mappings.#Bin!da:XmlRemoteValue.String]"
+                               />
+                    </Command>
+                  </me:SimpleButton>
+                </Children>
+              </Panel>
+            </Children>
+          </Panel>
+          
+          <Panel Name="Body" >
+            <LayoutInput>
+              <FormLayoutInput Top="Header,1,0" Left="Parent,0,150" Right="Parent,1,-75" Bottom="Parent,1,-50"/>
+            </LayoutInput>
+            <Children>
+              <me:Notes Name="NotesDisplay" NotesData="[MyResource.Mappings.Entries.#Notes!da:XmlRemoteValueList]"/>
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+  <!--Notes-->
+  <UI Name="Notes">
+    <Properties>
+      <da:XmlRemoteValueList Name="NotesData" XmlRemoteValueList="$Required"/>
+    </Properties>
+
+    <Locals>
+      <ScrollingData Name="ScrollData"/>
+      <ScrollingHandler Name="ScrollHandler" HandlerStage="Bubbled"/>
+    </Locals>
+
+    <Rules>
+      <Binding Target="[ScrollHandler.ScrollingData]" Source="[ScrollData]"/>
+      <Binding Target="[ScrollData.Repeater]" Source="[WineNotesRepeater]"/>
+
+      <Binding Source="[NotesData.List]" Target="[WineNotesRepeater.Source]"/>
+      <Changed Source="[NotesData.List]">
+        <Actions>
+          <DebugTrace Message="Notes Data Changed: {0}">
+            <Params>
+              <ObjectPath ObjectPath="[NotesData.List.Count]"/>
+            </Params>
+          </DebugTrace>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+      <Scroller  ScrollingData="[ScrollData]" FadeSize="1" FocusPadding="100" Orientation="Vertical">
+        <Children>
+          <Repeater Name="WineNotesRepeater" Source="[NotesData.List]" Layout="VerticalFlow" >
+
+            <Divider >
+              <Text Content="---------" Color="DimGray"/>
+            </Divider>
+
+            <Content>
+              <me:Note UserName="[RepeatedItem!PropertySet.Entries.#Name!cor:String]"
+                       NoteDate="[RepeatedItem!PropertySet.Entries.#TastingDate!cor:String]"
+                       Description="[RepeatedItem!PropertySet.Entries.#TastingNotes!cor:String]"
+                       Rating="[RepeatedItem!PropertySet.Entries.#Rating!cor:String]"
+                       Margins="0,30,0,0"/>
+            </Content>
+          </Repeater>
+        </Children>
+      </Scroller>
+    </Content>
+  </UI>
+  <!--Note-->
+  <UI Name="Note">
+
+    <Properties>
+      <cor:String Name="UserName" String="A"/>
+      <cor:String Name="NoteDate" String="B"/>
+      <cor:String Name="Description" String="C"/>
+      <cor:String Name="Rating" String="D"/>
+    </Properties>
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+    </Locals>
+    <Content>
+      <Panel  Name="Background" Layout="VerticalFlow">
+        <Children>
+          <Panel Layout="HorizontalFlow">
+            <Children>
+              <Text Name="user" Content="User: " Color="DimGray"/>
+              <Text Name="username" Content="[UserName]" Color="DimGray"/>
+              <Text Name="date" Content="Date:" Color="DimGray" Margins="30,0,0,0"/>
+              <Text Name="notedate" Content="[NoteDate]" Color="DimGray"/>
+              <Text Name="rating" Content="Rating: " Color="DimGray" Margins="30,0,0,0"/>
+              <Text Name="ratingval" Content="[Rating]" Color="DimGray"/>
+            </Children>
+          </Panel>
+          <Text Name="description" Content="[Description]" Margins="0,15,0,0" Color="DimGray" MaximumLines="10" WordWrap="true"/>
+        </Children>
+      </Panel>
+    </Content>
+
+    <Rules>
+      <Condition Source="[Input.KeyFocus]" SourceValue="true">
+        <Actions>
+          <Set Target="[user.Color]" Value="White"/>
+          <Set Target="[username.Color]" Value="White"/>
+          <Set Target="[date.Color]" Value="White"/>
+          <Set Target="[notedate.Color]" Value="White"/>
+          <Set Target="[rating.Color]" Value="White"/>
+          <Set Target="[ratingval.Color]" Value="White"/>
+          <Set Target="[description.Color]" Value="White"/>
+        </Actions>
+      </Condition>
+    </Rules>
+  </UI>
+  <!--LabelFlipper-->
+  <UI Name="LabelFlipper">
+
+    <Properties>
+      <da:XmlRemoteValueList Name="LabelLinks" XmlRemoteValueList="$Required"/>
+    </Properties>
+    <Locals>
+      <ScrollingData Name="LabelScrollingData"/>
+      <ScrollingHandler Name="LabelScrollHandler" HandlerStage="Bubbled"/>
+    </Locals>
+    <Rules>
+      <Binding Target="[LabelScrollHandler.ScrollingData]" Source="[LabelScrollingData]"/>
+      <Binding Target="[LabelScrollingData.Repeater]" Source="[LabelRepeater]"/>
+      <Binding Source="[LabelLinks.List]" Target="[LabelRepeater.Source]"/>
+
+    </Rules>
+    <Content>
+      <Scroller ScrollingData="[LabelScrollingData]" FadeSize="1">
+        <Children>
+          <Repeater Name="LabelRepeater" Source="[LabelLinks.List]" Layout="VerticalFlow">
+            <Content>
+              <Panel Layout="HorizontalFlow">
+                <Children>
+                  <me:WineLabel Label="[RepeatedItem!PropertySet.Entries.#ImageSource!cor:String]" />
+                </Children>
+              </Panel>
+            </Content>
+          </Repeater>
+        </Children>
+      </Scroller>
+    </Content>
+  </UI>
+
+  <!--WineLabel-->
+  <UI Name="WineLabel">
+    <Properties>
+      <cor:String Name="Label" cor:String="$Required"/>
+      <Image Name="iBarrel" Source="file://WineBarrel.jpg"/>
+
+    </Properties>
+
+    <Locals>
+      <ClickHandler Name="Clicker"/>
+      <CT:CellarTrackerAddIn2.MyAddIn Name="CTAddIn"/>
+    </Locals>
+
+    <Rules>
+      <Default Target="[GImage.Scale]" Value="1.0,1.0,1.0"/>
+
+      <Changed Source="[Label]">
+        <Actions>
+          <Invoke Target="[CTAddIn.GetImage]" ResultTarget="[GImage.Content]" ImgSource="[Label]" InvokePolicy="Synchronous"/>
+        </Actions>
+      </Changed>
+
+      <Changed Source="[Input.KeyFocus]">
+        <Actions>
+          <Set Target="[GImage.Scale]" Value="1.1,1.1,1.1"/>
+        </Actions>
+      </Changed>
+
+      <Rule>
+        <Actions>
+          <Invoke Target="[CTAddIn.GetImage]" ResultTarget="[GImage.Content]" ImgSource="[Label]" InvokePolicy="Synchronous"/>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+    <Content>
+      <Panel>
+        <Children>
+          <Graphic Name="GImage" AcquiringImage="[iBarrel]" AnimationsEnabled="false" Visible="true" MaintainAspectRatio="true" MinimumSize="50,50" MaximumSize="200,200" >
+
+            <!--<Animations>
+
+              -->
+            <!-- This animation is of type Alpha.  It will play whenever -->
+            <!--
+              -->
+            <!-- the opacity of this item is modified.                   -->
+            <!--
+              <Animation Type="Alpha">
+                <Keyframes>
+
+                  -->
+            <!-- Animate from our current alpha value... -->
+            <!--
+                  <AlphaKeyframe Time="0.0" Value="1.0" RelativeTo="Current"/>
+
+                  -->
+            <!-- ... to the new alpha value. -->
+            <!--
+                  <AlphaKeyframe Time="0.5" Value="1.0"/>
+
+                </Keyframes>
+              </Animation>
+
+            </Animations>-->
+          </Graphic>
+
+        </Children>
+      </Panel>
+
+    </Content>
+  </UI>
+</Mcml>

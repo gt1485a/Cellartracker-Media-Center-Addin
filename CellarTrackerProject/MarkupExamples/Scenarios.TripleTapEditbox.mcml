@@ -1,0 +1,203 @@
+<Mcml
+  xmlns="http://schemas.microsoft.com/2006/mcml"
+  xmlns:me="Me"
+  xmlns:cor="assembly://MsCorLib/System">
+
+  <!-- TypingHandler with Triple Tap support sample.                        -->
+  
+  <!-- Choosing TripleTap Policy for the typing handler will allow entering -->
+  <!-- information using the number buttons on a Windows Media Center       -->
+  <!-- remote control. When the Triple Tap Policy is set, Windows Media     -->
+  <!-- Center will look up the current locale and use the IME object        -->
+  <!-- registered for that locale. Inputting text using the keyboard will   -->
+  <!-- not use triple tap functionality. For example, pressing the '2' key  -->
+  <!-- on the remote control might display 'A' in the EditableText UI, but  -->
+  <!-- pressing the '2' key on the keyboard will display '2' in the         -->
+  <!-- EditableText UI.                                                     --> 
+
+  <!-- This example implements a UI element named TripleTapUI.              -->
+  <!-- When the MCML page is loaded, the UI displays an EditableText that   -->
+  <!-- will accept new input, and a key mapping that shows what characters  -->
+  <!-- the number keys will map to in the current mode.                     -->
+  
+  <!-- Pressing a number key on the remote will display the corresponding   -->
+  <!-- character in the EditableText. You can also change the key modes by  -->
+  <!-- using the ChannelUp/ChannelDown keys on the remote control or the    -->
+  <!-- PageUp/PageDown keys on the keyboard.                                -->
+
+  <!-- NOTE: To mask the user's input (i.e. password edit) set the          -->
+  <!-- PasswordMasked property on TypingHandler to "true".                  -->
+
+  <UI Name="TripleTapUI">
+    <Content>
+    
+      <me:TestTripleTap>
+        <EditableText>
+          <EditableText Value=""/>
+        </EditableText>
+      </me:TestTripleTap>
+      
+    </Content>
+    
+  </UI>
+
+  <!-- Implementation for editable text control which handles typing input. -->
+  <!-- Repeater gets the triple tap key information and repeats using a     -->
+  <!-- grid layout.                                                         -->
+  <UI Name="TestTripleTap">
+
+    <!-- Define the properties for this object. -->
+    <Properties>
+
+      <!-- EditableText is a required parameter. -->
+      <EditableText Name="EditableText" EditableText="$Required"/>
+
+      <!-- Label color properties. -->
+      <Color Name="LabelColor" Color="Firebrick"/>
+
+      <!-- Label font property. -->
+      <Font Name="LabelFont" Font="Arial,25"/>
+
+    </Properties>
+
+
+    <Locals>
+      <!-- Use the typing handler to handle input events.                   -->
+      <!-- Set the TypingPolicy to TripleTap to get triple tap behavior.    -->
+      <TypingHandler Name="TypingHandler" EditableText="[EditableText]" 
+                     TypingPolicy="TripleTap"/>
+    </Locals>
+
+    <!-- Define how to handle the input using rules. -->
+    <Rules>
+
+      <!-- Bind the TripleTap key information to the repeater.         -->
+      <Binding Source="[TypingHandler.KeyInfos]" Target="[RepeatLabels.Source]"/>
+      
+      <!-- The value of the TypingHandler's DisplayValue is bound to the    -->
+      <!-- text value of Label. The use of DisplayValue is important here.  -->
+      <!-- During triple-tap input, DisplayValue will include the current   -->
+      <!-- character the user is modifying as well as password masks.       -->
+      <Rule>
+        <Conditions>
+          <Modified Source="[TypingHandler.DisplayValue]"/>
+        </Conditions>
+        <Actions>
+          <Set Target="[Label.Content]" Value="[TypingHandler.DisplayValue]"/>
+        </Actions>
+      </Rule>
+
+    </Rules>
+
+
+    <Content>
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical" Spacing="5,0"/>
+        </Layout>
+
+        <Children>
+
+          <!-- Text showing usage information. -->
+          <ColorFill Content="Black" MouseInteractive="true" 
+                     Margins="0,0,0,60" Padding="0,5,5,5" Layout="VerticalFlow">
+            <Children>
+              <Text Name="LabelInfo1"  
+                    Content="Press any number key on the remote to see the triple tap behavior." 
+                    Color="White" Font="Arial,18"/>
+              <Text Name="LabelInfo"  
+                    Content="Use ChannelUp/ChannelDown buttons to change key modes!" 
+                    Color="White" Font="Arial,18"/>
+            </Children>
+          </ColorFill>
+
+          <!-- Text displaying the triple tap text. -->
+          <ColorFill Content="CornflowerBlue" 
+                     MouseInteractive="true" Margins="0,25,0,0" 
+                     Padding="5,5,5,5" Layout="Anchor">
+            <Children>
+          
+              <!-- The label to display. -->
+              <Text Name="Label" Content="Press a number key!" 
+                    Color="[LabelColor]" Font="Arial,25" 
+                    MinimumSize="0,40"/>
+          
+              <!-- Display of the caret. -->
+              <ColorFill Name="Caret" Content="[LabelColor]" Visible="true" 
+                         MinimumSize="20,4">
+               <LayoutInput>
+                 <AnchorLayoutInput Left="Label,1,-3" Top="Label,0" 
+                                    Bottom="Label,1" Vertical="Far"/>
+               </LayoutInput>
+               
+             </ColorFill>
+
+            </Children>
+          </ColorFill>
+                
+          <!-- Repeater showing the triple tap key information. -->
+          <ColorFill Content="DarkBlue" Margins="0,25,0,0" 
+                     Padding="5,5,5,5" MaximumSize="300,400">
+            <Layout>
+              <FlowLayout Orientation="Vertical" Spacing="5,0" 
+                          ItemAlignment="Center"/>
+            </Layout>
+
+            <Children>
+            
+              <Repeater Name="RepeatLabels" Source="[TypingHandler.KeyInfos]">
+                <Layout>
+                  <GridLayout Orientation="Horizontal" Columns="3" Rows="4"
+                              AllowWrap="true" Spacing="1,1" 
+                              MajorAlignment="Center" MinorAlignment="Center" />
+                </Layout>
+
+                <Content>
+                  <me:RepeatedItem Label="[RepeatedItem!TripleTapKeyInfo.Label]" 
+                                   Header="[RepeatedItem!TripleTapKeyInfo.KeyCode]" />
+                </Content>
+              </Repeater>
+
+            </Children>
+
+          </ColorFill>
+
+        </Children>
+        
+      </Panel>
+    </Content>
+
+  </UI>
+
+  
+  <!-- Implementation for UI element to display triple tap header and label -->
+  <!-- information. This gets repeated by a repeater.                       -->
+  <UI Name="RepeatedItem">
+    <Properties>
+
+      <cor:String Name="Label" String="$Required"/>
+      <cor:String Name="Header" String="$Required"/>
+      <Color Name="BackgroundColor" Color="DarkBlue"/>
+      <Color Name="LabelColor" Color="White"/>
+      <Font Name="LabelFont" Font="Arial,20" />
+
+    </Properties>
+
+    <Content>
+      <ColorFill Name="Background" Content="[BackgroundColor]" Padding="5,5,5,5">
+        <Layout>
+          <FlowLayout Orientation="Vertical" ItemAlignment="Center"/>
+        </Layout>
+
+        <Children>
+          <Text Content="[Header]" Color="[LabelColor]" 
+                Font="[LabelFont]"/>
+          <Text Content="[Label]" Color="[LabelColor]" 
+                Font="[LabelFont]"/>
+        </Children>
+        
+      </ColorFill>
+    </Content>
+  </UI>
+
+</Mcml>

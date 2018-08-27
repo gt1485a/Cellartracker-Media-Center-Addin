@@ -1,0 +1,167 @@
+<Mcml 
+  xmlns="http://schemas.microsoft.com/2006/mcml"
+  xmlns:cor="assembly://MSCorlib/System" 
+  xmlns:addin="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.Hosting"
+  xmlns:mc="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter"
+  xmlns:b="res://McmlSampler,Version=6.0.6000.0,Culture=neutral,PublicKeyToken=31bf3856ad364e35!Scenarios.SimpleButton.mcml"
+  xmlns:me="Me">
+
+  <!-- The Windows Media Center extensibility platform includes a full set  -->
+  <!-- of APIs for interacting with media services. Such services include   -->
+  <!-- playing media (such as music and videos) as well as other non-media  -->
+  <!-- related services (like displaying a MediaCenter dialog box).         -->
+
+  <!-- All Windows Media Center services are accessed via the AddInHost     -->
+  <!-- type, which is located in the Microsoft.MediaCenter namespace.       -->
+
+  <!-- This sample demonstrates the how to play an audio file and change    -->
+  <!-- its state, and tune to radio frequencies using APIs in the           -->
+  <!-- Microsoft.MediaCenter namespace.                                     -->
+
+  <UI Name="AudioPlayback">
+    
+    <Locals>
+
+      <!-- AddInHost is where all Windows Media Center-specific services start -->
+      <!-- from. It must appear in the Locals section of a markup file.        -->
+      <addin:AddInHost Name="AddInHost"/>
+
+      <cor:String Name="MediaPath" String="http://play.mediacentersandbox.com/SDKTestAudio.wma"/>
+      <cor:String Name="RadioStation" String="fm:94.9"/>
+      
+      <FormatTransformer Name="FormatVolume" Format="Current Volume = {0}"/>
+      <FormatTransformer Name="FormatMute"   Format="Current Mute = {0}"/>
+
+      <Command Name="MuteCommand" Description="Mute/Unmute"/>
+
+    </Locals>
+
+    <Rules>
+
+      <!-- Display the current Volume setting -->
+      <Changed Source="[AddInHost.MediaCenterEnvironment.AudioMixer.Volume]" InitialEvaluate="true">
+        <Actions>
+          <Set Target="[Volume.Content]" Transformer="[FormatVolume]" Value="[AddInHost.MediaCenterEnvironment.AudioMixer.Volume.ToString]"/>
+        </Actions>
+      </Changed>
+
+      <!-- Display the current Mute state -->
+      <Changed Source="[AddInHost.MediaCenterEnvironment.AudioMixer.Mute]" InitialEvaluate="true">
+        <Actions>
+          <Set Target="[Mute.Content]" Transformer="[FormatMute]" Value="[AddInHost.MediaCenterEnvironment.AudioMixer.Mute.ToString]"/>
+        </Actions>
+      </Changed>
+
+      <!-- Change the Mute state when the Mute/Unmute button is clicked -->
+      <Changed Source="[MuteCommand.Invoked]">
+        <Actions>
+          <Set Target="[AddInHost.MediaCenterEnvironment.AudioMixer.Mute]" Value="[AddInHost.MediaCenterEnvironment.AudioMixer.Mute]">
+            <Transformer>
+              <BooleanTransformer Inverse="true"/>
+            </Transformer>
+          </Set>
+        </Actions>
+      </Changed>
+    </Rules>
+
+    <Content>
+
+      <Panel Layout="Dock">
+        <Children>
+
+          <!-- Playback -->
+          <Panel Layout="VerticalFlow" Margins="10,10,10,10" Padding="10,150,0,0">
+            <LayoutInput>
+              <DockLayoutInput Position="Left"/>
+            </LayoutInput>
+
+            <Children>
+
+              <!-- Start audio playback with a new playlist -->
+              <b:SimpleButton MinimumSize="400,0" Padding="5,5,5,5" >
+                <Command>
+                  <InvokeCommand Description="Start a new playlist"  
+                                 Target="[AddInHost.MediaCenterEnvironment.PlayMedia]" 
+                                 mediaType="Audio"
+                                 media="[MediaPath]"
+                                 addToQueue="false"/>
+                </Command>
+              </b:SimpleButton>
+
+              <!-- Add audio media to existing playlist -->
+              <b:SimpleButton MinimumSize="400,0" Padding="5,5,5,5" >
+                <Command>
+                  <InvokeCommand Description="Add media to existing playlist"  
+                                 Target="[AddInHost.MediaCenterEnvironment.PlayMedia]" 
+                                 mediaType="Audio"
+                                 media="[MediaPath]"
+                                 addToQueue="true"/>
+                </Command>
+              </b:SimpleButton>
+
+              <!-- Tune to a FM station -->
+              <b:SimpleButton MinimumSize="400,0" Padding="5,5,5,5" >
+                <Command>
+                  <InvokeCommand Description="FM Radio (94.9 FM)"  
+                                 Target="[AddInHost.MediaCenterEnvironment.PlayMedia]" 
+                                 mediaType="Radio"
+                                 media="[RadioStation]"
+                                 addToQueue="false"/>
+                </Command>
+              </b:SimpleButton>
+
+              <!-- Volume Up-->
+              <b:SimpleButton MinimumSize="200,0" Padding="5,100,5,5" >
+                <Command>
+                  <InvokeCommand Description="Vol+"  
+                                 Target="[AddInHost.MediaCenterEnvironment.AudioMixer.VolumeUp]"/>
+                </Command>
+              </b:SimpleButton>
+
+              <!-- Volume Down-->
+              <b:SimpleButton MinimumSize="200,0" Padding="5,5,5,5" >
+                <Command>
+                  <InvokeCommand Description="Vol-"  
+                                 Target="[AddInHost.MediaCenterEnvironment.AudioMixer.VolumeDown]"/>
+                </Command>
+              </b:SimpleButton>
+
+              <!-- Mute -->
+              <b:SimpleButton MinimumSize="200,0" Padding="5,5,5,5" Command="[MuteCommand]"/>
+
+            </Children>
+          </Panel>
+
+          <Panel Layout="VerticalFlow">
+            <LayoutInput>
+              <DockLayoutInput Position="Client" Alignment="Center"/>
+            </LayoutInput>
+
+            <Children>
+
+              <!-- Now Playing -->
+              <NowPlaying MinimumSize="400,300" ShowFullMetadata="Always"/>
+
+              <Panel Layout="VerticalFlow">
+                <Children>
+
+                  <!-- Current Volume -->
+                  <Text  Name="Volume" Color="Red" Margins="0,0,0,10"/>
+
+                  <!-- Mute state -->
+                  <Text  Name="Mute" Color="Red" Margins="0,0,0,10"/>
+
+                </Children>
+              </Panel>
+
+            </Children>
+          </Panel>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

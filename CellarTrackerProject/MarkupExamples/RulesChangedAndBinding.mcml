@@ -1,0 +1,55 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:me="Me">
+
+  <UI Name="Binding">
+
+    <Locals>
+      <Timer Name="Timer"
+             Enabled="true"
+             AutoRepeat="false"
+             Interval="1000"/>
+    </Locals>
+
+    <Rules>
+      <Changed Source="[Timer.Tick]">
+        <Actions>
+          <Set Target="[A.Value]"
+               Value="10000000"/>
+        </Actions>
+      </Changed>
+    </Rules>
+
+
+    <Content>
+      <Panel Layout="VerticalFlow">
+        <Children>
+          <me:ValueDisplayer Name="A"
+                             Value="4"/>
+          <me:ValueDisplayer Name="B"
+                             Value="8"/>
+        </Children>
+      </Panel>
+    </Content>
+
+  </UI>
+
+  <UI Name="ValueDisplayer">
+
+    <Properties>
+      <cor:Int32 Name="Value"/>
+    </Properties>
+
+    <Rules>
+      <Binding Source="[Value.ToString]"
+               Target="[Label.Content]"/>
+    </Rules>
+
+    <Content>
+      <Text Name="Label"
+            Color="Moccasin"/>
+    </Content>
+
+  </UI>
+
+</Mcml>

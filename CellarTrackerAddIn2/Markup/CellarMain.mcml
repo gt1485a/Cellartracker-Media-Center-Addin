@@ -1,0 +1,55 @@
+<Mcml xmlns="http://schemas.microsoft.com/2008/mcml"
+      xmlns:cor="assembly://MSCorLib/System"
+      xmlns:da="assembly://Microsoft.MediaCenter/Microsoft.MediaCenter.DataAccess"
+      xmlns:me="Me">
+
+  <Aggregate Source="resx://CellarTrackerAddIn2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=275706189cd468f2/CellarTrackerAddIn2.Resources/Controls"/>
+  
+  <UI Name="CellarMain">
+
+    <Content>
+      <Panel Name="form" Layout="Center">
+        <Children>
+          <Panel Name="MainPanel" Layout="VerticalFlow">
+            <Children>
+
+              <me:SimpleButton>
+                <Command>
+                  <NavigateCommand Description="Cellar Contents"
+                                 Source="@resx://CellarTrackerAddIn2/CellarTrackerAddIn2.Resources/CellarContents"
+                             />
+                </Command>
+              </me:SimpleButton>
+
+              <me:SimpleButton>
+                <Command>
+                  <NavigateCommand Description="Drinkability"
+                                 Source="@resx://CellarTrackerAddIn2/CellarTrackerAddIn2.Resources/CellarDrinkability"
+                             />
+                </Command>
+              </me:SimpleButton>
+
+              <me:SimpleButton>
+                <Command>
+                  <NavigateCommand Description="Others Notes on My Cellar"
+                                 Source="@resx://CellarTrackerAddIn2/CellarTrackerAddIn2.Resources/CellarNotesFromOthers"
+                             />
+                </Command>
+              </me:SimpleButton>
+
+              <me:SimpleButton>
+                <Command>
+                  <NavigateCommand Description="Settings"
+                                 Source="@resx://CellarTrackerAddIn2/CellarTrackerAddIn2.Resources/CellarSettings"/>
+                </Command>
+              </me:SimpleButton>
+            </Children>
+          </Panel>
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>

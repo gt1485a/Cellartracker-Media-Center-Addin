@@ -1,0 +1,29 @@
+<Mcml xmlns="http://schemas.microsoft.com/2006/mcml">
+
+  <UI Name="Welcome">
+
+    <Content>
+
+      <Panel>
+        <Layout>
+          <FlowLayout Orientation="Vertical" ItemAlignment="Center"/>
+        </Layout>
+
+        <Children>
+
+          <!-- Banner. -->
+          <Text Content="Microsoft MediaCenter Markup (MCML)" 
+                Font="Tahoma,20" Color="Yellow"/>
+          
+          <Text Content="Sample Browser" Font="Arial,18" Color="White"/>
+          <Text Content="Copyright (c) 2006 Microsoft Corporation" 
+                Font="Verdana,8" Color="Yellow"/>
+
+        </Children>
+      </Panel>
+
+    </Content>
+
+  </UI>
+
+</Mcml>
